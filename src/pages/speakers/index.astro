@@ -9,30 +9,35 @@ const response = await fetch(
     body: JSON.stringify({
       query: `
       query speakers($limit: Int = 200, $yearTag: String = "FRONT23") {
-    tags: tagCollection(limit: 1, where: { title: $yearTag }) {
-      items {
-        linkedFrom {
-          speakers: speakerCollection(limit: $limit) {
-            items {
-              name
-              role
-              company
-              description
-              bio
-              slug
-              order
-              photo {
-                url(transform: { resizeStrategy: FILL })
+        tags: tagCollection(limit: 1, where: { title: $yearTag }) {
+          items {
+            linkedFrom {
+              speakers: speakerCollection(limit: $limit) {
+                items {
+                  name
+                  role
+                  company
+                  description
+                  bio
+                  slug
+                  order
+                  photo {
+                    url(transform: { resizeStrategy: FILL })
+                  }
+                }
               }
             }
           }
         }
       }
-    }
-  }
       `,
     }),
   }
+);
+
+Astro.response.headers.set(
+  "Cache-Control",
+  "s-maxage=450, stale-while-revalidate"
 );
 
 const json = await response.json();
