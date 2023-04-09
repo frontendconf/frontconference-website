@@ -35,10 +35,10 @@ const response = await fetch(
   }
 );
 
-// Astro.response.headers.set(
-//   "Cache-Control",
-//   "s-maxage=450, stale-while-revalidate"
-// );
+Astro.response.headers.set(
+  "Cache-Control",
+  "s-maxage=450, stale-while-revalidate"
+);
 
 const json = await response.json();
 const speakers = json.data.tags.items[0].linkedFrom.speakers.items;
