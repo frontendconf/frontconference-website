@@ -53,7 +53,7 @@ import Layout from "../../layouts/Layout.astro";
 const { speaker: speakerSlug } = Astro.params;
 
 const response = await fetch(
-  "https://graphql.contentful.com/content/v1/spaces/j8md9ikrag2j?access_token=c0eae4b4c6ddb1acdef7590927e9c901eca36f51fffd93a540a13a756d3278a4",
+  "https://graphql.contentful.com/content/v1/spaces/j8md9ikrag2j/environments/test?access_token=rzFgLmMrf5EspzL9QgEyOTPtIWdc-jGBIdk5GKs4Rfg",
   {
     method: "POST",
     headers: { "Content-Type": "application/json" },
