@@ -41,9 +41,12 @@ speakers.sort((a, b) => {
   if (a.name > b.name) return 1;
   else return -1;
 });
+
+const randomNumber = Math.floor(Math.random() * 100);
 ---
 
 <Layout title="Speakers">
+  <p>Random number to test cache things of vercel: {randomNumber}</p>
   <ul>
     {
       speakers.map((speaker) => (
