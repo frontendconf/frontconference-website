@@ -1,0 +1,59 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const response = await fetch(
+  "https://graphql.contentful.com/content/v1/spaces/j8md9ikrag2j/environments/test?access_token=rzFgLmMrf5EspzL9QgEyOTPtIWdc-jGBIdk5GKs4Rfg",
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+      query speakers($limit: Int = 200, $yearTag: String = "FRONT22") {
+        tags: tagCollection(limit: 1, where: { title: $yearTag }) {
+          items {
+            linkedFrom {
+              speakers: speakerCollection(limit: $limit) {
+                items {
+                  name
+                  role
+                  company
+                  description
+                  bio
+                  slug
+                  order
+                  photo {
+                    url(transform: { resizeStrategy: FILL })
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `,
+    }),
+  }
+);
+
+const json = await response.json();
+const speakers = json.data.tags.items[0].linkedFrom.speakers.items;
+speakers.sort((a, b) => {
+  if (a.name > b.name) return 1;
+  else return -1;
+});
+
+const randomNumber = Math.floor(Math.random() * 100);
+---
+
+<Layout title="Speakers">
+  <p>Random number to test cache things of vercel: {randomNumber}</p>
+  <ul>
+    {
+      speakers.map((speaker) => (
+        <li>
+          <a href={`/speakers/${speaker.slug}`}>{speaker.name}</a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
