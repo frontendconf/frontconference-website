@@ -13,23 +13,23 @@
 		},
 		{
 			"src": "^\\/_image$",
-			"dest": "entry._image.astro"
+			"dest": "_image.astro"
 		},
 		{
 			"src": "^\\/$",
-			"dest": "entry.index.astro"
+			"dest": "index.astro"
 		},
 		{
 			"src": "^\\/speakers\\/?$",
-			"dest": "entry.speakers.astro"
+			"dest": "speakers/index.astro"
 		},
 		{
 			"src": "^\\/speakers\\/([^/]+?)\\/?$",
-			"dest": "entry._speaker_.astro"
+			"dest": "speakers/[speaker].astro"
 		},
 		{
 			"src": "^\\/404\\/?$",
-			"dest": "entry.404.astro"
+			"dest": "404.astro"
 		}
 	]
 }
