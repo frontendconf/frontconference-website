@@ -1,0 +1,108 @@
+.container {
+  max-width: 1920px;
+  padding-right: pxToRem(24);
+  padding-left: pxToRem(24);
+  margin: 0 auto;
+
+  // @include mq-up(sm) {
+  //   padding-right: 32px;
+  //   padding-left: 32px;
+  // }
+
+  // @include mq-up(md) {
+  //   padding-right: 64px;
+  //   padding-left: 64px;
+
+  //   &--wide {
+  //     padding-right: 32px;
+  //     padding-left: 32px;
+  //   }
+  // }
+
+  // @include mq-up(xl) {
+  //   padding-right: 120px;
+  //   padding-left: 120px;
+
+  //   &--wide {
+  //     padding-right: 40px;
+  //     padding-left: 40px;
+  //   }
+  // }
+
+  // @include mq-up(xxl) {
+  //   padding-right: 200px;
+  //   padding-left: 200px;
+
+  //   &--wide {
+  //     padding-right: 56px;
+  //     padding-left: 56px;
+  //   }
+  // }
+}
+
+// .row {
+//   display: flex;
+//   flex-wrap: wrap;
+
+//   @each $bp, $gutter in $grid-gutters {
+//     @if bp == "xs" {
+//       margin-right: -$gutter / 2;
+//       margin-left: -$gutter / 2;
+//     } @else {
+//       @include mq-up($bp) {
+//         margin-right: -$gutter / 2;
+//         margin-left: -$gutter / 2;
+//       }
+//     }
+//   }
+// }
+
+// .col {
+//   display: block;
+//   position: relative;
+//   min-height: 1px;
+
+//   @each $bp, $gutter in $grid-gutters {
+//     @if bp == "xs" {
+//       padding-right: $gutter / 2;
+//       padding-left: $gutter / 2;
+//     } @else {
+//       @include mq-up($bp) {
+//         padding-right: $gutter / 2;
+//         padding-left: $gutter / 2;
+//       }
+//     }
+//   }
+// }
+
+// // Short mixing to creating classes for columns
+// @mixin create-cols($key, $grid-columns: $grid-columns) {
+//   @for $i from 0 through $grid-columns {
+//     @if $i != 0 {
+//       .#{$key}-#{$i} {
+//         flex: 0 0 (100% / $grid-columns * $i);
+//         width: (100% / $grid-columns * $i);
+//         max-width: (100% / $grid-columns * $i);
+//       }
+//     }
+
+//     .offset-#{$key}-#{$i} {
+//       margin-left: (100% / $grid-columns * $i);
+//     }
+
+//     // Only needed when floating the columns
+//     .offset-right-#{$key}-#{$i} {
+//       margin-right: (100% / $grid-columns * $i);
+//     }
+//   }
+// }
+
+// @each $key, $width in $grid-breakpoints {
+//   @if $width == 0 {
+//     @include create-cols($key);
+//   } @else {
+//     @media (min-width: #{$width}) {
+//       @include create-cols($key);
+//     }
+//   }
+// }
