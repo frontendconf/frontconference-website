@@ -1,15 +1,10 @@
 ---
-import ButtonLink from "./ButtonLink.astro";
+import { client } from "../utils/graphql-client";
+import { graphql } from "gql.tada";
 
 const { slug } = Astro.params;
 
-const response = await fetch(
-  "https://graphql.contentful.com/content/v1/spaces/j8md9ikrag2j/environments/test?access_token=rzFgLmMrf5EspzL9QgEyOTPtIWdc-jGBIdk5GKs4Rfg",
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
+const query = graphql(`
   query {
     configCollection {
       items {
@@ -60,77 +55,82 @@ const response = await fetch(
       }
     }
   }
-      `,
-    }),
-  }
-);
+`);
 
-const json = await response.json();
-const {
-  configCollection: {
-    items: [
-      {
-        footerMenuCollection: { items: menuItems },
-        footerMenuMetaCollection: { items: metaMenuItems },
-        footerCtasCollection: { items: ctas },
-        footerSocialMediaCollection: { items: socialMediaItems },
-      },
-    ],
-  },
-} = json.data;
+const data = await client.request(query);
+
+const menuItems =
+  data.configCollection?.items[0]?.footerMenuCollection?.items || [];
+const metaMenuItems =
+  data.configCollection?.items[0]?.footerMenuMetaCollection?.items || [];
+const ctas = data.configCollection?.items[0]?.footerCtasCollection?.items || [];
+const socialMediaItems =
+  data.configCollection?.items[0]?.footerSocialMediaCollection?.items || [];
 ---
 
 <footer class="footer">
   <nav class="nav">
     <ul class="nav-list">
       {
-        menuItems.map((item) => (
-          <li class="nav-list-item">
-            <a
-              href={`/${item.slug}`}
-              class:list={["link", { active: item.slug === slug }]}
-            >
-              {item.menu || item.title}
-            </a>
-          </li>
-        ))
+        menuItems.map(
+          (item) =>
+            item && (
+              <li class="nav-list-item">
+                <a
+                  href={`/${item.slug}`}
+                  class:list={["link", { active: item.slug === slug }]}
+                >
+                  {item.title}
+                </a>
+              </li>
+            )
+        )
       }
     </ul>
     <ul class="nav-list">
       {
-        metaMenuItems.map((item) => (
-          <li class="nav-list-item">
-            <a
-              href={`/${item.slug}`}
-              class:list={["link", { active: item.slug === slug }]}
-            >
-              {item.menu || item.title}
-            </a>
-          </li>
-        ))
+        metaMenuItems.map(
+          (item) =>
+            item && (
+              <li class="nav-list-item">
+                <a
+                  href={`/${item.slug}`}
+                  class:list={["link", { active: item.slug === slug }]}
+                >
+                  {item.title}
+                </a>
+              </li>
+            )
+        )
       }
     </ul>
     <ul class="nav-list">
       {
-        ctas.map((item) => (
-          <li class="nav-list-item">
-            <a
-              href={`/${item.slug}`}
-              class:list={["link", { active: item.slug === slug }]}
-            >
-              {item.menu || item.title}
-            </a>
-          </li>
-        ))
+        ctas.map(
+          (item) =>
+            item && (
+              <li class="nav-list-item">
+                <a
+                  href={`/${item.slug}`}
+                  class:list={["link", { active: item.slug === slug }]}
+                >
+                  {item.title}
+                </a>
+              </li>
+            )
+        )
       }
     </ul>
     <ul class="nav-list">
       {
-        socialMediaItems.map((item) => (
-          <li class="nav-list-item">
-            <a href={`/${item.link}`}>{item.title}</a>
-          </li>
-        ))
+        socialMediaItems.map(
+          (item) =>
+            item && (
+              <li class="nav-list-item">
+                <a href={`/${item.link}`}>{item.title}</a>
+              </li>
+            )
+        )
       }
     </ul>
   </nav>

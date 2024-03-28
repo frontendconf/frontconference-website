@@ -1,0 +1,5476 @@
+type Query {
+  asset(id: String!, preview: Boolean, locale: String): Asset
+  assetCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: AssetFilter
+    order: [AssetOrder]
+  ): AssetCollection
+  sponsor(id: String!, preview: Boolean, locale: String): Sponsor
+  sponsorCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: SponsorFilter
+    order: [SponsorOrder]
+  ): SponsorCollection
+  page(id: String!, preview: Boolean, locale: String): Page
+  pageCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: PageFilter
+    order: [PageOrder]
+  ): PageCollection
+  speaker(id: String!, preview: Boolean, locale: String): Speaker
+  speakerCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: SpeakerFilter
+    order: [SpeakerOrder]
+  ): SpeakerCollection
+  teaser(id: String!, preview: Boolean, locale: String): Teaser
+  teaserCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TeaserFilter
+    order: [TeaserOrder]
+  ): TeaserCollection
+  configNew(id: String!, preview: Boolean, locale: String): ConfigNew
+  configNewCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: ConfigNewFilter
+    order: [ConfigNewOrder]
+  ): ConfigNewCollection
+  talk(id: String!, preview: Boolean, locale: String): Talk
+  talkCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TalkFilter
+    order: [TalkOrder]
+  ): TalkCollection
+  news(id: String!, preview: Boolean, locale: String): News
+  newsCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: NewsFilter
+    order: [NewsOrder]
+  ): NewsCollection
+  workshop(id: String!, preview: Boolean, locale: String): Workshop
+  workshopCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: WorkshopFilter
+    order: [WorkshopOrder]
+  ): WorkshopCollection
+  sponsorCategory(
+    id: String!
+    preview: Boolean
+    locale: String
+  ): SponsorCategory
+  sponsorCategoryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: SponsorCategoryFilter
+    order: [SponsorCategoryOrder]
+  ): SponsorCategoryCollection
+  config(id: String!, preview: Boolean, locale: String): Config
+  configCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: ConfigFilter
+    order: [ConfigOrder]
+  ): ConfigCollection
+  block(id: String!, preview: Boolean, locale: String): Block
+  blockCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: BlockFilter
+    order: [BlockOrder]
+  ): BlockCollection
+  staff(id: String!, preview: Boolean, locale: String): Staff
+  staffCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: StaffFilter
+    order: [StaffOrder]
+  ): StaffCollection
+  host(id: String!, preview: Boolean, locale: String): Host
+  hostCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: HostFilter
+    order: [HostOrder]
+  ): HostCollection
+  redirect(id: String!, preview: Boolean, locale: String): Redirect
+  redirectCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: RedirectFilter
+    order: [RedirectOrder]
+  ): RedirectCollection
+  tag(id: String!, preview: Boolean, locale: String): Tag
+  tagCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TagFilter
+    order: [TagOrder]
+  ): TagCollection
+  hotel(id: String!, preview: Boolean, locale: String): Hotel
+  hotelCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: HotelFilter
+    order: [HotelOrder]
+  ): HotelCollection
+  restaurant(id: String!, preview: Boolean, locale: String): Restaurant
+  restaurantCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: RestaurantFilter
+    order: [RestaurantOrder]
+  ): RestaurantCollection
+  team(id: String!, preview: Boolean, locale: String): Team
+  teamCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TeamFilter
+    order: [TeamOrder]
+  ): TeamCollection
+  goodies(id: String!, preview: Boolean, locale: String): Goodies
+  goodiesCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: GoodiesFilter
+    order: [GoodiesOrder]
+  ): GoodiesCollection
+  socialMedia(id: String!, preview: Boolean, locale: String): SocialMedia
+  socialMediaCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: SocialMediaFilter
+    order: [SocialMediaOrder]
+  ): SocialMediaCollection
+  edition(id: String!, preview: Boolean, locale: String): Edition
+  editionCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: EditionFilter
+    order: [EditionOrder]
+  ): EditionCollection
+  contact(id: String!, preview: Boolean, locale: String): Contact
+  contactCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: ContactFilter
+    order: [ContactOrder]
+  ): ContactCollection
+  track(id: String!, preview: Boolean, locale: String): Track
+  trackCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TrackFilter
+    order: [TrackOrder]
+  ): TrackCollection
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: EntryFilter
+    order: [EntryOrder]
+  ): EntryCollection
+  _node(id: ID!, preview: Boolean, locale: String): _Node
+}
+
+"""
+Represents a binary file in a space. An asset can be any file type.
+"""
+type Asset {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  title(locale: String): String
+  description(locale: String): String
+  contentType(locale: String): String
+  fileName(locale: String): String
+  size(locale: String): Int
+  url(transform: ImageTransformOptions, locale: String): String
+  width(locale: String): Int
+  height(locale: String): Int
+  linkedFrom(allowedLocales: [String]): AssetLinkingCollections
+}
+
+type Sys {
+  id: String!
+  spaceId: String!
+  environmentId: String!
+  publishedAt: DateTime
+  firstPublishedAt: DateTime
+  publishedVersion: Int
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z,
+    compliant with the 'date-time' format outlined in section 5.6 of
+    the RFC 3339 profile of the ISO 8601 standard for representation
+    of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+type ContentfulMetadata {
+  tags: [ContentfulTag]!
+}
+
+"""
+Represents a tag entity for finding and organizing content easily.
+    Find out more here: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/content-tags
+"""
+type ContentfulTag {
+  id: String
+  name: String
+}
+
+input ImageTransformOptions {
+  """
+  Desired width in pixels. Defaults to the original image width.
+  """
+  width: Dimension
+
+  """
+  Desired height in pixels. Defaults to the original image height.
+  """
+  height: Dimension
+
+  """
+  Desired quality of the image in percents.
+          Used for `PNG8`, `JPG`, `JPG_PROGRESSIVE` and `WEBP` formats.
+  """
+  quality: Quality
+
+  """
+  Desired corner radius in pixels.
+          Results in an image with rounded corners (pass `-1` for a full circle/ellipse).
+          Defaults to `0`. Uses desired background color as padding color,
+          unless the format is `JPG` or `JPG_PROGRESSIVE` and resize strategy is `PAD`, then defaults to white.
+  """
+  cornerRadius: Int
+
+  """
+  Desired resize strategy. Defaults to `FIT`.
+  """
+  resizeStrategy: ImageResizeStrategy
+
+  """
+  Desired resize focus area. Defaults to `CENTER`.
+  """
+  resizeFocus: ImageResizeFocus
+
+  """
+  Desired background color, used with corner radius or `PAD` resize strategy.
+          Defaults to transparent (for `PNG`, `PNG8` and `WEBP`) or white (for `JPG` and `JPG_PROGRESSIVE`).
+  """
+  backgroundColor: HexColor
+
+  """
+  Desired image format. Defaults to the original image format.
+  """
+  format: ImageFormat
+}
+
+"""
+The 'Dimension' type represents dimensions as whole numeric values between `1` and `4000`.
+"""
+scalar Dimension
+
+"""
+The 'Quality' type represents quality as whole numeric values between `1` and `100`.
+"""
+scalar Quality
+
+enum ImageResizeStrategy {
+  """
+  Resizes the image to fit into the specified dimensions.
+  """
+  FIT
+
+  """
+  Resizes the image to the specified dimensions, padding the image if needed.
+          Uses desired background color as padding color.
+  """
+  PAD
+
+  """
+  Resizes the image to the specified dimensions, cropping the image if needed.
+  """
+  FILL
+
+  """
+  Resizes the image to the specified dimensions, changing the original aspect ratio if needed.
+  """
+  SCALE
+
+  """
+  Crops a part of the original image to fit into the specified dimensions.
+  """
+  CROP
+
+  """
+  Creates a thumbnail from the image.
+  """
+  THUMB
+}
+
+enum ImageResizeFocus {
+  """
+  Focus the resizing on the center.
+  """
+  CENTER
+
+  """
+  Focus the resizing on the top.
+  """
+  TOP
+
+  """
+  Focus the resizing on the top right.
+  """
+  TOP_RIGHT
+
+  """
+  Focus the resizing on the right.
+  """
+  RIGHT
+
+  """
+  Focus the resizing on the bottom right.
+  """
+  BOTTOM_RIGHT
+
+  """
+  Focus the resizing on the bottom.
+  """
+  BOTTOM
+
+  """
+  Focus the resizing on the bottom left.
+  """
+  BOTTOM_LEFT
+
+  """
+  Focus the resizing on the left.
+  """
+  LEFT
+
+  """
+  Focus the resizing on the top left.
+  """
+  TOP_LEFT
+
+  """
+  Focus the resizing on the largest face.
+  """
+  FACE
+
+  """
+  Focus the resizing on the area containing all the faces.
+  """
+  FACES
+}
+
+"""
+The 'HexColor' type represents color in `rgb:ffffff` string format.
+"""
+scalar HexColor
+
+enum ImageFormat {
+  """
+  JPG image format.
+  """
+  JPG
+
+  """
+  Progressive JPG format stores multiple passes of an image in progressively higher detail.
+          When a progressive image is loading, the viewer will first see a lower quality pixelated version which
+          will gradually improve in detail, until the image is fully downloaded. This is to display an image as
+          early as possible to make the layout look as designed.
+  """
+  JPG_PROGRESSIVE
+
+  """
+  PNG image format
+  """
+  PNG
+
+  """
+  8-bit PNG images support up to 256 colors and weigh less than the standard 24-bit PNG equivalent.
+          The 8-bit PNG format is mostly used for simple images, such as icons or logos.
+  """
+  PNG8
+
+  """
+  WebP image format.
+  """
+  WEBP
+  AVIF
+}
+
+type AssetLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  sponsorCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): SponsorCollection
+  pageCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): PageCollection
+  speakerCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): SpeakerCollection
+  teaserCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): TeaserCollection
+  talkCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): TalkCollection
+  workshopCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): WorkshopCollection
+  sponsorCategoryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): SponsorCategoryCollection
+  hostCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): HostCollection
+  hotelCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): HotelCollection
+  restaurantCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): RestaurantCollection
+  teamCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): TeamCollection
+}
+
+type EntryCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Entry]!
+}
+
+interface Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+}
+
+type SponsorCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Sponsor]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/sponsor)
+"""
+type Sponsor implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): SponsorLinkingCollections
+  title(locale: String): String
+  body(locale: String): String
+  logo(preview: Boolean, locale: String): Asset
+  logoSvg(locale: String): String
+  link(locale: String): String
+  twitter(locale: String): String
+  linkedin(locale: String): String
+  instagram(locale: String): String
+  facebook(locale: String): String
+  category(
+    preview: Boolean
+    locale: String
+    where: SponsorCategoryFilter
+  ): SponsorCategory
+  order(locale: String): Int
+  tagCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TagFilter
+    order: [SponsorTagCollectionOrder]
+  ): SponsorTagCollection
+  zoomFactor(locale: String): String
+}
+
+type SponsorLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/sponsorCategory)
+"""
+type SponsorCategory implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): SponsorCategoryLinkingCollections
+  title(locale: String): String
+  level(locale: String): Int
+  body(locale: String): String
+  icon(preview: Boolean, locale: String): Asset
+  price(locale: String): String
+  availability(locale: String): String
+  color(locale: String): String
+  cssClass(locale: String): String
+  cssClassItems(locale: String): String
+  teaser(preview: Boolean, locale: String, where: TeaserFilter): Teaser
+  teaserOverview(preview: Boolean, locale: String, where: TeaserFilter): Teaser
+  cssClassTeaser(locale: String): String
+}
+
+type SponsorCategoryLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  sponsorCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [SponsorCategoryLinkingCollectionsSponsorCollectionOrder]
+  ): SponsorCollection
+}
+
+enum SponsorCategoryLinkingCollectionsSponsorCollectionOrder {
+  title_ASC
+  title_DESC
+  link_ASC
+  link_DESC
+  twitter_ASC
+  twitter_DESC
+  linkedin_ASC
+  linkedin_DESC
+  instagram_ASC
+  instagram_DESC
+  facebook_ASC
+  facebook_DESC
+  order_ASC
+  order_DESC
+  zoomFactor_ASC
+  zoomFactor_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/teaser)
+"""
+type Teaser implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): TeaserLinkingCollections
+  title(locale: String): String
+  ctaLabel(locale: String): String
+  body(locale: String): String
+  link(preview: Boolean, locale: String): TeaserLink
+  linkExternal(locale: String): String
+  photo(preview: Boolean, locale: String): Asset
+  config(locale: String): JSON
+}
+
+type TeaserLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  pageCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TeaserLinkingCollectionsPageCollectionOrder]
+  ): PageCollection
+  sponsorCategoryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TeaserLinkingCollectionsSponsorCategoryCollectionOrder]
+  ): SponsorCategoryCollection
+  configCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TeaserLinkingCollectionsConfigCollectionOrder]
+  ): ConfigCollection
+}
+
+type PageCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Page]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/page)
+"""
+type Page implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): PageLinkingCollections
+  title(locale: String): String
+  lead(locale: String): String
+  leadLogosCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): AssetCollection
+  leadCtasCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: PageFilter
+    order: [PageLeadCtasCollectionOrder]
+  ): PageLeadCtasCollection
+  leadTeaser(preview: Boolean, locale: String, where: TeaserFilter): Teaser
+  contentTeasersCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TeaserFilter
+    order: [PageContentTeasersCollectionOrder]
+  ): PageContentTeasersCollection
+  lead2019(locale: String): String
+  body(locale: String): String
+  slug(locale: String): String
+  menu(locale: String): String
+  menuButton(locale: String): Boolean
+  showIntro(locale: String): Boolean
+  showNews(locale: String): Boolean
+  showSpeakers(locale: String): Boolean
+  showVenue(locale: String): Boolean
+  showSponsorshipCategories(locale: String): Boolean
+  showSponsors(locale: String): Boolean
+  showSponsorsDetailed(locale: String): Boolean
+  showWorkshops(locale: String): Boolean
+  showTeam(locale: String): Boolean
+  showJobs(locale: String): Boolean
+  showJobsDetailed(locale: String): Boolean
+  showSchedule(locale: String): Boolean
+  showHotels(locale: String): Boolean
+  showRestaurants(locale: String): Boolean
+  showCallForSpeakers(locale: String): Boolean
+  showSpeakersForm(locale: String): Boolean
+  showSpeakersFormWorkshop(locale: String): Boolean
+  showSpeakersBootcampForm(locale: String): Boolean
+  bodyClass(locale: String): String
+  menuClass(locale: String): String
+  ctaText(locale: String): String
+  specialPage(locale: String): String
+  config(locale: String): JSON
+  backgroundImageDesktop(preview: Boolean, locale: String): Asset
+  backgroundImageMobile(preview: Boolean, locale: String): Asset
+}
+
+type PageLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  pageCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [PageLinkingCollectionsPageCollectionOrder]
+  ): PageCollection
+  teaserCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [PageLinkingCollectionsTeaserCollectionOrder]
+  ): TeaserCollection
+  configNewCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [PageLinkingCollectionsConfigNewCollectionOrder]
+  ): ConfigNewCollection
+  talkCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [PageLinkingCollectionsTalkCollectionOrder]
+  ): TalkCollection
+  workshopCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [PageLinkingCollectionsWorkshopCollectionOrder]
+  ): WorkshopCollection
+  configCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [PageLinkingCollectionsConfigCollectionOrder]
+  ): ConfigCollection
+}
+
+enum PageLinkingCollectionsPageCollectionOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type TeaserCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Teaser]!
+}
+
+enum PageLinkingCollectionsTeaserCollectionOrder {
+  title_ASC
+  title_DESC
+  ctaLabel_ASC
+  ctaLabel_DESC
+  linkExternal_ASC
+  linkExternal_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type ConfigNewCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [ConfigNew]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/configNew)
+"""
+type ConfigNew implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): ConfigNewLinkingCollections
+  logoTitle(locale: String): String
+  logoText(locale: String): ConfigNewLogoText
+  menuCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): ConfigNewMenuCollection
+  menuCtaCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: PageFilter
+    order: [ConfigNewMenuCtaCollectionOrder]
+  ): ConfigNewMenuCtaCollection
+  headerTitle(locale: String): String
+  headerText(locale: String): ConfigNewHeaderText
+  headerCtaCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: PageFilter
+    order: [ConfigNewHeaderCtaCollectionOrder]
+  ): ConfigNewHeaderCtaCollection
+  footerNewsletterTitle(locale: String): String
+  footerNewsletterField(locale: String): String
+  footerNewsletterButton(locale: String): String
+  footerSocialMediaCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: SocialMediaFilter
+    order: [ConfigNewFooterSocialMediaCollectionOrder]
+  ): ConfigNewFooterSocialMediaCollection
+  footerCtaCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: PageFilter
+    order: [ConfigNewFooterCtaCollectionOrder]
+  ): ConfigNewFooterCtaCollection
+  footerMenuCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: PageFilter
+    order: [ConfigNewFooterMenuCollectionOrder]
+  ): ConfigNewFooterMenuCollection
+  footerCopyright(locale: String): String
+  footerMenuMetaCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: PageFilter
+    order: [ConfigNewFooterMenuMetaCollectionOrder]
+  ): ConfigNewFooterMenuMetaCollection
+  contentFilterTag(preview: Boolean, locale: String, where: TagFilter): Tag
+}
+
+type ConfigNewLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type ConfigNewLogoText {
+  json: JSON!
+  links: ConfigNewLogoTextLinks!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type ConfigNewLogoTextLinks {
+  entries: ConfigNewLogoTextEntries!
+  assets: ConfigNewLogoTextAssets!
+  resources: ConfigNewLogoTextResources!
+}
+
+type ConfigNewLogoTextEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type ConfigNewLogoTextAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type ConfigNewLogoTextResources {
+  block: [ConfigNewLogoTextResourcesBlock!]!
+  inline: [ConfigNewLogoTextResourcesInline!]!
+  hyperlink: [ConfigNewLogoTextResourcesHyperlink!]!
+}
+
+type ConfigNewLogoTextResourcesBlock implements ResourceLink {
+  sys: ResourceSys!
+}
+
+interface ResourceLink {
+  sys: ResourceSys!
+}
+
+type ResourceSys {
+  urn: String!
+  linkType: String!
+}
+
+type ConfigNewLogoTextResourcesInline implements ResourceLink {
+  sys: ResourceSys!
+}
+
+type ConfigNewLogoTextResourcesHyperlink implements ResourceLink {
+  sys: ResourceSys!
+}
+
+type ConfigNewMenuCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Entry]!
+}
+
+type ConfigNewMenuCtaCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Page]!
+}
+
+input PageFilter {
+  leadCtas: cfPageNestedFilter
+  leadTeaser: cfTeaserNestedFilter
+  contentTeasers: cfTeaserNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  lead_exists: Boolean
+  lead: String
+  lead_not: String
+  lead_in: [String]
+  lead_not_in: [String]
+  lead_contains: String
+  lead_not_contains: String
+  leadLogosCollection_exists: Boolean
+  leadCtasCollection_exists: Boolean
+  leadTeaser_exists: Boolean
+  contentTeasersCollection_exists: Boolean
+  lead2019_exists: Boolean
+  lead2019: String
+  lead2019_not: String
+  lead2019_in: [String]
+  lead2019_not_in: [String]
+  lead2019_contains: String
+  lead2019_not_contains: String
+  body_exists: Boolean
+  body: String
+  body_not: String
+  body_in: [String]
+  body_not_in: [String]
+  body_contains: String
+  body_not_contains: String
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  menu_exists: Boolean
+  menu: String
+  menu_not: String
+  menu_in: [String]
+  menu_not_in: [String]
+  menu_contains: String
+  menu_not_contains: String
+  menuButton_exists: Boolean
+  menuButton: Boolean
+  menuButton_not: Boolean
+  showIntro_exists: Boolean
+  showIntro: Boolean
+  showIntro_not: Boolean
+  showNews_exists: Boolean
+  showNews: Boolean
+  showNews_not: Boolean
+  showSpeakers_exists: Boolean
+  showSpeakers: Boolean
+  showSpeakers_not: Boolean
+  showVenue_exists: Boolean
+  showVenue: Boolean
+  showVenue_not: Boolean
+  showSponsorshipCategories_exists: Boolean
+  showSponsorshipCategories: Boolean
+  showSponsorshipCategories_not: Boolean
+  showSponsors_exists: Boolean
+  showSponsors: Boolean
+  showSponsors_not: Boolean
+  showSponsorsDetailed_exists: Boolean
+  showSponsorsDetailed: Boolean
+  showSponsorsDetailed_not: Boolean
+  showWorkshops_exists: Boolean
+  showWorkshops: Boolean
+  showWorkshops_not: Boolean
+  showTeam_exists: Boolean
+  showTeam: Boolean
+  showTeam_not: Boolean
+  showJobs_exists: Boolean
+  showJobs: Boolean
+  showJobs_not: Boolean
+  showJobsDetailed_exists: Boolean
+  showJobsDetailed: Boolean
+  showJobsDetailed_not: Boolean
+  showSchedule_exists: Boolean
+  showSchedule: Boolean
+  showSchedule_not: Boolean
+  showHotels_exists: Boolean
+  showHotels: Boolean
+  showHotels_not: Boolean
+  showRestaurants_exists: Boolean
+  showRestaurants: Boolean
+  showRestaurants_not: Boolean
+  showCallForSpeakers_exists: Boolean
+  showCallForSpeakers: Boolean
+  showCallForSpeakers_not: Boolean
+  showSpeakersForm_exists: Boolean
+  showSpeakersForm: Boolean
+  showSpeakersForm_not: Boolean
+  showSpeakersFormWorkshop_exists: Boolean
+  showSpeakersFormWorkshop: Boolean
+  showSpeakersFormWorkshop_not: Boolean
+  showSpeakersBootcampForm_exists: Boolean
+  showSpeakersBootcampForm: Boolean
+  showSpeakersBootcampForm_not: Boolean
+  bodyClass_exists: Boolean
+  bodyClass: String
+  bodyClass_not: String
+  bodyClass_in: [String]
+  bodyClass_not_in: [String]
+  bodyClass_contains: String
+  bodyClass_not_contains: String
+  menuClass_exists: Boolean
+  menuClass: String
+  menuClass_not: String
+  menuClass_in: [String]
+  menuClass_not_in: [String]
+  menuClass_contains: String
+  menuClass_not_contains: String
+  ctaText_exists: Boolean
+  ctaText: String
+  ctaText_not: String
+  ctaText_in: [String]
+  ctaText_not_in: [String]
+  ctaText_contains: String
+  ctaText_not_contains: String
+  specialPage_exists: Boolean
+  specialPage: String
+  specialPage_not: String
+  specialPage_in: [String]
+  specialPage_not_in: [String]
+  specialPage_contains: String
+  specialPage_not_contains: String
+  config_exists: Boolean
+  backgroundImageDesktop_exists: Boolean
+  backgroundImageMobile_exists: Boolean
+  OR: [PageFilter]
+  AND: [PageFilter]
+}
+
+input cfPageNestedFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  lead_exists: Boolean
+  lead: String
+  lead_not: String
+  lead_in: [String]
+  lead_not_in: [String]
+  lead_contains: String
+  lead_not_contains: String
+  leadLogosCollection_exists: Boolean
+  leadCtasCollection_exists: Boolean
+  leadTeaser_exists: Boolean
+  contentTeasersCollection_exists: Boolean
+  lead2019_exists: Boolean
+  lead2019: String
+  lead2019_not: String
+  lead2019_in: [String]
+  lead2019_not_in: [String]
+  lead2019_contains: String
+  lead2019_not_contains: String
+  body_exists: Boolean
+  body: String
+  body_not: String
+  body_in: [String]
+  body_not_in: [String]
+  body_contains: String
+  body_not_contains: String
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  menu_exists: Boolean
+  menu: String
+  menu_not: String
+  menu_in: [String]
+  menu_not_in: [String]
+  menu_contains: String
+  menu_not_contains: String
+  menuButton_exists: Boolean
+  menuButton: Boolean
+  menuButton_not: Boolean
+  showIntro_exists: Boolean
+  showIntro: Boolean
+  showIntro_not: Boolean
+  showNews_exists: Boolean
+  showNews: Boolean
+  showNews_not: Boolean
+  showSpeakers_exists: Boolean
+  showSpeakers: Boolean
+  showSpeakers_not: Boolean
+  showVenue_exists: Boolean
+  showVenue: Boolean
+  showVenue_not: Boolean
+  showSponsorshipCategories_exists: Boolean
+  showSponsorshipCategories: Boolean
+  showSponsorshipCategories_not: Boolean
+  showSponsors_exists: Boolean
+  showSponsors: Boolean
+  showSponsors_not: Boolean
+  showSponsorsDetailed_exists: Boolean
+  showSponsorsDetailed: Boolean
+  showSponsorsDetailed_not: Boolean
+  showWorkshops_exists: Boolean
+  showWorkshops: Boolean
+  showWorkshops_not: Boolean
+  showTeam_exists: Boolean
+  showTeam: Boolean
+  showTeam_not: Boolean
+  showJobs_exists: Boolean
+  showJobs: Boolean
+  showJobs_not: Boolean
+  showJobsDetailed_exists: Boolean
+  showJobsDetailed: Boolean
+  showJobsDetailed_not: Boolean
+  showSchedule_exists: Boolean
+  showSchedule: Boolean
+  showSchedule_not: Boolean
+  showHotels_exists: Boolean
+  showHotels: Boolean
+  showHotels_not: Boolean
+  showRestaurants_exists: Boolean
+  showRestaurants: Boolean
+  showRestaurants_not: Boolean
+  showCallForSpeakers_exists: Boolean
+  showCallForSpeakers: Boolean
+  showCallForSpeakers_not: Boolean
+  showSpeakersForm_exists: Boolean
+  showSpeakersForm: Boolean
+  showSpeakersForm_not: Boolean
+  showSpeakersFormWorkshop_exists: Boolean
+  showSpeakersFormWorkshop: Boolean
+  showSpeakersFormWorkshop_not: Boolean
+  showSpeakersBootcampForm_exists: Boolean
+  showSpeakersBootcampForm: Boolean
+  showSpeakersBootcampForm_not: Boolean
+  bodyClass_exists: Boolean
+  bodyClass: String
+  bodyClass_not: String
+  bodyClass_in: [String]
+  bodyClass_not_in: [String]
+  bodyClass_contains: String
+  bodyClass_not_contains: String
+  menuClass_exists: Boolean
+  menuClass: String
+  menuClass_not: String
+  menuClass_in: [String]
+  menuClass_not_in: [String]
+  menuClass_contains: String
+  menuClass_not_contains: String
+  ctaText_exists: Boolean
+  ctaText: String
+  ctaText_not: String
+  ctaText_in: [String]
+  ctaText_not_in: [String]
+  ctaText_contains: String
+  ctaText_not_contains: String
+  specialPage_exists: Boolean
+  specialPage: String
+  specialPage_not: String
+  specialPage_in: [String]
+  specialPage_not_in: [String]
+  specialPage_contains: String
+  specialPage_not_contains: String
+  config_exists: Boolean
+  backgroundImageDesktop_exists: Boolean
+  backgroundImageMobile_exists: Boolean
+  OR: [cfPageNestedFilter]
+  AND: [cfPageNestedFilter]
+}
+
+input SysFilter {
+  id_exists: Boolean
+  id: String
+  id_not: String
+  id_in: [String]
+  id_not_in: [String]
+  id_contains: String
+  id_not_contains: String
+  publishedAt_exists: Boolean
+  publishedAt: DateTime
+  publishedAt_not: DateTime
+  publishedAt_in: [DateTime]
+  publishedAt_not_in: [DateTime]
+  publishedAt_gt: DateTime
+  publishedAt_gte: DateTime
+  publishedAt_lt: DateTime
+  publishedAt_lte: DateTime
+  firstPublishedAt_exists: Boolean
+  firstPublishedAt: DateTime
+  firstPublishedAt_not: DateTime
+  firstPublishedAt_in: [DateTime]
+  firstPublishedAt_not_in: [DateTime]
+  firstPublishedAt_gt: DateTime
+  firstPublishedAt_gte: DateTime
+  firstPublishedAt_lt: DateTime
+  firstPublishedAt_lte: DateTime
+  publishedVersion_exists: Boolean
+  publishedVersion: Float
+  publishedVersion_not: Float
+  publishedVersion_in: [Float]
+  publishedVersion_not_in: [Float]
+  publishedVersion_gt: Float
+  publishedVersion_gte: Float
+  publishedVersion_lt: Float
+  publishedVersion_lte: Float
+}
+
+input ContentfulMetadataFilter {
+  tags_exists: Boolean
+  tags: ContentfulMetadataTagsFilter
+}
+
+input ContentfulMetadataTagsFilter {
+  id_contains_all: [String]
+  id_contains_some: [String]
+  id_contains_none: [String]
+}
+
+input cfTeaserNestedFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  ctaLabel_exists: Boolean
+  ctaLabel: String
+  ctaLabel_not: String
+  ctaLabel_in: [String]
+  ctaLabel_not_in: [String]
+  ctaLabel_contains: String
+  ctaLabel_not_contains: String
+  body_exists: Boolean
+  body: String
+  body_not: String
+  body_in: [String]
+  body_not_in: [String]
+  body_contains: String
+  body_not_contains: String
+  link_exists: Boolean
+  linkExternal_exists: Boolean
+  linkExternal: String
+  linkExternal_not: String
+  linkExternal_in: [String]
+  linkExternal_not_in: [String]
+  linkExternal_contains: String
+  linkExternal_not_contains: String
+  photo_exists: Boolean
+  config_exists: Boolean
+  OR: [cfTeaserNestedFilter]
+  AND: [cfTeaserNestedFilter]
+}
+
+enum ConfigNewMenuCtaCollectionOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type ConfigNewHeaderText {
+  json: JSON!
+  links: ConfigNewHeaderTextLinks!
+}
+
+type ConfigNewHeaderTextLinks {
+  entries: ConfigNewHeaderTextEntries!
+  assets: ConfigNewHeaderTextAssets!
+  resources: ConfigNewHeaderTextResources!
+}
+
+type ConfigNewHeaderTextEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type ConfigNewHeaderTextAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type ConfigNewHeaderTextResources {
+  block: [ConfigNewHeaderTextResourcesBlock!]!
+  inline: [ConfigNewHeaderTextResourcesInline!]!
+  hyperlink: [ConfigNewHeaderTextResourcesHyperlink!]!
+}
+
+type ConfigNewHeaderTextResourcesBlock implements ResourceLink {
+  sys: ResourceSys!
+}
+
+type ConfigNewHeaderTextResourcesInline implements ResourceLink {
+  sys: ResourceSys!
+}
+
+type ConfigNewHeaderTextResourcesHyperlink implements ResourceLink {
+  sys: ResourceSys!
+}
+
+type ConfigNewHeaderCtaCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Page]!
+}
+
+enum ConfigNewHeaderCtaCollectionOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type ConfigNewFooterSocialMediaCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [SocialMedia]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/socialMedia)
+"""
+type SocialMedia implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): SocialMediaLinkingCollections
+  title(locale: String): String
+  link(locale: String): String
+  iconCharacter(locale: String): String
+}
+
+type SocialMediaLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  configNewCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [SocialMediaLinkingCollectionsConfigNewCollectionOrder]
+  ): ConfigNewCollection
+  configCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [SocialMediaLinkingCollectionsConfigCollectionOrder]
+  ): ConfigCollection
+}
+
+enum SocialMediaLinkingCollectionsConfigNewCollectionOrder {
+  logoTitle_ASC
+  logoTitle_DESC
+  headerTitle_ASC
+  headerTitle_DESC
+  footerNewsletterTitle_ASC
+  footerNewsletterTitle_DESC
+  footerNewsletterField_ASC
+  footerNewsletterField_DESC
+  footerNewsletterButton_ASC
+  footerNewsletterButton_DESC
+  footerCopyright_ASC
+  footerCopyright_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type ConfigCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Config]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/config)
+"""
+type Config implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): ConfigLinkingCollections
+  menuCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): ConfigMenuCollection
+  title(locale: String): String
+  subtitle(locale: String): String
+  startDate(locale: String): DateTime
+  endDate(locale: String): DateTime
+  location(locale: String): String
+  footerCtasCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: PageFilter
+    order: [ConfigFooterCtasCollectionOrder]
+  ): ConfigFooterCtasCollection
+  footerMenuCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: PageFilter
+    order: [ConfigFooterMenuCollectionOrder]
+  ): ConfigFooterMenuCollection
+  footerSocialMediaCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: SocialMediaFilter
+    order: [ConfigFooterSocialMediaCollectionOrder]
+  ): ConfigFooterSocialMediaCollection
+  footerMenuMetaCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: PageFilter
+    order: [ConfigFooterMenuMetaCollectionOrder]
+  ): ConfigFooterMenuMetaCollection
+  venueTeaser(preview: Boolean, locale: String, where: TeaserFilter): Teaser
+  leadAccomodations(locale: String): String
+  leadHotels(locale: String): String
+  leadRestaurants(locale: String): String
+  map(locale: String): String
+  filterTag(preview: Boolean, locale: String, where: TagFilter): Tag
+}
+
+type ConfigLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type ConfigMenuCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Entry]!
+}
+
+type ConfigFooterCtasCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Page]!
+}
+
+enum ConfigFooterCtasCollectionOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type ConfigFooterMenuCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Page]!
+}
+
+enum ConfigFooterMenuCollectionOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type ConfigFooterSocialMediaCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [SocialMedia]!
+}
+
+input SocialMediaFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  link_exists: Boolean
+  link: String
+  link_not: String
+  link_in: [String]
+  link_not_in: [String]
+  link_contains: String
+  link_not_contains: String
+  iconCharacter_exists: Boolean
+  iconCharacter: String
+  iconCharacter_not: String
+  iconCharacter_in: [String]
+  iconCharacter_not_in: [String]
+  iconCharacter_contains: String
+  iconCharacter_not_contains: String
+  OR: [SocialMediaFilter]
+  AND: [SocialMediaFilter]
+}
+
+enum ConfigFooterSocialMediaCollectionOrder {
+  title_ASC
+  title_DESC
+  link_ASC
+  link_DESC
+  iconCharacter_ASC
+  iconCharacter_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type ConfigFooterMenuMetaCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Page]!
+}
+
+enum ConfigFooterMenuMetaCollectionOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input TeaserFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  ctaLabel_exists: Boolean
+  ctaLabel: String
+  ctaLabel_not: String
+  ctaLabel_in: [String]
+  ctaLabel_not_in: [String]
+  ctaLabel_contains: String
+  ctaLabel_not_contains: String
+  body_exists: Boolean
+  body: String
+  body_not: String
+  body_in: [String]
+  body_not_in: [String]
+  body_contains: String
+  body_not_contains: String
+  link_exists: Boolean
+  linkExternal_exists: Boolean
+  linkExternal: String
+  linkExternal_not: String
+  linkExternal_in: [String]
+  linkExternal_not_in: [String]
+  linkExternal_contains: String
+  linkExternal_not_contains: String
+  photo_exists: Boolean
+  config_exists: Boolean
+  OR: [TeaserFilter]
+  AND: [TeaserFilter]
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/tag)
+"""
+type Tag implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): TagLinkingCollections
+  title(locale: String): String
+}
+
+type TagLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  sponsorCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TagLinkingCollectionsSponsorCollectionOrder]
+  ): SponsorCollection
+  speakerCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TagLinkingCollectionsSpeakerCollectionOrder]
+  ): SpeakerCollection
+  configNewCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TagLinkingCollectionsConfigNewCollectionOrder]
+  ): ConfigNewCollection
+  talkCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TagLinkingCollectionsTalkCollectionOrder]
+  ): TalkCollection
+  newsCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TagLinkingCollectionsNewsCollectionOrder]
+  ): NewsCollection
+  workshopCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TagLinkingCollectionsWorkshopCollectionOrder]
+  ): WorkshopCollection
+  configCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TagLinkingCollectionsConfigCollectionOrder]
+  ): ConfigCollection
+  hostCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TagLinkingCollectionsHostCollectionOrder]
+  ): HostCollection
+}
+
+enum TagLinkingCollectionsSponsorCollectionOrder {
+  title_ASC
+  title_DESC
+  link_ASC
+  link_DESC
+  twitter_ASC
+  twitter_DESC
+  linkedin_ASC
+  linkedin_DESC
+  instagram_ASC
+  instagram_DESC
+  facebook_ASC
+  facebook_DESC
+  order_ASC
+  order_DESC
+  zoomFactor_ASC
+  zoomFactor_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type SpeakerCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Speaker]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/speaker)
+"""
+type Speaker implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): SpeakerLinkingCollections
+  name(locale: String): String
+  description(locale: String): String
+  company(locale: String): String
+  role(locale: String): String
+  bio(locale: String): String
+  photo(preview: Boolean, locale: String): Asset
+  website(locale: String): String
+  twitter(locale: String): String
+  linkedin(locale: String): String
+  slug(locale: String): String
+  order(locale: String): Int
+  tagsCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TagFilter
+    order: [SpeakerTagsCollectionOrder]
+  ): SpeakerTagsCollection
+  publicationDate(locale: String): DateTime
+}
+
+type SpeakerLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  teaserCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [SpeakerLinkingCollectionsTeaserCollectionOrder]
+  ): TeaserCollection
+  talkCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [SpeakerLinkingCollectionsTalkCollectionOrder]
+  ): TalkCollection
+  workshopCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [SpeakerLinkingCollectionsWorkshopCollectionOrder]
+  ): WorkshopCollection
+}
+
+enum SpeakerLinkingCollectionsTeaserCollectionOrder {
+  title_ASC
+  title_DESC
+  ctaLabel_ASC
+  ctaLabel_DESC
+  linkExternal_ASC
+  linkExternal_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type TalkCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Talk]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/talk)
+"""
+type Talk implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): TalkLinkingCollections
+  title(locale: String): String
+  shortDescription(locale: String): String
+  abstract(locale: String): String
+  image(preview: Boolean, locale: String): Asset
+  video(locale: String): String
+  date(locale: String): DateTime
+  fromTime(locale: String): String
+  toTime(locale: String): String
+  slug(locale: String): String
+  room(locale: String): String
+  speaker(preview: Boolean, locale: String, where: SpeakerFilter): Speaker
+  showAbstractOnMobile(locale: String): Boolean
+  tagsCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TagFilter
+    order: [TalkTagsCollectionOrder]
+  ): TalkTagsCollection
+  duplicate(locale: String): Boolean
+  detailPage(preview: Boolean, locale: String, where: PageFilter): Page
+}
+
+type TalkLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+input SpeakerFilter {
+  tags: cfTagNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  name_exists: Boolean
+  name: String
+  name_not: String
+  name_in: [String]
+  name_not_in: [String]
+  name_contains: String
+  name_not_contains: String
+  description_exists: Boolean
+  description: String
+  description_not: String
+  description_in: [String]
+  description_not_in: [String]
+  description_contains: String
+  description_not_contains: String
+  company_exists: Boolean
+  company: String
+  company_not: String
+  company_in: [String]
+  company_not_in: [String]
+  company_contains: String
+  company_not_contains: String
+  role_exists: Boolean
+  role: String
+  role_not: String
+  role_in: [String]
+  role_not_in: [String]
+  role_contains: String
+  role_not_contains: String
+  bio_exists: Boolean
+  bio: String
+  bio_not: String
+  bio_in: [String]
+  bio_not_in: [String]
+  bio_contains: String
+  bio_not_contains: String
+  photo_exists: Boolean
+  website_exists: Boolean
+  website: String
+  website_not: String
+  website_in: [String]
+  website_not_in: [String]
+  website_contains: String
+  website_not_contains: String
+  twitter_exists: Boolean
+  twitter: String
+  twitter_not: String
+  twitter_in: [String]
+  twitter_not_in: [String]
+  twitter_contains: String
+  twitter_not_contains: String
+  linkedin_exists: Boolean
+  linkedin: String
+  linkedin_not: String
+  linkedin_in: [String]
+  linkedin_not_in: [String]
+  linkedin_contains: String
+  linkedin_not_contains: String
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  order_exists: Boolean
+  order: Int
+  order_not: Int
+  order_in: [Int]
+  order_not_in: [Int]
+  order_gt: Int
+  order_gte: Int
+  order_lt: Int
+  order_lte: Int
+  tagsCollection_exists: Boolean
+  publicationDate_exists: Boolean
+  publicationDate: DateTime
+  publicationDate_not: DateTime
+  publicationDate_in: [DateTime]
+  publicationDate_not_in: [DateTime]
+  publicationDate_gt: DateTime
+  publicationDate_gte: DateTime
+  publicationDate_lt: DateTime
+  publicationDate_lte: DateTime
+  OR: [SpeakerFilter]
+  AND: [SpeakerFilter]
+}
+
+input cfTagNestedFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  OR: [cfTagNestedFilter]
+  AND: [cfTagNestedFilter]
+}
+
+type TalkTagsCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Tag]!
+}
+
+input TagFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  OR: [TagFilter]
+  AND: [TagFilter]
+}
+
+enum TalkTagsCollectionOrder {
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum SpeakerLinkingCollectionsTalkCollectionOrder {
+  title_ASC
+  title_DESC
+  shortDescription_ASC
+  shortDescription_DESC
+  date_ASC
+  date_DESC
+  fromTime_ASC
+  fromTime_DESC
+  toTime_ASC
+  toTime_DESC
+  slug_ASC
+  slug_DESC
+  room_ASC
+  room_DESC
+  showAbstractOnMobile_ASC
+  showAbstractOnMobile_DESC
+  duplicate_ASC
+  duplicate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type WorkshopCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Workshop]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/workshop)
+"""
+type Workshop implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): WorkshopLinkingCollections
+  title(locale: String): String
+  lead(locale: String): String
+  body(locale: String): String
+  from(locale: String): DateTime
+  to(locale: String): DateTime
+  location(locale: String): Location
+  teacher(preview: Boolean, locale: String, where: SpeakerFilter): Speaker
+  slug(locale: String): String
+  photo(preview: Boolean, locale: String): Asset
+  order(locale: String): Int
+  cta(preview: Boolean, locale: String, where: PageFilter): Page
+  tagsCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TagFilter
+    order: [WorkshopTagsCollectionOrder]
+  ): WorkshopTagsCollection
+  publicationDate(locale: String): DateTime
+}
+
+type WorkshopLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  teaserCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [WorkshopLinkingCollectionsTeaserCollectionOrder]
+  ): TeaserCollection
+}
+
+enum WorkshopLinkingCollectionsTeaserCollectionOrder {
+  title_ASC
+  title_DESC
+  ctaLabel_ASC
+  ctaLabel_DESC
+  linkExternal_ASC
+  linkExternal_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type Location {
+  lat: Float
+  lon: Float
+}
+
+type WorkshopTagsCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Tag]!
+}
+
+enum WorkshopTagsCollectionOrder {
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum SpeakerLinkingCollectionsWorkshopCollectionOrder {
+  title_ASC
+  title_DESC
+  lead_ASC
+  lead_DESC
+  from_ASC
+  from_DESC
+  to_ASC
+  to_DESC
+  slug_ASC
+  slug_DESC
+  order_ASC
+  order_DESC
+  publicationDate_ASC
+  publicationDate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type SpeakerTagsCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Tag]!
+}
+
+enum SpeakerTagsCollectionOrder {
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TagLinkingCollectionsSpeakerCollectionOrder {
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  company_ASC
+  company_DESC
+  role_ASC
+  role_DESC
+  website_ASC
+  website_DESC
+  twitter_ASC
+  twitter_DESC
+  linkedin_ASC
+  linkedin_DESC
+  slug_ASC
+  slug_DESC
+  order_ASC
+  order_DESC
+  publicationDate_ASC
+  publicationDate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TagLinkingCollectionsConfigNewCollectionOrder {
+  logoTitle_ASC
+  logoTitle_DESC
+  headerTitle_ASC
+  headerTitle_DESC
+  footerNewsletterTitle_ASC
+  footerNewsletterTitle_DESC
+  footerNewsletterField_ASC
+  footerNewsletterField_DESC
+  footerNewsletterButton_ASC
+  footerNewsletterButton_DESC
+  footerCopyright_ASC
+  footerCopyright_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TagLinkingCollectionsTalkCollectionOrder {
+  title_ASC
+  title_DESC
+  shortDescription_ASC
+  shortDescription_DESC
+  date_ASC
+  date_DESC
+  fromTime_ASC
+  fromTime_DESC
+  toTime_ASC
+  toTime_DESC
+  slug_ASC
+  slug_DESC
+  room_ASC
+  room_DESC
+  showAbstractOnMobile_ASC
+  showAbstractOnMobile_DESC
+  duplicate_ASC
+  duplicate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type NewsCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [News]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/news)
+"""
+type News implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): NewsLinkingCollections
+  title(locale: String): String
+  date(locale: String): DateTime
+  body(locale: String): String
+  slug(locale: String): String
+  tagsCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TagFilter
+    order: [NewsTagsCollectionOrder]
+  ): NewsTagsCollection
+  summary(locale: String): String
+}
+
+type NewsLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  teaserCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [NewsLinkingCollectionsTeaserCollectionOrder]
+  ): TeaserCollection
+}
+
+enum NewsLinkingCollectionsTeaserCollectionOrder {
+  title_ASC
+  title_DESC
+  ctaLabel_ASC
+  ctaLabel_DESC
+  linkExternal_ASC
+  linkExternal_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type NewsTagsCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Tag]!
+}
+
+enum NewsTagsCollectionOrder {
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TagLinkingCollectionsNewsCollectionOrder {
+  title_ASC
+  title_DESC
+  date_ASC
+  date_DESC
+  slug_ASC
+  slug_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TagLinkingCollectionsWorkshopCollectionOrder {
+  title_ASC
+  title_DESC
+  lead_ASC
+  lead_DESC
+  from_ASC
+  from_DESC
+  to_ASC
+  to_DESC
+  slug_ASC
+  slug_DESC
+  order_ASC
+  order_DESC
+  publicationDate_ASC
+  publicationDate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TagLinkingCollectionsConfigCollectionOrder {
+  title_ASC
+  title_DESC
+  subtitle_ASC
+  subtitle_DESC
+  startDate_ASC
+  startDate_DESC
+  endDate_ASC
+  endDate_DESC
+  location_ASC
+  location_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type HostCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Host]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/host)
+"""
+type Host implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): HostLinkingCollections
+  name(locale: String): String
+  description(locale: String): String
+  bio(locale: String): String
+  photo(preview: Boolean, locale: String): Asset
+  twitter(locale: String): String
+  slug(locale: String): String
+  order(locale: String): Int
+  tagsCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TagFilter
+    order: [HostTagsCollectionOrder]
+  ): HostTagsCollection
+}
+
+type HostLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  teaserCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [HostLinkingCollectionsTeaserCollectionOrder]
+  ): TeaserCollection
+}
+
+enum HostLinkingCollectionsTeaserCollectionOrder {
+  title_ASC
+  title_DESC
+  ctaLabel_ASC
+  ctaLabel_DESC
+  linkExternal_ASC
+  linkExternal_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type HostTagsCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Tag]!
+}
+
+enum HostTagsCollectionOrder {
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TagLinkingCollectionsHostCollectionOrder {
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  twitter_ASC
+  twitter_DESC
+  slug_ASC
+  slug_DESC
+  order_ASC
+  order_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum SocialMediaLinkingCollectionsConfigCollectionOrder {
+  title_ASC
+  title_DESC
+  subtitle_ASC
+  subtitle_DESC
+  startDate_ASC
+  startDate_DESC
+  endDate_ASC
+  endDate_DESC
+  location_ASC
+  location_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum ConfigNewFooterSocialMediaCollectionOrder {
+  title_ASC
+  title_DESC
+  link_ASC
+  link_DESC
+  iconCharacter_ASC
+  iconCharacter_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type ConfigNewFooterCtaCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Page]!
+}
+
+enum ConfigNewFooterCtaCollectionOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type ConfigNewFooterMenuCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Page]!
+}
+
+enum ConfigNewFooterMenuCollectionOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type ConfigNewFooterMenuMetaCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Page]!
+}
+
+enum ConfigNewFooterMenuMetaCollectionOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum PageLinkingCollectionsConfigNewCollectionOrder {
+  logoTitle_ASC
+  logoTitle_DESC
+  headerTitle_ASC
+  headerTitle_DESC
+  footerNewsletterTitle_ASC
+  footerNewsletterTitle_DESC
+  footerNewsletterField_ASC
+  footerNewsletterField_DESC
+  footerNewsletterButton_ASC
+  footerNewsletterButton_DESC
+  footerCopyright_ASC
+  footerCopyright_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum PageLinkingCollectionsTalkCollectionOrder {
+  title_ASC
+  title_DESC
+  shortDescription_ASC
+  shortDescription_DESC
+  date_ASC
+  date_DESC
+  fromTime_ASC
+  fromTime_DESC
+  toTime_ASC
+  toTime_DESC
+  slug_ASC
+  slug_DESC
+  room_ASC
+  room_DESC
+  showAbstractOnMobile_ASC
+  showAbstractOnMobile_DESC
+  duplicate_ASC
+  duplicate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum PageLinkingCollectionsWorkshopCollectionOrder {
+  title_ASC
+  title_DESC
+  lead_ASC
+  lead_DESC
+  from_ASC
+  from_DESC
+  to_ASC
+  to_DESC
+  slug_ASC
+  slug_DESC
+  order_ASC
+  order_DESC
+  publicationDate_ASC
+  publicationDate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum PageLinkingCollectionsConfigCollectionOrder {
+  title_ASC
+  title_DESC
+  subtitle_ASC
+  subtitle_DESC
+  startDate_ASC
+  startDate_DESC
+  endDate_ASC
+  endDate_DESC
+  location_ASC
+  location_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type AssetCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Asset]!
+}
+
+type PageLeadCtasCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Page]!
+}
+
+enum PageLeadCtasCollectionOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type PageContentTeasersCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Teaser]!
+}
+
+enum PageContentTeasersCollectionOrder {
+  title_ASC
+  title_DESC
+  ctaLabel_ASC
+  ctaLabel_DESC
+  linkExternal_ASC
+  linkExternal_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TeaserLinkingCollectionsPageCollectionOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type SponsorCategoryCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [SponsorCategory]!
+}
+
+enum TeaserLinkingCollectionsSponsorCategoryCollectionOrder {
+  title_ASC
+  title_DESC
+  level_ASC
+  level_DESC
+  price_ASC
+  price_DESC
+  availability_ASC
+  availability_DESC
+  color_ASC
+  color_DESC
+  cssClass_ASC
+  cssClass_DESC
+  cssClassItems_ASC
+  cssClassItems_DESC
+  cssClassTeaser_ASC
+  cssClassTeaser_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TeaserLinkingCollectionsConfigCollectionOrder {
+  title_ASC
+  title_DESC
+  subtitle_ASC
+  subtitle_DESC
+  startDate_ASC
+  startDate_DESC
+  endDate_ASC
+  endDate_DESC
+  location_ASC
+  location_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+union TeaserLink = Host | News | Page | Speaker | Workshop
+
+input SponsorCategoryFilter {
+  teaser: cfTeaserNestedFilter
+  teaserOverview: cfTeaserNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  level_exists: Boolean
+  level: Int
+  level_not: Int
+  level_in: [Int]
+  level_not_in: [Int]
+  level_gt: Int
+  level_gte: Int
+  level_lt: Int
+  level_lte: Int
+  body_exists: Boolean
+  body: String
+  body_not: String
+  body_in: [String]
+  body_not_in: [String]
+  body_contains: String
+  body_not_contains: String
+  icon_exists: Boolean
+  price_exists: Boolean
+  price: String
+  price_not: String
+  price_in: [String]
+  price_not_in: [String]
+  price_contains: String
+  price_not_contains: String
+  availability_exists: Boolean
+  availability: String
+  availability_not: String
+  availability_in: [String]
+  availability_not_in: [String]
+  availability_contains: String
+  availability_not_contains: String
+  color_exists: Boolean
+  color: String
+  color_not: String
+  color_in: [String]
+  color_not_in: [String]
+  color_contains: String
+  color_not_contains: String
+  cssClass_exists: Boolean
+  cssClass: String
+  cssClass_not: String
+  cssClass_in: [String]
+  cssClass_not_in: [String]
+  cssClass_contains: String
+  cssClass_not_contains: String
+  cssClassItems_exists: Boolean
+  cssClassItems: String
+  cssClassItems_not: String
+  cssClassItems_in: [String]
+  cssClassItems_not_in: [String]
+  cssClassItems_contains: String
+  cssClassItems_not_contains: String
+  teaser_exists: Boolean
+  teaserOverview_exists: Boolean
+  cssClassTeaser_exists: Boolean
+  cssClassTeaser: String
+  cssClassTeaser_not: String
+  cssClassTeaser_in: [String]
+  cssClassTeaser_not_in: [String]
+  cssClassTeaser_contains: String
+  cssClassTeaser_not_contains: String
+  OR: [SponsorCategoryFilter]
+  AND: [SponsorCategoryFilter]
+}
+
+type SponsorTagCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Tag]!
+}
+
+enum SponsorTagCollectionOrder {
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type HotelCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Hotel]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/hotel)
+"""
+type Hotel implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): HotelLinkingCollections
+  name(locale: String): String
+  description(locale: String): String
+  link(locale: String): String
+  photo(preview: Boolean, locale: String): Asset
+  location(locale: String): Location
+}
+
+type HotelLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type RestaurantCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Restaurant]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/restaurant)
+"""
+type Restaurant implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): RestaurantLinkingCollections
+  name(locale: String): String
+  description(locale: String): String
+  link(locale: String): String
+  photo(preview: Boolean, locale: String): Asset
+  location(locale: String): Location
+}
+
+type RestaurantLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type TeamCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Team]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/team)
+"""
+type Team implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): TeamLinkingCollections
+  name(locale: String): String
+  description(locale: String): String
+  company(locale: String): String
+  companyLink(locale: String): String
+  twitter(locale: String): String
+  photo(preview: Boolean, locale: String): Asset
+  order(locale: String): Int
+}
+
+type TeamLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+input AssetFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  description_exists: Boolean
+  description: String
+  description_not: String
+  description_in: [String]
+  description_not_in: [String]
+  description_contains: String
+  description_not_contains: String
+  url_exists: Boolean
+  url: String
+  url_not: String
+  url_in: [String]
+  url_not_in: [String]
+  url_contains: String
+  url_not_contains: String
+  size_exists: Boolean
+  size: Int
+  size_not: Int
+  size_in: [Int]
+  size_not_in: [Int]
+  size_gt: Int
+  size_gte: Int
+  size_lt: Int
+  size_lte: Int
+  contentType_exists: Boolean
+  contentType: String
+  contentType_not: String
+  contentType_in: [String]
+  contentType_not_in: [String]
+  contentType_contains: String
+  contentType_not_contains: String
+  fileName_exists: Boolean
+  fileName: String
+  fileName_not: String
+  fileName_in: [String]
+  fileName_not_in: [String]
+  fileName_contains: String
+  fileName_not_contains: String
+  width_exists: Boolean
+  width: Int
+  width_not: Int
+  width_in: [Int]
+  width_not_in: [Int]
+  width_gt: Int
+  width_gte: Int
+  width_lt: Int
+  width_lte: Int
+  height_exists: Boolean
+  height: Int
+  height_not: Int
+  height_in: [Int]
+  height_not_in: [Int]
+  height_gt: Int
+  height_gte: Int
+  height_lt: Int
+  height_lte: Int
+  OR: [AssetFilter]
+  AND: [AssetFilter]
+}
+
+enum AssetOrder {
+  url_ASC
+  url_DESC
+  size_ASC
+  size_DESC
+  contentType_ASC
+  contentType_DESC
+  fileName_ASC
+  fileName_DESC
+  width_ASC
+  width_DESC
+  height_ASC
+  height_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input SponsorFilter {
+  category: cfSponsorCategoryNestedFilter
+  tag: cfTagNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  body_exists: Boolean
+  body: String
+  body_not: String
+  body_in: [String]
+  body_not_in: [String]
+  body_contains: String
+  body_not_contains: String
+  logo_exists: Boolean
+  logoSvg_exists: Boolean
+  logoSvg: String
+  logoSvg_not: String
+  logoSvg_in: [String]
+  logoSvg_not_in: [String]
+  logoSvg_contains: String
+  logoSvg_not_contains: String
+  link_exists: Boolean
+  link: String
+  link_not: String
+  link_in: [String]
+  link_not_in: [String]
+  link_contains: String
+  link_not_contains: String
+  twitter_exists: Boolean
+  twitter: String
+  twitter_not: String
+  twitter_in: [String]
+  twitter_not_in: [String]
+  twitter_contains: String
+  twitter_not_contains: String
+  linkedin_exists: Boolean
+  linkedin: String
+  linkedin_not: String
+  linkedin_in: [String]
+  linkedin_not_in: [String]
+  linkedin_contains: String
+  linkedin_not_contains: String
+  instagram_exists: Boolean
+  instagram: String
+  instagram_not: String
+  instagram_in: [String]
+  instagram_not_in: [String]
+  instagram_contains: String
+  instagram_not_contains: String
+  facebook_exists: Boolean
+  facebook: String
+  facebook_not: String
+  facebook_in: [String]
+  facebook_not_in: [String]
+  facebook_contains: String
+  facebook_not_contains: String
+  category_exists: Boolean
+  order_exists: Boolean
+  order: Int
+  order_not: Int
+  order_in: [Int]
+  order_not_in: [Int]
+  order_gt: Int
+  order_gte: Int
+  order_lt: Int
+  order_lte: Int
+  tagCollection_exists: Boolean
+  zoomFactor_exists: Boolean
+  zoomFactor: String
+  zoomFactor_not: String
+  zoomFactor_in: [String]
+  zoomFactor_not_in: [String]
+  zoomFactor_contains: String
+  zoomFactor_not_contains: String
+  OR: [SponsorFilter]
+  AND: [SponsorFilter]
+}
+
+input cfSponsorCategoryNestedFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  level_exists: Boolean
+  level: Int
+  level_not: Int
+  level_in: [Int]
+  level_not_in: [Int]
+  level_gt: Int
+  level_gte: Int
+  level_lt: Int
+  level_lte: Int
+  body_exists: Boolean
+  body: String
+  body_not: String
+  body_in: [String]
+  body_not_in: [String]
+  body_contains: String
+  body_not_contains: String
+  icon_exists: Boolean
+  price_exists: Boolean
+  price: String
+  price_not: String
+  price_in: [String]
+  price_not_in: [String]
+  price_contains: String
+  price_not_contains: String
+  availability_exists: Boolean
+  availability: String
+  availability_not: String
+  availability_in: [String]
+  availability_not_in: [String]
+  availability_contains: String
+  availability_not_contains: String
+  color_exists: Boolean
+  color: String
+  color_not: String
+  color_in: [String]
+  color_not_in: [String]
+  color_contains: String
+  color_not_contains: String
+  cssClass_exists: Boolean
+  cssClass: String
+  cssClass_not: String
+  cssClass_in: [String]
+  cssClass_not_in: [String]
+  cssClass_contains: String
+  cssClass_not_contains: String
+  cssClassItems_exists: Boolean
+  cssClassItems: String
+  cssClassItems_not: String
+  cssClassItems_in: [String]
+  cssClassItems_not_in: [String]
+  cssClassItems_contains: String
+  cssClassItems_not_contains: String
+  teaser_exists: Boolean
+  teaserOverview_exists: Boolean
+  cssClassTeaser_exists: Boolean
+  cssClassTeaser: String
+  cssClassTeaser_not: String
+  cssClassTeaser_in: [String]
+  cssClassTeaser_not_in: [String]
+  cssClassTeaser_contains: String
+  cssClassTeaser_not_contains: String
+  OR: [cfSponsorCategoryNestedFilter]
+  AND: [cfSponsorCategoryNestedFilter]
+}
+
+enum SponsorOrder {
+  title_ASC
+  title_DESC
+  link_ASC
+  link_DESC
+  twitter_ASC
+  twitter_DESC
+  linkedin_ASC
+  linkedin_DESC
+  instagram_ASC
+  instagram_DESC
+  facebook_ASC
+  facebook_DESC
+  order_ASC
+  order_DESC
+  zoomFactor_ASC
+  zoomFactor_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum PageOrder {
+  title_ASC
+  title_DESC
+  lead2019_ASC
+  lead2019_DESC
+  slug_ASC
+  slug_DESC
+  menu_ASC
+  menu_DESC
+  menuButton_ASC
+  menuButton_DESC
+  showIntro_ASC
+  showIntro_DESC
+  showNews_ASC
+  showNews_DESC
+  showSpeakers_ASC
+  showSpeakers_DESC
+  showVenue_ASC
+  showVenue_DESC
+  showSponsorshipCategories_ASC
+  showSponsorshipCategories_DESC
+  showSponsors_ASC
+  showSponsors_DESC
+  showSponsorsDetailed_ASC
+  showSponsorsDetailed_DESC
+  showWorkshops_ASC
+  showWorkshops_DESC
+  showTeam_ASC
+  showTeam_DESC
+  showJobs_ASC
+  showJobs_DESC
+  showJobsDetailed_ASC
+  showJobsDetailed_DESC
+  showSchedule_ASC
+  showSchedule_DESC
+  showHotels_ASC
+  showHotels_DESC
+  showRestaurants_ASC
+  showRestaurants_DESC
+  showCallForSpeakers_ASC
+  showCallForSpeakers_DESC
+  showSpeakersForm_ASC
+  showSpeakersForm_DESC
+  showSpeakersFormWorkshop_ASC
+  showSpeakersFormWorkshop_DESC
+  showSpeakersBootcampForm_ASC
+  showSpeakersBootcampForm_DESC
+  bodyClass_ASC
+  bodyClass_DESC
+  menuClass_ASC
+  menuClass_DESC
+  ctaText_ASC
+  ctaText_DESC
+  specialPage_ASC
+  specialPage_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum SpeakerOrder {
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  company_ASC
+  company_DESC
+  role_ASC
+  role_DESC
+  website_ASC
+  website_DESC
+  twitter_ASC
+  twitter_DESC
+  linkedin_ASC
+  linkedin_DESC
+  slug_ASC
+  slug_DESC
+  order_ASC
+  order_DESC
+  publicationDate_ASC
+  publicationDate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TeaserOrder {
+  title_ASC
+  title_DESC
+  ctaLabel_ASC
+  ctaLabel_DESC
+  linkExternal_ASC
+  linkExternal_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input ConfigNewFilter {
+  menuCta: cfPageNestedFilter
+  headerCta: cfPageNestedFilter
+  footerSocialMedia: cfSocialMediaNestedFilter
+  footerCta: cfPageNestedFilter
+  footerMenu: cfPageNestedFilter
+  footerMenuMeta: cfPageNestedFilter
+  contentFilterTag: cfTagNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  logoTitle_exists: Boolean
+  logoTitle: String
+  logoTitle_not: String
+  logoTitle_in: [String]
+  logoTitle_not_in: [String]
+  logoTitle_contains: String
+  logoTitle_not_contains: String
+  logoText_exists: Boolean
+  logoText_contains: String
+  logoText_not_contains: String
+  menuCollection_exists: Boolean
+  menuCtaCollection_exists: Boolean
+  headerTitle_exists: Boolean
+  headerTitle: String
+  headerTitle_not: String
+  headerTitle_in: [String]
+  headerTitle_not_in: [String]
+  headerTitle_contains: String
+  headerTitle_not_contains: String
+  headerText_exists: Boolean
+  headerText_contains: String
+  headerText_not_contains: String
+  headerCtaCollection_exists: Boolean
+  footerNewsletterTitle_exists: Boolean
+  footerNewsletterTitle: String
+  footerNewsletterTitle_not: String
+  footerNewsletterTitle_in: [String]
+  footerNewsletterTitle_not_in: [String]
+  footerNewsletterTitle_contains: String
+  footerNewsletterTitle_not_contains: String
+  footerNewsletterField_exists: Boolean
+  footerNewsletterField: String
+  footerNewsletterField_not: String
+  footerNewsletterField_in: [String]
+  footerNewsletterField_not_in: [String]
+  footerNewsletterField_contains: String
+  footerNewsletterField_not_contains: String
+  footerNewsletterButton_exists: Boolean
+  footerNewsletterButton: String
+  footerNewsletterButton_not: String
+  footerNewsletterButton_in: [String]
+  footerNewsletterButton_not_in: [String]
+  footerNewsletterButton_contains: String
+  footerNewsletterButton_not_contains: String
+  footerSocialMediaCollection_exists: Boolean
+  footerCtaCollection_exists: Boolean
+  footerMenuCollection_exists: Boolean
+  footerCopyright_exists: Boolean
+  footerCopyright: String
+  footerCopyright_not: String
+  footerCopyright_in: [String]
+  footerCopyright_not_in: [String]
+  footerCopyright_contains: String
+  footerCopyright_not_contains: String
+  footerMenuMetaCollection_exists: Boolean
+  contentFilterTag_exists: Boolean
+  OR: [ConfigNewFilter]
+  AND: [ConfigNewFilter]
+}
+
+input cfSocialMediaNestedFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  link_exists: Boolean
+  link: String
+  link_not: String
+  link_in: [String]
+  link_not_in: [String]
+  link_contains: String
+  link_not_contains: String
+  iconCharacter_exists: Boolean
+  iconCharacter: String
+  iconCharacter_not: String
+  iconCharacter_in: [String]
+  iconCharacter_not_in: [String]
+  iconCharacter_contains: String
+  iconCharacter_not_contains: String
+  OR: [cfSocialMediaNestedFilter]
+  AND: [cfSocialMediaNestedFilter]
+}
+
+enum ConfigNewOrder {
+  logoTitle_ASC
+  logoTitle_DESC
+  headerTitle_ASC
+  headerTitle_DESC
+  footerNewsletterTitle_ASC
+  footerNewsletterTitle_DESC
+  footerNewsletterField_ASC
+  footerNewsletterField_DESC
+  footerNewsletterButton_ASC
+  footerNewsletterButton_DESC
+  footerCopyright_ASC
+  footerCopyright_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input TalkFilter {
+  speaker: cfSpeakerNestedFilter
+  tags: cfTagNestedFilter
+  detailPage: cfPageNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  shortDescription_exists: Boolean
+  shortDescription: String
+  shortDescription_not: String
+  shortDescription_in: [String]
+  shortDescription_not_in: [String]
+  shortDescription_contains: String
+  shortDescription_not_contains: String
+  abstract_exists: Boolean
+  abstract: String
+  abstract_not: String
+  abstract_in: [String]
+  abstract_not_in: [String]
+  abstract_contains: String
+  abstract_not_contains: String
+  image_exists: Boolean
+  video_exists: Boolean
+  video: String
+  video_not: String
+  video_in: [String]
+  video_not_in: [String]
+  video_contains: String
+  video_not_contains: String
+  date_exists: Boolean
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime]
+  date_not_in: [DateTime]
+  date_gt: DateTime
+  date_gte: DateTime
+  date_lt: DateTime
+  date_lte: DateTime
+  fromTime_exists: Boolean
+  fromTime: String
+  fromTime_not: String
+  fromTime_in: [String]
+  fromTime_not_in: [String]
+  fromTime_contains: String
+  fromTime_not_contains: String
+  toTime_exists: Boolean
+  toTime: String
+  toTime_not: String
+  toTime_in: [String]
+  toTime_not_in: [String]
+  toTime_contains: String
+  toTime_not_contains: String
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  room_exists: Boolean
+  room: String
+  room_not: String
+  room_in: [String]
+  room_not_in: [String]
+  room_contains: String
+  room_not_contains: String
+  speaker_exists: Boolean
+  showAbstractOnMobile_exists: Boolean
+  showAbstractOnMobile: Boolean
+  showAbstractOnMobile_not: Boolean
+  tagsCollection_exists: Boolean
+  duplicate_exists: Boolean
+  duplicate: Boolean
+  duplicate_not: Boolean
+  detailPage_exists: Boolean
+  OR: [TalkFilter]
+  AND: [TalkFilter]
+}
+
+input cfSpeakerNestedFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  name_exists: Boolean
+  name: String
+  name_not: String
+  name_in: [String]
+  name_not_in: [String]
+  name_contains: String
+  name_not_contains: String
+  description_exists: Boolean
+  description: String
+  description_not: String
+  description_in: [String]
+  description_not_in: [String]
+  description_contains: String
+  description_not_contains: String
+  company_exists: Boolean
+  company: String
+  company_not: String
+  company_in: [String]
+  company_not_in: [String]
+  company_contains: String
+  company_not_contains: String
+  role_exists: Boolean
+  role: String
+  role_not: String
+  role_in: [String]
+  role_not_in: [String]
+  role_contains: String
+  role_not_contains: String
+  bio_exists: Boolean
+  bio: String
+  bio_not: String
+  bio_in: [String]
+  bio_not_in: [String]
+  bio_contains: String
+  bio_not_contains: String
+  photo_exists: Boolean
+  website_exists: Boolean
+  website: String
+  website_not: String
+  website_in: [String]
+  website_not_in: [String]
+  website_contains: String
+  website_not_contains: String
+  twitter_exists: Boolean
+  twitter: String
+  twitter_not: String
+  twitter_in: [String]
+  twitter_not_in: [String]
+  twitter_contains: String
+  twitter_not_contains: String
+  linkedin_exists: Boolean
+  linkedin: String
+  linkedin_not: String
+  linkedin_in: [String]
+  linkedin_not_in: [String]
+  linkedin_contains: String
+  linkedin_not_contains: String
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  order_exists: Boolean
+  order: Int
+  order_not: Int
+  order_in: [Int]
+  order_not_in: [Int]
+  order_gt: Int
+  order_gte: Int
+  order_lt: Int
+  order_lte: Int
+  tagsCollection_exists: Boolean
+  publicationDate_exists: Boolean
+  publicationDate: DateTime
+  publicationDate_not: DateTime
+  publicationDate_in: [DateTime]
+  publicationDate_not_in: [DateTime]
+  publicationDate_gt: DateTime
+  publicationDate_gte: DateTime
+  publicationDate_lt: DateTime
+  publicationDate_lte: DateTime
+  OR: [cfSpeakerNestedFilter]
+  AND: [cfSpeakerNestedFilter]
+}
+
+enum TalkOrder {
+  title_ASC
+  title_DESC
+  shortDescription_ASC
+  shortDescription_DESC
+  date_ASC
+  date_DESC
+  fromTime_ASC
+  fromTime_DESC
+  toTime_ASC
+  toTime_DESC
+  slug_ASC
+  slug_DESC
+  room_ASC
+  room_DESC
+  showAbstractOnMobile_ASC
+  showAbstractOnMobile_DESC
+  duplicate_ASC
+  duplicate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input NewsFilter {
+  tags: cfTagNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  date_exists: Boolean
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime]
+  date_not_in: [DateTime]
+  date_gt: DateTime
+  date_gte: DateTime
+  date_lt: DateTime
+  date_lte: DateTime
+  body_exists: Boolean
+  body: String
+  body_not: String
+  body_in: [String]
+  body_not_in: [String]
+  body_contains: String
+  body_not_contains: String
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  tagsCollection_exists: Boolean
+  summary_exists: Boolean
+  summary: String
+  summary_not: String
+  summary_in: [String]
+  summary_not_in: [String]
+  summary_contains: String
+  summary_not_contains: String
+  OR: [NewsFilter]
+  AND: [NewsFilter]
+}
+
+enum NewsOrder {
+  title_ASC
+  title_DESC
+  date_ASC
+  date_DESC
+  slug_ASC
+  slug_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input WorkshopFilter {
+  teacher: cfSpeakerNestedFilter
+  cta: cfPageNestedFilter
+  tags: cfTagNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  lead_exists: Boolean
+  lead: String
+  lead_not: String
+  lead_in: [String]
+  lead_not_in: [String]
+  lead_contains: String
+  lead_not_contains: String
+  body_exists: Boolean
+  body: String
+  body_not: String
+  body_in: [String]
+  body_not_in: [String]
+  body_contains: String
+  body_not_contains: String
+  from_exists: Boolean
+  from: DateTime
+  from_not: DateTime
+  from_in: [DateTime]
+  from_not_in: [DateTime]
+  from_gt: DateTime
+  from_gte: DateTime
+  from_lt: DateTime
+  from_lte: DateTime
+  to_exists: Boolean
+  to: DateTime
+  to_not: DateTime
+  to_in: [DateTime]
+  to_not_in: [DateTime]
+  to_gt: DateTime
+  to_gte: DateTime
+  to_lt: DateTime
+  to_lte: DateTime
+  location_exists: Boolean
+  location_within_circle: Circle
+  location_within_rectangle: Rectangle
+  teacher_exists: Boolean
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  photo_exists: Boolean
+  order_exists: Boolean
+  order: Int
+  order_not: Int
+  order_in: [Int]
+  order_not_in: [Int]
+  order_gt: Int
+  order_gte: Int
+  order_lt: Int
+  order_lte: Int
+  cta_exists: Boolean
+  tagsCollection_exists: Boolean
+  publicationDate_exists: Boolean
+  publicationDate: DateTime
+  publicationDate_not: DateTime
+  publicationDate_in: [DateTime]
+  publicationDate_not_in: [DateTime]
+  publicationDate_gt: DateTime
+  publicationDate_gte: DateTime
+  publicationDate_lt: DateTime
+  publicationDate_lte: DateTime
+  OR: [WorkshopFilter]
+  AND: [WorkshopFilter]
+}
+
+"""
+The Circle scalar type represents a circle, defined by the coordinates of its center and a radius. The Circle type is used to represent a searchable area together with the '_within_circle' filter.
+"""
+scalar Circle
+
+"""
+The Rectangle scalar type represents a rectangle, defined by the coordinates of its top left and bottom right corners. The Rectangle type is used to represent a searchable area together with the '_within_rectangle' filter.
+"""
+scalar Rectangle
+
+enum WorkshopOrder {
+  title_ASC
+  title_DESC
+  lead_ASC
+  lead_DESC
+  from_ASC
+  from_DESC
+  to_ASC
+  to_DESC
+  slug_ASC
+  slug_DESC
+  order_ASC
+  order_DESC
+  publicationDate_ASC
+  publicationDate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum SponsorCategoryOrder {
+  title_ASC
+  title_DESC
+  level_ASC
+  level_DESC
+  price_ASC
+  price_DESC
+  availability_ASC
+  availability_DESC
+  color_ASC
+  color_DESC
+  cssClass_ASC
+  cssClass_DESC
+  cssClassItems_ASC
+  cssClassItems_DESC
+  cssClassTeaser_ASC
+  cssClassTeaser_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input ConfigFilter {
+  footerCtas: cfPageNestedFilter
+  footerMenu: cfPageNestedFilter
+  footerSocialMedia: cfSocialMediaNestedFilter
+  footerMenuMeta: cfPageNestedFilter
+  venueTeaser: cfTeaserNestedFilter
+  filterTag: cfTagNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  menuCollection_exists: Boolean
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  subtitle_exists: Boolean
+  subtitle: String
+  subtitle_not: String
+  subtitle_in: [String]
+  subtitle_not_in: [String]
+  subtitle_contains: String
+  subtitle_not_contains: String
+  startDate_exists: Boolean
+  startDate: DateTime
+  startDate_not: DateTime
+  startDate_in: [DateTime]
+  startDate_not_in: [DateTime]
+  startDate_gt: DateTime
+  startDate_gte: DateTime
+  startDate_lt: DateTime
+  startDate_lte: DateTime
+  endDate_exists: Boolean
+  endDate: DateTime
+  endDate_not: DateTime
+  endDate_in: [DateTime]
+  endDate_not_in: [DateTime]
+  endDate_gt: DateTime
+  endDate_gte: DateTime
+  endDate_lt: DateTime
+  endDate_lte: DateTime
+  location_exists: Boolean
+  location: String
+  location_not: String
+  location_in: [String]
+  location_not_in: [String]
+  location_contains: String
+  location_not_contains: String
+  footerCtasCollection_exists: Boolean
+  footerMenuCollection_exists: Boolean
+  footerSocialMediaCollection_exists: Boolean
+  footerMenuMetaCollection_exists: Boolean
+  venueTeaser_exists: Boolean
+  leadAccomodations_exists: Boolean
+  leadAccomodations: String
+  leadAccomodations_not: String
+  leadAccomodations_in: [String]
+  leadAccomodations_not_in: [String]
+  leadAccomodations_contains: String
+  leadAccomodations_not_contains: String
+  leadHotels_exists: Boolean
+  leadHotels: String
+  leadHotels_not: String
+  leadHotels_in: [String]
+  leadHotels_not_in: [String]
+  leadHotels_contains: String
+  leadHotels_not_contains: String
+  leadRestaurants_exists: Boolean
+  leadRestaurants: String
+  leadRestaurants_not: String
+  leadRestaurants_in: [String]
+  leadRestaurants_not_in: [String]
+  leadRestaurants_contains: String
+  leadRestaurants_not_contains: String
+  map_exists: Boolean
+  map: String
+  map_not: String
+  map_in: [String]
+  map_not_in: [String]
+  map_contains: String
+  map_not_contains: String
+  filterTag_exists: Boolean
+  OR: [ConfigFilter]
+  AND: [ConfigFilter]
+}
+
+enum ConfigOrder {
+  title_ASC
+  title_DESC
+  subtitle_ASC
+  subtitle_DESC
+  startDate_ASC
+  startDate_DESC
+  endDate_ASC
+  endDate_DESC
+  location_ASC
+  location_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/block)
+"""
+type Block implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): BlockLinkingCollections
+  id(locale: String): String
+  content(locale: String): String
+}
+
+type BlockLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type BlockCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Block]!
+}
+
+input BlockFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  id_exists: Boolean
+  id: String
+  id_not: String
+  id_in: [String]
+  id_not_in: [String]
+  id_contains: String
+  id_not_contains: String
+  content_exists: Boolean
+  content: String
+  content_not: String
+  content_in: [String]
+  content_not_in: [String]
+  content_contains: String
+  content_not_contains: String
+  OR: [BlockFilter]
+  AND: [BlockFilter]
+}
+
+enum BlockOrder {
+  id_ASC
+  id_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/staff)
+"""
+type Staff implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): StaffLinkingCollections
+  name(locale: String): String
+  twitter(locale: String): String
+}
+
+type StaffLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type StaffCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Staff]!
+}
+
+input StaffFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  name_exists: Boolean
+  name: String
+  name_not: String
+  name_in: [String]
+  name_not_in: [String]
+  name_contains: String
+  name_not_contains: String
+  twitter_exists: Boolean
+  twitter: String
+  twitter_not: String
+  twitter_in: [String]
+  twitter_not_in: [String]
+  twitter_contains: String
+  twitter_not_contains: String
+  OR: [StaffFilter]
+  AND: [StaffFilter]
+}
+
+enum StaffOrder {
+  name_ASC
+  name_DESC
+  twitter_ASC
+  twitter_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input HostFilter {
+  tags: cfTagNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  name_exists: Boolean
+  name: String
+  name_not: String
+  name_in: [String]
+  name_not_in: [String]
+  name_contains: String
+  name_not_contains: String
+  description_exists: Boolean
+  description: String
+  description_not: String
+  description_in: [String]
+  description_not_in: [String]
+  description_contains: String
+  description_not_contains: String
+  bio_exists: Boolean
+  bio: String
+  bio_not: String
+  bio_in: [String]
+  bio_not_in: [String]
+  bio_contains: String
+  bio_not_contains: String
+  photo_exists: Boolean
+  twitter_exists: Boolean
+  twitter: String
+  twitter_not: String
+  twitter_in: [String]
+  twitter_not_in: [String]
+  twitter_contains: String
+  twitter_not_contains: String
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  order_exists: Boolean
+  order: Int
+  order_not: Int
+  order_in: [Int]
+  order_not_in: [Int]
+  order_gt: Int
+  order_gte: Int
+  order_lt: Int
+  order_lte: Int
+  tagsCollection_exists: Boolean
+  OR: [HostFilter]
+  AND: [HostFilter]
+}
+
+enum HostOrder {
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  twitter_ASC
+  twitter_DESC
+  slug_ASC
+  slug_DESC
+  order_ASC
+  order_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/redirect)
+"""
+type Redirect implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): RedirectLinkingCollections
+  slug(locale: String): String
+  url(locale: String): String
+}
+
+type RedirectLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type RedirectCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Redirect]!
+}
+
+input RedirectFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  url_exists: Boolean
+  url: String
+  url_not: String
+  url_in: [String]
+  url_not_in: [String]
+  url_contains: String
+  url_not_contains: String
+  OR: [RedirectFilter]
+  AND: [RedirectFilter]
+}
+
+enum RedirectOrder {
+  slug_ASC
+  slug_DESC
+  url_ASC
+  url_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type TagCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Tag]!
+}
+
+enum TagOrder {
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input HotelFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  name_exists: Boolean
+  name: String
+  name_not: String
+  name_in: [String]
+  name_not_in: [String]
+  name_contains: String
+  name_not_contains: String
+  description_exists: Boolean
+  description: String
+  description_not: String
+  description_in: [String]
+  description_not_in: [String]
+  description_contains: String
+  description_not_contains: String
+  link_exists: Boolean
+  link: String
+  link_not: String
+  link_in: [String]
+  link_not_in: [String]
+  link_contains: String
+  link_not_contains: String
+  photo_exists: Boolean
+  location_exists: Boolean
+  location_within_circle: Circle
+  location_within_rectangle: Rectangle
+  OR: [HotelFilter]
+  AND: [HotelFilter]
+}
+
+enum HotelOrder {
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  link_ASC
+  link_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input RestaurantFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  name_exists: Boolean
+  name: String
+  name_not: String
+  name_in: [String]
+  name_not_in: [String]
+  name_contains: String
+  name_not_contains: String
+  description_exists: Boolean
+  description: String
+  description_not: String
+  description_in: [String]
+  description_not_in: [String]
+  description_contains: String
+  description_not_contains: String
+  link_exists: Boolean
+  link: String
+  link_not: String
+  link_in: [String]
+  link_not_in: [String]
+  link_contains: String
+  link_not_contains: String
+  photo_exists: Boolean
+  location_exists: Boolean
+  location_within_circle: Circle
+  location_within_rectangle: Rectangle
+  OR: [RestaurantFilter]
+  AND: [RestaurantFilter]
+}
+
+enum RestaurantOrder {
+  name_ASC
+  name_DESC
+  link_ASC
+  link_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input TeamFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  name_exists: Boolean
+  name: String
+  name_not: String
+  name_in: [String]
+  name_not_in: [String]
+  name_contains: String
+  name_not_contains: String
+  description_exists: Boolean
+  description: String
+  description_not: String
+  description_in: [String]
+  description_not_in: [String]
+  description_contains: String
+  description_not_contains: String
+  company_exists: Boolean
+  company: String
+  company_not: String
+  company_in: [String]
+  company_not_in: [String]
+  company_contains: String
+  company_not_contains: String
+  companyLink_exists: Boolean
+  companyLink: String
+  companyLink_not: String
+  companyLink_in: [String]
+  companyLink_not_in: [String]
+  companyLink_contains: String
+  companyLink_not_contains: String
+  twitter_exists: Boolean
+  twitter: String
+  twitter_not: String
+  twitter_in: [String]
+  twitter_not_in: [String]
+  twitter_contains: String
+  twitter_not_contains: String
+  photo_exists: Boolean
+  order_exists: Boolean
+  order: Int
+  order_not: Int
+  order_in: [Int]
+  order_not_in: [Int]
+  order_gt: Int
+  order_gte: Int
+  order_lt: Int
+  order_lte: Int
+  OR: [TeamFilter]
+  AND: [TeamFilter]
+}
+
+enum TeamOrder {
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  company_ASC
+  company_DESC
+  companyLink_ASC
+  companyLink_DESC
+  twitter_ASC
+  twitter_DESC
+  order_ASC
+  order_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+"""
+Sponsorship Goodies [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/goodies)
+"""
+type Goodies implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): GoodiesLinkingCollections
+  goodieList(locale: String): String
+}
+
+type GoodiesLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type GoodiesCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Goodies]!
+}
+
+input GoodiesFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  goodieList_exists: Boolean
+  goodieList: String
+  goodieList_not: String
+  goodieList_in: [String]
+  goodieList_not_in: [String]
+  goodieList_contains: String
+  goodieList_not_contains: String
+  OR: [GoodiesFilter]
+  AND: [GoodiesFilter]
+}
+
+enum GoodiesOrder {
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type SocialMediaCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [SocialMedia]!
+}
+
+enum SocialMediaOrder {
+  title_ASC
+  title_DESC
+  link_ASC
+  link_DESC
+  iconCharacter_ASC
+  iconCharacter_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+"""
+Year of Appearance [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/edition)
+"""
+type Edition implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): EditionLinkingCollections
+  fec17(locale: String): DateTime
+  fec16(locale: String): DateTime
+}
+
+type EditionLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type EditionCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Edition]!
+}
+
+input EditionFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  FEC17_exists: Boolean
+  FEC17: DateTime
+  FEC17_not: DateTime
+  FEC17_in: [DateTime]
+  FEC17_not_in: [DateTime]
+  FEC17_gt: DateTime
+  FEC17_gte: DateTime
+  FEC17_lt: DateTime
+  FEC17_lte: DateTime
+  FEC16_exists: Boolean
+  FEC16: DateTime
+  FEC16_not: DateTime
+  FEC16_in: [DateTime]
+  FEC16_not_in: [DateTime]
+  FEC16_gt: DateTime
+  FEC16_gte: DateTime
+  FEC16_lt: DateTime
+  FEC16_lte: DateTime
+  OR: [EditionFilter]
+  AND: [EditionFilter]
+}
+
+enum EditionOrder {
+  FEC17_ASC
+  FEC17_DESC
+  FEC16_ASC
+  FEC16_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+"""
+Contact Form [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/contact)
+"""
+type Contact implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): ContactLinkingCollections
+  title(locale: String): String
+  description(locale: String): String
+}
+
+type ContactLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type ContactCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Contact]!
+}
+
+input ContactFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  description_exists: Boolean
+  description: String
+  description_not: String
+  description_in: [String]
+  description_not_in: [String]
+  description_contains: String
+  description_not_contains: String
+  OR: [ContactFilter]
+  AND: [ContactFilter]
+}
+
+enum ContactOrder {
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/track)
+"""
+type Track implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): TrackLinkingCollections
+  title(locale: String): String
+}
+
+type TrackLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type TrackCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Track]!
+}
+
+input TrackFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  OR: [TrackFilter]
+  AND: [TrackFilter]
+}
+
+enum TrackOrder {
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input EntryFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  OR: [EntryFilter]
+  AND: [EntryFilter]
+}
+
+enum EntryOrder {
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+interface _Node {
+  _id: ID!
+}

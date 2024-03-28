@@ -5,12 +5,4 @@ import vercel from "@astrojs/vercel/serverless";
 export default defineConfig({
   output: "server",
   adapter: vercel(),
-  // integrations: [react()],
-  // server: {
-  //   headers: {
-  //     // Default cache-control for all pages
-  //     // https://vercel.com/docs/concepts/functions/serverless-functions/edge-caching#recommended-cache-control
-  //     "Cache-Control": "s-maxage=300, stale-while-revalidate",
-  //   },
-  // },
 });
