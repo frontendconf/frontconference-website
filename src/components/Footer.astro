@@ -1,7 +1,149 @@
 ---
+import ButtonLink from "./ButtonLink.astro";
 
+const { slug } = Astro.params;
+
+const response = await fetch(
+  "https://graphql.contentful.com/content/v1/spaces/j8md9ikrag2j/environments/test?access_token=rzFgLmMrf5EspzL9QgEyOTPtIWdc-jGBIdk5GKs4Rfg",
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+  query {
+    configCollection {
+      items {
+        footerMenuCollection(limit: 20) {
+          items {
+            ... on Page {
+              title
+              slug
+              sys {
+                id
+              }
+            }
+          }
+        }
+        footerMenuMetaCollection(limit: 10) {
+          items {
+            ... on Page {
+              title
+              slug
+              sys {
+                id
+              }
+            }
+          }
+        }
+        footerCtasCollection(limit: 10) {
+          items {
+            ... on Page {
+              title
+              slug
+              sys {
+                id
+              }
+            }
+          }
+        }
+        footerSocialMediaCollection(limit: 10) {
+          items {
+            ... on SocialMedia {
+              title
+              link
+              sys {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+      `,
+    }),
+  }
+);
+
+const json = await response.json();
+const {
+  configCollection: {
+    items: [
+      {
+        footerMenuCollection: { items: menuItems },
+        footerMenuMetaCollection: { items: metaMenuItems },
+        footerCtasCollection: { items: ctas },
+        footerSocialMediaCollection: { items: socialMediaItems },
+      },
+    ],
+  },
+} = json.data;
 ---
 
-<footer>
-  This is the Footer
+<footer class="footer">
+  <nav class="nav">
+    <ul class="nav-list">
+      {
+        menuItems.map((item) => (
+          <li class="nav-list-item">
+            <a
+              href={`/${item.slug}`}
+              class:list={["link", { active: item.slug === slug }]}
+            >
+              {item.menu || item.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="nav-list">
+      {
+        metaMenuItems.map((item) => (
+          <li class="nav-list-item">
+            <a
+              href={`/${item.slug}`}
+              class:list={["link", { active: item.slug === slug }]}
+            >
+              {item.menu || item.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="nav-list">
+      {
+        ctas.map((item) => (
+          <li class="nav-list-item">
+            <a
+              href={`/${item.slug}`}
+              class:list={["link", { active: item.slug === slug }]}
+            >
+              {item.menu || item.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="nav-list">
+      {
+        socialMediaItems.map((item) => (
+          <li class="nav-list-item">
+            <a href={`/${item.link}`}>{item.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <p class="copyright__text">
+    2011-{new Date().getFullYear()} Front Conference Zurich
+  </p>
 </footer>
+
+<style lang="scss">
+  @import "../styles/_imports.scss";
+
+  .footer {
+    background: var(--color-black);
+  }
+</style>
