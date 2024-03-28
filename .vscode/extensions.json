@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "EditorConfig.EditorConfig",
+    "dbaeumer.vscode-eslint",
+    "GraphQL.vscode-graphql-syntax",
+    "esbenp.prettier-vscode"
+  ]
+}
