@@ -1,0 +1,74 @@
+<button
+  id="menu-burger"
+  aria-label="Menu"
+  aria-controls="mobile-menu"
+  aria-expanded="false"
+>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</button>
+
+<style lang="scss">
+  @import "../styles/_imports.scss";
+
+  #menu-burger {
+    width: 20px;
+    height: 21px; // Needs to be a number that can be evenly divided by 3
+    position: relative;
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: "one" "two" "three";
+    align-items: center;
+
+    @include breakpoint-up("lg") {
+      display: none;
+    }
+
+    div {
+      width: 100%;
+      height: pxToRem(3);
+      width: 100%;
+      background: var(--color-green-100);
+      border-radius: 2px;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: all 0.25s ease-in-out;
+    }
+
+    div:nth-child(1) {
+      grid-area: one;
+    }
+
+    div:nth-child(2),
+    div:nth-child(3) {
+      grid-area: two;
+    }
+
+    div:nth-child(4) {
+      grid-area: three;
+    }
+
+    &.open {
+      div:nth-child(1),
+      div:nth-child(4) {
+        opacity: 0;
+      }
+
+      div:nth-child(2) {
+        transform: rotate(45deg);
+      }
+
+      div:nth-child(3) {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+</style>

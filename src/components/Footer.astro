@@ -1,6 +1,9 @@
 ---
 import { client } from "../utils/graphql-client";
 import { graphql } from "gql.tada";
+import ButtonLink from "./ButtonLink.astro";
+import NewsletterSignup from "./NewsletterSignup.astro";
+import Logo from "./Logo.astro";
 
 const { slug } = Astro.params;
 
@@ -69,59 +72,50 @@ const socialMediaItems =
 ---
 
 <footer class="footer">
-  <nav class="nav">
-    <ul class="nav-list">
-      {
-        menuItems.map(
-          (item) =>
-            item && (
-              <li class="nav-list-item">
-                <a
-                  href={`/${item.slug}`}
-                  class:list={["link", { active: item.slug === slug }]}
-                >
-                  {item.title}
-                </a>
-              </li>
-            )
-        )
-      }
-    </ul>
-    <ul class="nav-list">
-      {
-        metaMenuItems.map(
-          (item) =>
-            item && (
-              <li class="nav-list-item">
-                <a
-                  href={`/${item.slug}`}
-                  class:list={["link", { active: item.slug === slug }]}
-                >
-                  {item.title}
-                </a>
-              </li>
-            )
-        )
-      }
-    </ul>
-    <ul class="nav-list">
+  <div class="right">
+    <NewsletterSignup />
+  </div>
+
+  <div class="left">
+    <ul class="cta-nav-list">
       {
         ctas.map(
           (item) =>
             item && (
-              <li class="nav-list-item">
-                <a
-                  href={`/${item.slug}`}
-                  class:list={["link", { active: item.slug === slug }]}
-                >
+              <li class="cta-nav-list-item">
+                <ButtonLink href={`/${item.slug}`} variant="tertiary">
                   {item.title}
-                </a>
+                </ButtonLink>
               </li>
             )
         )
       }
     </ul>
-    <ul class="nav-list">
+    <nav class="nav">
+      <ul class="nav-list">
+        {
+          menuItems.map(
+            (item) =>
+              item && (
+                <li class="nav-list-item">
+                  <a
+                    href={`/${item.slug}`}
+                    class:list={[
+                      "nav-list-item-link",
+                      { active: item.slug === slug },
+                    ]}
+                  >
+                    {item.title}
+                  </a>
+                </li>
+              )
+          )
+        }
+      </ul>
+    </nav>
+  </div>
+  <!--  -->
+  <!-- <ul class="nav-list">
       {
         socialMediaItems.map(
           (item) =>
@@ -132,18 +126,154 @@ const socialMediaItems =
             )
         )
       }
-    </ul>
-  </nav>
+    </ul> -->
 
-  <p class="copyright__text">
-    2011-{new Date().getFullYear()} Front Conference Zurich
-  </p>
+  <div class="copyright">
+    <Logo class={"copyright__logo"} />
+    <p class="copyright__text">
+      2011-{new Date().getFullYear()} Front Conference Zurich
+    </p>
+
+    <ul class="copyright__nav">
+      {
+        metaMenuItems.map(
+          (item) =>
+            item && (
+              <>
+                <li class="copyright__nav-item">
+                  <a href={`/${item.slug}`} class="copyright__nav-link">
+                    {item.title}
+                  </a>
+                </li>
+                <li class="copyright__nav-item">
+                  <a href={`/${item.slug}`} class="copyright__nav-link">
+                    {item.title}
+                  </a>
+                </li>
+              </>
+            )
+        )
+      }
+    </ul>
+  </div>
 </footer>
 
 <style lang="scss">
   @import "../styles/_imports.scss";
 
   .footer {
+    display: flex;
+    flex-wrap: wrap;
     background: var(--color-black);
+    padding: var(--spacing-lg) var(--spacing-md);
+    gap: 64px; // no spacing for this??
+  }
+
+  .right,
+  .left {
+    flex: 0 0 100%;
+  }
+
+  .newsletter-wrapper {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .cta-nav-list {
+    display: flex;
+    gap: var(--spacing-xs);
+    padding: 0;
+    margin: 0 0 var(--spacing-lg);
+    list-style: none;
+  }
+
+  .nav {
+  }
+
+  .nav-list {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    row-gap: 16px; // no spacing for this??
+    padding: 8px 0;
+    margin: 0;
+  }
+
+  .nav-list-item {
+  }
+
+  // TODO: Fix active/hover states
+  .nav-list-item-link {
+    display: block;
+    color: var(--color-green-100);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.14;
+    letter-spacing: 0.14px;
+    text-decoration: none;
+    transition: color var(--transition-time-quick) ease-in-out;
+
+    &:hover,
+    &:active {
+      color: var(--color-green-300);
+    }
+
+    &:focus {
+      color: var(--color-green-300);
+      text-decoration: underline;
+    }
+  }
+
+  .copyright {
+    display: flex;
+    flex: 0 0 100%;
+    align-items: center;
+
+    &__logo {
+      display: block;
+      width: 40px;
+      height: 40px;
+      margin-right: var(--spacing-xs);
+    }
+
+    &__text {
+      color: var(--color-gray-400);
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: 0.1px;
+      margin: 0 var(--spacing-md) 0 0;
+    }
+
+    &__nav {
+      display: flex;
+      gap: var(--spacing-xs);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      &-item {
+        display: block;
+        list-style: none;
+        line-height: 1.4;
+      }
+
+      &-link {
+        display: block;
+        color: var(--color-gray-400);
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.4;
+        letter-spacing: 0.1px;
+        text-decoration: none;
+        transition: color var(--transition-time-quick)
+          var(--transition-easing-default);
+
+        &:hover {
+          color: var(--color-gray-050);
+        }
+      }
+    }
   }
 </style>

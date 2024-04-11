@@ -1,97 +1,128 @@
 ---
 import ButtonLink from "./ButtonLink.astro";
+import { graphql } from "gql.tada";
+import { client } from "../utils/graphql-client";
+import Logo from "./Logo.astro";
+import MenuBurger from "./MenuBurger.astro";
 
 const { slug } = Astro.params;
 
-const response = await fetch(
-  "https://graphql.contentful.com/content/v1/spaces/j8md9ikrag2j/environments/test?access_token=rzFgLmMrf5EspzL9QgEyOTPtIWdc-jGBIdk5GKs4Rfg",
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
-        query menu {
-          configCollection {
-            items {
-              menuCollection {
-                items {
-                  ... on Page {
-                    title
-                    menu
-                    slug
-                    sys {
-                      id
-                    }
-                  }
-                }
+const query = graphql(`
+  query menu {
+    configCollection {
+      items {
+        menuCollection {
+          items {
+            ... on Page {
+              title
+              menu
+              slug
+              sys {
+                id
               }
+              __typename
             }
           }
         }
-      `,
-    }),
+      }
+    }
   }
-);
+`);
 
-const json = await response.json();
-const {
-  configCollection: {
-    items: [
-      {
-        menuCollection: { items: menuItems },
-      },
-    ],
-  },
-} = json.data;
+const data = await client.request(query);
+
+const menuItems =
+  data?.configCollection?.items?.[0]?.menuCollection?.items || [];
 ---
 
 <header class="header">
   <div class="inner">
     <div class="left">
       <a href="/" class="home-link">
-        <svg
-          class="logo"
-          viewBox="0 0 200 200"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M0 0H200L150 50H50L0 0Z" fill="#E2E8E6"></path>
-          <path d="M100 100L0 0V200L100 100Z" fill="white"></path>
-        </svg>
+        <Logo class={"logo"} />
         <span class="home-link-text-mobile">
           FRONT<br />CONF 24
         </span>
       </a>
     </div>
     <div class="right">
-      <nav class="nav">
+      <nav id="navigation" class="nav">
         <ul class="nav-list">
           {
-            menuItems.map((item) => (
-              <li class="nav-list-item">
-                <a
-                  href={`/${item.slug}`}
-                  class:list={["link", { active: item.slug === slug }]}
-                >
-                  {item.menu || item.title}
-                </a>
-              </li>
-            ))
+            menuItems.map(
+              (item) =>
+                item &&
+                item.__typename === "Page" && (
+                  <li class="nav-list-item">
+                    <a
+                      href={`/${item.slug}`}
+                      class:list={["link", { active: item.slug === slug }]}
+                    >
+                      {item.menu || item.title}
+                    </a>
+                  </li>
+                )
+            )
           }
         </ul>
       </nav>
       <ButtonLink href={`/tickets`} variant="tertiary"
         >Get your ticket</ButtonLink
       >
+      <MenuBurger />
     </div>
   </div>
 </header>
+
+<script>
+  function attachListeners() {
+    const menuBurger = document.getElementById("menu-burger")!;
+    const navigation = document.getElementById("navigation")!;
+
+    function openMenu() {
+      menuBurger.classList.add("open");
+      menuBurger.setAttribute("aria-expanded", "true");
+      navigation.classList.add("is-open");
+    }
+
+    function closeMenu() {
+      menuBurger.classList.remove("open");
+      menuBurger.setAttribute("aria-expanded", "false");
+      navigation.classList.remove("is-open");
+    }
+    menuBurger.addEventListener("click", function () {
+      const currentlyOpen = this.getAttribute("aria-expanded") === "true";
+      if (currentlyOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+  }
+
+  document.addEventListener("astro:after-swap", () => {
+    console.log("after swap");
+    attachListeners();
+  });
+
+  document.addEventListener(
+    "astro:page-load",
+    () => {
+      console.log("page load");
+      attachListeners();
+    },
+    { once: true }
+  );
+</script>
 
 <style lang="scss">
   @import "../styles/_imports.scss";
 
   .header {
+    position: sticky;
     background: var(--color-black);
+    top: 0;
+    z-index: 10;
   }
 
   .inner {
@@ -101,9 +132,6 @@ const {
     margin: 0 auto;
     justify-content: space-between;
     align-items: center;
-  }
-
-  .left {
   }
 
   .home-link {
@@ -118,6 +146,7 @@ const {
     width: pxToRem(40);
   }
 
+  // TODO: Implement & use font mixins
   .home-link-text-mobile {
     position: relative;
     color: var(--color-gray-050);
@@ -132,37 +161,89 @@ const {
 
   .right {
     display: flex;
-    gap: var(--spacing-lg);
+    gap: pxToRem(16);
     align-items: center;
+
+    @include breakpoint-up("rg") {
+      gap: var(--spacing-lg);
+    }
   }
 
   .nav {
+    @include breakpoint-down("md") {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1;
+      background-color: var(--color-black);
+      padding: 20px 0 20px;
+      transform: translateY(60px);
+      transition: all var(--transition-time-medium) ease;
+      opacity: 0;
+      // TODO: Test on different deviced, might be shitty
+      height: calc(100vh - 80px);
+      pointer-events: none;
+
+      &.is-open {
+        transform: translateY(80px);
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
   }
 
   .nav-list {
-    display: flex;
-    align-items: flex-start;
-    gap: 40px;
-    list-style: none;
-    margin: 0;
     padding: 0;
+    margin: 0;
+
+    @include breakpoint-up("lg") {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+      list-style: none;
+    }
+
+    @include breakpoint-up("xl") {
+      gap: var(--spacing-lg);
+    }
   }
 
   .nav-list-item {
     display: block;
+    border-top: 1px solid var(--color-gray-600);
+    &:last-child {
+      border-bottom: 1px solid var(--color-gray-600);
+    }
+
+    @include breakpoint-up("lg") {
+      border-top: none;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
   }
 
+  // TODO: Implement & use font mixins
   .link {
+    display: block;
     color: var(--color-white);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 16px; /* 114.286% */
-    letter-spacing: 0.14px;
+    padding: pxToRem(16) var(--grid-padding);
+    font-size: 16px;
+    line-height: 1;
     text-decoration: none;
 
     &.active {
-      font-weight: bold; // TODO: Fix
+      color: var(--color-green-100);
+    }
+
+    @include breakpoint-up("lg") {
+      padding: 0;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.14;
+      letter-spacing: 0.14px;
     }
   }
 </style>

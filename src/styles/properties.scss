@@ -1,0 +1,48 @@
+@import "./_imports.scss";
+
+:root {
+  // colors
+  --color-white: #ffffff;
+  --color-gray-050: #f0f3f2;
+  --color-gray-100: #e2e8e6;
+  --color-gray-200: #cbd4d0;
+  --color-gray-400: #a9aeac;
+  --color-gray-500: #767878;
+  --color-gray-600: #4d4e4e;
+  --color-gray-700: #2a2a2a;
+  --color-gray-800: #1e1e1e;
+  --color-gray-900: #121212;
+  --color-black: #000000;
+
+  --color-green-100: #22ddcc;
+  --color-green-200: #11bbaa;
+  --color-green-300: #009494;
+
+  --color-purple-100: #8855ff;
+  --color-purple-200: #6633dd;
+  --color-purple-300: #331177;
+
+  --color-cardboard-100: #aaa192;
+  --color-cardboard-200: #aa9988;
+  --color-cardboard-300: #998877;
+
+  // spacing
+  --spacing-none: 0;
+  --spacing-xxs: #{pxToRem(4)};
+  --spacing-xs: #{pxToRem(8)};
+  --spacing-sm: #{pxToRem(20)};
+  --spacing-md: #{pxToRem(24)};
+  --spacing-lg: #{pxToRem(40)};
+  --spacing-xl: #{pxToRem(80)};
+  --spacing-xxl: #{pxToRem(120)};
+
+  --spacing-content: var(--spacing-md);
+
+  // grid
+  --grid-gap: var(--spacing-sm);
+  --grid-padding: var(--spacing-md);
+
+  --transition-time-quick: 150ms;
+  --transition-time-medium: 250ms;
+  --transition-easing-default: ease-in-out;
+}

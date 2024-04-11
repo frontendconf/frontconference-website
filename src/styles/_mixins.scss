@@ -1,36 +1,16 @@
-// @mixin mq-up($breakpoint) {
-//   @media (min-width: map-get($grid-breakpoints, $breakpoint)) {
-//     @content;
-//   }
-// }
+@mixin breakpoint-up($breakpoint) {
+  @media (min-width: map-get($grid-breakpoints, $breakpoint)) {
+    @content;
+  }
+}
 
-// @mixin mq-down($name, $breakpoints: $grid-breakpoints) {
-//   $max: breakpoint-max($name, $breakpoints);
-//   @if $max {
-//     @media (max-width: $max) {
-//       @content;
-//     }
-//   } @else {
-//     @content;
-//   }
-// }
-
-/**
- * Better font rendering (on OS X)
- * http://maximilianhoffmann.com/posts/better-font-rendering-on-osx
- *
- * Usage:
- *
- * .xy--dark-on-light {
- * 	@include fontSmoothing;
- * }
- * .xy--light-on-dark {
- * 	@include fontSmoothingReset;
- * }
- */
-
-// @mixin font-smoothing() {
-//   text-rendering: optimizeLegibility;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-// }
+@mixin breakpoint-down($name, $breakpoints: $grid-breakpoints) {
+  $max: breakpoint-max($name, $breakpoints);
+  @if $max {
+    @media (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
