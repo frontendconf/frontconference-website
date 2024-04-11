@@ -5,6 +5,7 @@ import { client } from "../utils/graphql-client";
 import Logo from "./Logo.astro";
 import MenuBurger from "./MenuBurger.astro";
 
+// TODO: find solution to identify current page other than slug (for special pages like speakers etc)
 const { slug } = Astro.params;
 
 const query = graphql(`
