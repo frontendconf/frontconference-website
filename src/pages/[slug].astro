@@ -1,87 +1,84 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { marked } from "marked";
+import { graphql } from "gql.tada";
+import { client } from "../utils/graphql-client";
 
 const { slug } = Astro.params;
 
-const response = await fetch(
-  "https://graphql.contentful.com/content/v1/spaces/j8md9ikrag2j/environments/test?access_token=rzFgLmMrf5EspzL9QgEyOTPtIWdc-jGBIdk5GKs4Rfg",
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
-      query($slug: String!) {
-          collection: pageCollection(where: { slug: $slug }) {
-            items {
-              title
-              lead
-              body
-              slug
-              menu
-              menuButton
-              showIntro
-              showNews
-              showSpeakers
-              showVenue
-              showSponsorshipCategories
-              showSponsors
-              showSponsorsDetailed
-              showWorkshops
-              showTeam
-              showJobs
-              showJobsDetailed
-              showSchedule
-              showHotels
-              showRestaurants
-              showCallForSpeakers
-              showSpeakersBootcampForm
-              bodyClass
-              menuClass
-              ctaText
-              specialPage
-              config
-              leadLogosCollection(limit: 5) {
-                items {
-                  url
-                }
-              }
-              contentTeasersCollection(limit: 4) {
-                items {
-                  body
-                  title
-                  ctaLabel
-                  body
-                  photo {
-                    url(
-                      transform: { width: 1200, height: 1200, resizeStrategy: FILL }
-                    )
-                  }
-                  link {
-                    ... on Page {
-                      slug
-                      title
-                    }
-                  }
-                }
+const query = graphql(`
+  query ($slug: String!) {
+    collection: pageCollection(where: { slug: $slug }) {
+      items {
+        title
+        lead
+        body
+        slug
+        menu
+        menuButton
+        showIntro
+        showNews
+        showSpeakers
+        showVenue
+        showSponsorshipCategories
+        showSponsors
+        showSponsorsDetailed
+        showWorkshops
+        showTeam
+        showJobs
+        showJobsDetailed
+        showSchedule
+        showHotels
+        showRestaurants
+        showCallForSpeakers
+        showSpeakersBootcampForm
+        bodyClass
+        menuClass
+        ctaText
+        specialPage
+        config
+        leadLogosCollection(limit: 5) {
+          items {
+            url
+          }
+        }
+        contentTeasersCollection(limit: 4) {
+          items {
+            body
+            title
+            ctaLabel
+            body
+            photo {
+              url(
+                transform: { width: 1200, height: 1200, resizeStrategy: FILL }
+              )
+            }
+            link {
+              ... on Page {
+                slug
+                title
               }
             }
           }
         }
-      `,
-      variables: {
-        slug,
-      },
-    }),
+      }
+    }
   }
-);
+`);
 
-const json = await response.json();
-const {
-  collection: {
-    items: [currentPage],
-  },
-} = json.data;
+const data = await client.request(query, {
+  slug: slug as string,
+});
+
+const currentPage = data.collection?.items[0];
+
+// TODO: double check if this is correct
+if (!currentPage || !currentPage.title) {
+  return {
+    status: 404,
+    error: "Page not found",
+  };
+}
 const content = currentPage.body && marked.parse(currentPage.body);
 ---
 
