@@ -45,7 +45,8 @@
   --grid-gap: var(--spacing-5x);
   --grid-padding: var(--spacing-6x);
 
-  --transition-time-quick: 150ms;
-  --transition-time-medium: 250ms;
+  // transition
+  --transition-duration-quick: 150ms;
+  --transition-duration-medium: 250ms;
   --transition-easing-default: ease-in-out;
 }
