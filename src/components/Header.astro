@@ -129,7 +129,7 @@ const menuItems =
   .inner {
     display: flex;
     max-width: 1400px; // TODO: use rem & variable
-    padding: var(--spacing-sm) var(--grid-padding);
+    padding: var(--spacing-5x) var(--spacing-6x);
     margin: 0 auto;
     justify-content: space-between;
     align-items: center;
@@ -137,7 +137,7 @@ const menuItems =
 
   .home-link {
     display: flex;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-2x);
     text-decoration: none !important;
   }
 
@@ -166,7 +166,7 @@ const menuItems =
     align-items: center;
 
     @include breakpoint-up("rg") {
-      gap: var(--spacing-lg);
+      gap: var(--spacing-10x);
     }
   }
 
@@ -201,12 +201,12 @@ const menuItems =
     @include breakpoint-up("lg") {
       display: flex;
       align-items: flex-start;
-      gap: var(--spacing-sm);
+      gap: var(--spacing-5x);
       list-style: none;
     }
 
     @include breakpoint-up("xl") {
-      gap: var(--spacing-lg);
+      gap: var(--spacing-10x);
     }
   }
 
