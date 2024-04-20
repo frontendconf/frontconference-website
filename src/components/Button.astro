@@ -1,15 +1,17 @@
 ---
-export interface Props {
-  id?: string;
-  variant?: "primary" | "secondary" | "tertiary" | "quaternary";
-}
+import type { HTMLTag, Polymorphic } from "astro/types";
 
-const { variant = "primary", id } = Astro.props;
+type Props<Tag extends HTMLTag> = Polymorphic<{
+  as: Tag;
+  variant?: "primary" | "secondary" | "tertiary" | "quaternary";
+}>;
+
+const { as: Tag = "button", variant, ...rest } = Astro.props;
 ---
 
-<button id={id} class:list={["button", variant]} type="button">
+<Tag class:list={["button", variant]} {...rest}>
   <span class="inner"><slot /></span>
-</button>
+</Tag>
 
 <style lang="scss">
   @import "../styles/_imports.scss";
@@ -28,7 +30,10 @@ const { variant = "primary", id } = Astro.props;
     --button-focus-background-color: var(--color-black);
     --button-focus-outline-color: var(--color-green-100);
 
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
     position: relative;
     height: pxToRem(40);
     clip-path: polygon(
@@ -41,22 +46,25 @@ const { variant = "primary", id } = Astro.props;
     );
     border: 0 none;
     appearance: none;
-    padding: 0 pxToRem(30);
+    padding-inline: pxToRem(30);
     color: var(--button-color);
     background-color: var(--button-background-color);
     outline: none !important;
 
-    transition:
-      color 150ms ease,
-      background-color 150ms ease; // TODO: use timings variable
+    transition: var(--transition-duration-quick)
+      var(--transition-easing-default);
+    transition-property: color, background-color;
 
     font-variant-numeric: lining-nums tabular-nums; // TODO: type mixins or whatever
-    // font-family: "Brutal Type";
     font-size: 16px; // TODO: type mixins or whatever
     font-style: normal; // TODO: type mixins or whatever
     font-weight: 400; // TODO: type mixins or whatever
     line-height: 1.25; // TODO: type mixins or whatever
     letter-spacing: 0.16px; // TODO: type mixins or whatever
+
+    &:not(:disabled) {
+      cursor: pointer;
+    }
 
     &::before {
       content: "";
@@ -67,7 +75,8 @@ const { variant = "primary", id } = Astro.props;
       right: 3px; // TODO: use rem
       bottom: 2px; // TODO: use rem
       background-color: var(--button-background-color);
-      transition: background-color 150ms ease; // TODO: use timings variable
+      transition: background-color var(--transition-duration-quick)
+        var(--transition-easing-default);
       // TODO: use rem
       clip-path: polygon(
         11px 0%,
@@ -78,7 +87,6 @@ const { variant = "primary", id } = Astro.props;
         0% 50%
       );
       z-index: 1;
-      // opacity: 0;
     }
 
     &:hover {

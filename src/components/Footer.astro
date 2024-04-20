@@ -1,7 +1,7 @@
 ---
 import { client } from "../utils/graphql-client";
 import { graphql } from "gql.tada";
-import ButtonLink from "./ButtonLink.astro";
+import Button from "./Button.astro";
 import NewsletterSignup from "./NewsletterSignup.astro";
 import Logo from "./Logo.astro";
 
@@ -83,11 +83,11 @@ const socialMediaItems =
           (item) =>
             item && (
               <li class="cta-nav-list-item">
-                <ButtonLink href={`/${item.slug}`} variant="tertiary">
+                <Button as="a" href={`/${item.slug}`} variant="tertiary">
                   {item.title}
-                </ButtonLink>
+                </Button>
               </li>
-            )
+            ),
         )
       }
     </ul>
@@ -108,7 +108,7 @@ const socialMediaItems =
                     {item.title}
                   </a>
                 </li>
-              )
+              ),
           )
         }
       </ul>
@@ -151,7 +151,7 @@ const socialMediaItems =
                   </a>
                 </li>
               </>
-            )
+            ),
         )
       }
     </ul>

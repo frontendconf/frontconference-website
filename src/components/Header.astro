@@ -1,5 +1,5 @@
 ---
-import ButtonLink from "./ButtonLink.astro";
+import Button from "./Button.astro";
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
 import Logo from "./Logo.astro";
@@ -62,14 +62,14 @@ const menuItems =
                       {item.menu || item.title}
                     </a>
                   </li>
-                )
+                ),
             )
           }
         </ul>
       </nav>
-      <ButtonLink href={`/tickets`} variant="tertiary"
-        >Get your ticket</ButtonLink
-      >
+      <Button as="a" href={`/tickets`} variant="tertiary">
+        Get your ticket
+      </Button>
       <MenuBurger />
     </div>
   </div>
@@ -112,7 +112,7 @@ const menuItems =
       console.log("page load");
       attachListeners();
     },
-    { once: true }
+    { once: true },
   );
 </script>
 
