@@ -1,10 +1,9 @@
 ---
 import type { HTMLTag, Polymorphic } from "astro/types";
 
-type Props<Tag extends HTMLTag> = Polymorphic<{
-  as: Tag;
+export interface Props<Tag extends HTMLTag> extends Polymorphic<{ as: Tag }> {
   variant?: "primary" | "secondary" | "tertiary" | "quaternary";
-}>;
+}
 
 const { as: Tag = "button", variant, ...rest } = Astro.props;
 ---
