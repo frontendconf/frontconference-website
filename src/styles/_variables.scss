@@ -7,12 +7,12 @@ $grid-gutters: (
 
 $grid-breakpoints: (
   xs: 0,
-  sm: 400px,
-  rg: 500px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px,
-  xxl: 1500px,
+  sm: 600px,
+  md: 800px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1440px,
+  xxxl: 1920px,
 );
 
 // $transition-time-simple: 150ms !default;
@@ -33,4 +33,4 @@ $grid-breakpoints: (
 // $transition-easing-decelerate: cubic-bezier(0, 0, 0.2, 1) !default;
 // $transition-easing-accelerate: cubic-bezier(0.4, 0, 1, 1) !default;
 
-$font-size-tiny: 30px;
+//$font-size-tiny: 30px;
