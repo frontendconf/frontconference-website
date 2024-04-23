@@ -4,19 +4,19 @@
   aria-controls="mobile-menu"
   aria-expanded="false"
 >
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
 </button>
 
 <style lang="scss">
   @import "../styles/_imports.scss";
 
   #menu-burger {
-    width: 20px;
-    height: 21px; // Needs to be a number that can be evenly divided by 3
     position: relative;
+    width: pxToRem(20);
+    height: pxToRem(21); // Needs to be a number that can be evenly divided by 3
     appearance: none;
     border: none;
     background: transparent;
@@ -31,43 +31,45 @@
       display: none;
     }
 
-    div {
+    span {
       width: 100%;
       height: pxToRem(3);
-      width: 100%;
       background: var(--color-green-100);
       border-radius: 2px;
       opacity: 1;
-      left: 0;
-      transform: rotate(0deg);
-      transition: all 0.25s ease-in-out;
-    }
+      rotate: 0deg;
+      transition: var(--transition-duration-medium)
+        var(--transition-easing-default);
+      transition-property: rotate, opacity;
 
-    div:nth-child(1) {
-      grid-area: one;
-    }
+      &:nth-child(1) {
+        grid-area: one;
+      }
 
-    div:nth-child(2),
-    div:nth-child(3) {
-      grid-area: two;
-    }
+      &:nth-child(2),
+      &:nth-child(3) {
+        grid-area: two;
+      }
 
-    div:nth-child(4) {
-      grid-area: three;
+      &:nth-child(4) {
+        grid-area: three;
+      }
     }
 
     &.open {
-      div:nth-child(1),
-      div:nth-child(4) {
-        opacity: 0;
-      }
+      span {
+        &:nth-child(1),
+        &:nth-child(4) {
+          opacity: 0;
+        }
 
-      div:nth-child(2) {
-        transform: rotate(45deg);
-      }
+        &:nth-child(2) {
+          rotate: 45deg;
+        }
 
-      div:nth-child(3) {
-        transform: rotate(-45deg);
+        &:nth-child(3) {
+          rotate: -45deg;
+        }
       }
     }
   }

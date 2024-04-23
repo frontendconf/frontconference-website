@@ -3,7 +3,7 @@
 :root {
   // colors
   --color-white: #ffffff;
-  --color-gray-050: #f0f3f2;
+  --color-gray-50: #f0f3f2;
   --color-gray-100: #e2e8e6;
   --color-gray-200: #cbd4d0;
   --color-gray-400: #a9aeac;
@@ -26,23 +26,33 @@
   --color-cardboard-200: #aa9988;
   --color-cardboard-300: #998877;
 
-  // spacing
-  --spacing-none: 0;
-  --spacing-xxs: #{pxToRem(4)};
-  --spacing-xs: #{pxToRem(8)};
-  --spacing-sm: #{pxToRem(20)};
-  --spacing-md: #{pxToRem(24)};
-  --spacing-lg: #{pxToRem(40)};
-  --spacing-xl: #{pxToRem(80)};
-  --spacing-xxl: #{pxToRem(120)};
+  // typography
+  --font-family-fallback: system-ui, sans-serif;
+  --font-family-regular: "BrutalType-Regular", var(--font-family-fallback);
+  --font-family-medium: "BrutalType-Medium", var(--font-family-fallback);
+  --font-family-bold: "BrutalType-Bold", var(--font-family-fallback);
 
-  --spacing-content: var(--spacing-md);
+  // spacing
+  --spacing-1x: #{pxToRem(4)}; // spacing-xxs
+  --spacing-2x: calc(2 * var(--spacing-1x)); // spacing-xs
+  --spacing-3x: calc(3 * var(--spacing-1x));
+  --spacing-4x: calc(4 * var(--spacing-1x));
+  --spacing-5x: calc(5 * var(--spacing-1x)); // spacing-sm
+  --spacing-6x: calc(6 * var(--spacing-1x)); // spacing-md
+  --spacing-8x: calc(8 * var(--spacing-1x));
+  --spacing-10x: calc(10 * var(--spacing-1x)); // spacing-lg
+  --spacing-12x: calc(12 * var(--spacing-1x));
+  --spacing-16x: calc(16 * var(--spacing-1x));
+  --spacing-20x: calc(20 * var(--spacing-1x)); // spacing-xl
+  --spacing-24x: calc(24 * var(--spacing-1x));
+  --spacing-30x: calc(30 * var(--spacing-1x)); // spacing-xxl
 
   // grid
-  --grid-gap: var(--spacing-sm);
-  --grid-padding: var(--spacing-md);
+  --grid-gap: var(--spacing-5x);
+  --grid-padding: var(--spacing-6x);
 
-  --transition-time-quick: 150ms;
-  --transition-time-medium: 250ms;
+  // transition
+  --transition-duration-quick: 150ms;
+  --transition-duration-medium: 250ms;
   --transition-easing-default: ease-in-out;
 }

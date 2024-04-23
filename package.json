@@ -19,6 +19,8 @@
     "web-vitals": "^3.3.1"
   },
   "devDependencies": {
-    "@0no-co/graphqlsp": "^1.7.1"
+    "@0no-co/graphqlsp": "^1.7.1",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0"
   }
 }

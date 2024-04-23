@@ -1,7 +1,7 @@
 ---
 import { client } from "../utils/graphql-client";
 import { graphql } from "gql.tada";
-import ButtonLink from "./ButtonLink.astro";
+import Button from "./Button.astro";
 import NewsletterSignup from "./NewsletterSignup.astro";
 import Logo from "./Logo.astro";
 
@@ -83,11 +83,11 @@ const socialMediaItems =
           (item) =>
             item && (
               <li class="cta-nav-list-item">
-                <ButtonLink href={`/${item.slug}`} variant="tertiary">
+                <Button as="a" href={`/${item.slug}`} variant="tertiary">
                   {item.title}
-                </ButtonLink>
+                </Button>
               </li>
-            )
+            ),
         )
       }
     </ul>
@@ -108,7 +108,7 @@ const socialMediaItems =
                     {item.title}
                   </a>
                 </li>
-              )
+              ),
           )
         }
       </ul>
@@ -151,7 +151,7 @@ const socialMediaItems =
                   </a>
                 </li>
               </>
-            )
+            ),
         )
       }
     </ul>
@@ -165,7 +165,7 @@ const socialMediaItems =
     display: flex;
     flex-wrap: wrap;
     background: var(--color-black);
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-10x) var(--spacing-6x);
     gap: 64px; // no spacing for this??
   }
 
@@ -175,14 +175,14 @@ const socialMediaItems =
   }
 
   .newsletter-wrapper {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-10x);
   }
 
   .cta-nav-list {
     display: flex;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-2x);
     padding: 0;
-    margin: 0 0 var(--spacing-lg);
+    margin: 0 0 var(--spacing-10x);
     list-style: none;
   }
 
@@ -210,7 +210,7 @@ const socialMediaItems =
     line-height: 1.14;
     letter-spacing: 0.14px;
     text-decoration: none;
-    transition: color var(--transition-time-quick) ease-in-out;
+    transition: color var(--transition-duration-quick) ease-in-out;
 
     &:hover,
     &:active {
@@ -232,7 +232,7 @@ const socialMediaItems =
       display: block;
       width: 40px;
       height: 40px;
-      margin-right: var(--spacing-xs);
+      margin-right: var(--spacing-2x);
     }
 
     &__text {
@@ -242,12 +242,12 @@ const socialMediaItems =
       font-weight: 400;
       line-height: 1.4;
       letter-spacing: 0.1px;
-      margin: 0 var(--spacing-md) 0 0;
+      margin: 0 var(--spacing-6x) 0 0;
     }
 
     &__nav {
       display: flex;
-      gap: var(--spacing-xs);
+      gap: var(--spacing-2x);
       list-style: none;
       margin: 0;
       padding: 0;
@@ -267,11 +267,11 @@ const socialMediaItems =
         line-height: 1.4;
         letter-spacing: 0.1px;
         text-decoration: none;
-        transition: color var(--transition-time-quick)
+        transition: color var(--transition-duration-quick)
           var(--transition-easing-default);
 
         &:hover {
-          color: var(--color-gray-050);
+          color: var(--color-gray-50);
         }
       }
     }

@@ -1,5 +1,5 @@
 ---
-import ButtonLink from "./ButtonLink.astro";
+import Button from "./Button.astro";
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
 import Logo from "./Logo.astro";
@@ -62,14 +62,14 @@ const menuItems =
                       {item.menu || item.title}
                     </a>
                   </li>
-                )
+                ),
             )
           }
         </ul>
       </nav>
-      <ButtonLink href={`/tickets`} variant="tertiary"
-        >Get your ticket</ButtonLink
-      >
+      <Button as="a" href={`/tickets`} variant="tertiary">
+        Get your ticket
+      </Button>
       <MenuBurger />
     </div>
   </div>
@@ -112,7 +112,7 @@ const menuItems =
       console.log("page load");
       attachListeners();
     },
-    { once: true }
+    { once: true },
   );
 </script>
 
@@ -129,7 +129,7 @@ const menuItems =
   .inner {
     display: flex;
     max-width: 1400px; // TODO: use rem & variable
-    padding: var(--spacing-sm) var(--grid-padding);
+    padding: var(--spacing-5x) var(--spacing-6x);
     margin: 0 auto;
     justify-content: space-between;
     align-items: center;
@@ -137,8 +137,9 @@ const menuItems =
 
   .home-link {
     display: flex;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-2x);
     text-decoration: none !important;
+    overflow: hidden;
   }
 
   .logo {
@@ -150,7 +151,7 @@ const menuItems =
   // TODO: Implement & use font mixins
   .home-link-text-mobile {
     position: relative;
-    color: var(--color-gray-050);
+    color: var(--color-gray-50);
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -166,7 +167,7 @@ const menuItems =
     align-items: center;
 
     @include breakpoint-up("rg") {
-      gap: var(--spacing-lg);
+      gap: var(--spacing-10x);
     }
   }
 
@@ -180,7 +181,7 @@ const menuItems =
       background-color: var(--color-black);
       padding: 20px 0 20px;
       transform: translateY(60px);
-      transition: all var(--transition-time-medium) ease;
+      transition: all var(--transition-duration-medium) ease;
       opacity: 0;
       // TODO: Test on different deviced, might be shitty
       height: calc(100vh - 80px);
@@ -201,12 +202,12 @@ const menuItems =
     @include breakpoint-up("lg") {
       display: flex;
       align-items: flex-start;
-      gap: var(--spacing-sm);
+      gap: var(--spacing-5x);
       list-style: none;
     }
 
     @include breakpoint-up("xl") {
-      gap: var(--spacing-lg);
+      gap: var(--spacing-10x);
     }
   }
 
