@@ -1,0 +1,30 @@
+/**
+ * Credit: Sebastiano Guerriero
+ * https://medium.com/codyhouse/a-new-approach-to-visibility-utility-classes-based-on-css-variables-eb1e2a01fa3b
+ */
+
+:root {
+  --display: block;
+}
+
+[class^="display--"] {
+  display: none !important;
+}
+
+@each $key, $_value in $grid-breakpoints {
+  @include breakpoint-up($key) {
+    .display--#{$key} {
+      display: var(--display) !important;
+    }
+
+    .hide--#{$key} {
+      display: none !important;
+    }
+  }
+}
+
+@mixin display($display-value) {
+  --display: #{$display-value};
+
+  display: var(--display);
+}
