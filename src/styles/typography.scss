@@ -1,10 +1,9 @@
 body {
-  font-family: var(--font-family-regular);
-  font-weight: normal;
+  @include typo-family-regular;
   color: var(--color-white);
 }
 
-b, strong {
-  font-family: var(--font-family-bold);
-  font-weight: normal;
+b,
+strong {
+  @include typo-family-bold;
 }

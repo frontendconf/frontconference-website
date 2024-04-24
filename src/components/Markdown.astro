@@ -1,0 +1,83 @@
+---
+import { marked } from "marked";
+
+export interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+
+const content = text && marked.parse(text);
+---
+
+<div class="markdown" set:html={content} />
+
+<style lang="scss" is:global>
+  @import "../styles/_imports.scss";
+
+  .markdown {
+    h2 {
+      @extend %typo-h2;
+    }
+
+    h3 {
+      @extend %typo-h3;
+    }
+
+    h4 {
+      @extend %typo-h4;
+    }
+
+    h5 {
+      @extend %typo-h5;
+    }
+
+    h6 {
+      @extend %typo-h6;
+    }
+
+    p {
+      @extend %typo-body;
+      margin: 0 0 pxToRem(16);
+    }
+
+    table {
+      // TODO
+    }
+
+    ul {
+      padding-left: var(--spacing-5x);
+      li {
+        @extend %typo-body;
+      }
+    }
+
+    a {
+      // TODO
+    }
+
+    // Embedded videos
+    .video {
+      height: 0;
+      padding-bottom: 56.25%;
+      position: relative;
+      margin: var(--spacing-10x) 0;
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+    }
+
+    // Remove unnecessary margins from trailing elements
+    > * {
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+</style>
