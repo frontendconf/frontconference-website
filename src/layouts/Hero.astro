@@ -30,11 +30,16 @@ const { title, displayBacklink = false } = Astro.props;
     &__inner {
       display: flex;
       max-width: var(--max-content-width);
-      padding: 0 var(--grid-padding) var(--spacing-16x);
+      padding-inline: var(--grid-padding);
+      padding-block-end: var(--spacing-16x);
       margin: 0 auto;
       justify-content: space-between;
       flex-direction: column;
       height: 100%;
+
+      @include breakpoint-up("lg") {
+        padding-block-end: var(--spacing-20x);
+      }
     }
 
     &__backlink-wrapper {
