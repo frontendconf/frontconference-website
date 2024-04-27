@@ -84,36 +84,5 @@ if (!currentPage || !currentPage.title) {
 <ContentLayout title={currentPage.title}>
   <!-- TODO: What about the lead, is this not used anymore? -->
   <!-- <p>{currentPage.lead}</p> -->
-  <div class="content">
-    <div class="content__inner">
-      {currentPage.body && <Markdown text={currentPage.body} />}
-    </div>
-  </div>
+  {currentPage.body && <Markdown text={currentPage.body} />}
 </ContentLayout>
-
-<style lang="scss">
-  @import "../styles/_imports.scss";
-
-  .content {
-    max-width: var(--max-content-width);
-    padding: var(--spacing-12x) var(--grid-padding);
-    margin: 0 auto;
-
-    @include breakpoint-up("md") {
-      padding: var(--spacing-20x) var(--grid-padding);
-
-      &__inner {
-        max-width: 920px;
-        padding: 0 80px;
-      }
-    }
-
-    @include breakpoint-up("xl") {
-      padding: 120px var(--grid-padding);
-
-      &__inner {
-        padding: 0 120px;
-      }
-    }
-  }
-</style>

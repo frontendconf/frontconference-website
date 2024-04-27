@@ -25,13 +25,16 @@ const { title, isHome } = Astro.props;
       @import "../styles/global.scss";
       @import "../styles/typography.scss";
       @import "../styles/visibility.scss";
+      @import "../styles/grid.scss";
     </style>
   </head>
   <body>
     <Header />
     <slot name="after-header" />
     <main class:list={[isHome && "home"]}>
-      <slot />
+      <div class="container grid section">
+        <slot />
+      </div>
     </main>
     <Footer />
   </body>

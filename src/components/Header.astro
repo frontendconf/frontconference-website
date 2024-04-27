@@ -62,7 +62,7 @@ const menuItems =
                       {item.menu || item.title}
                     </a>
                   </li>
-                )
+                ),
             )
           }
         </ul>
@@ -112,7 +112,7 @@ const menuItems =
       console.log("page load");
       attachListeners();
     },
-    { once: true }
+    { once: true },
   );
 </script>
 
@@ -128,11 +128,12 @@ const menuItems =
 
   .inner {
     display: flex;
-    max-width: var(--max-content-width);
-    padding: var(--spacing-5x) var(--grid-padding);
-    margin: 0 auto;
     justify-content: space-between;
     align-items: center;
+    // we can't use container here due to sticky behaviour
+    max-width: var(--max-content-width);
+    padding: var(--spacing-5x) var(--grid-padding);
+    margin-inline: auto;
   }
 
   .home-link {
