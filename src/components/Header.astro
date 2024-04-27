@@ -67,7 +67,7 @@ const menuItems =
                       {item.menu || item.title}
                     </a>
                   </li>
-                )
+                ),
             )
           }
         </ul>
@@ -118,7 +118,7 @@ const menuItems =
       console.log("page load");
       attachListeners();
     },
-    { once: true }
+    { once: true },
   );
 </script>
 
@@ -148,6 +148,10 @@ const menuItems =
     text-decoration: none;
     overflow: hidden;
     color: var(--color-gray-50);
+
+    @include breakpoint-up("sm") {
+      margin-block-start: var(--spacing-1x);
+    }
   }
 
   .logo {
