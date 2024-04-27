@@ -7,39 +7,34 @@ export interface Props {
 const { title, displayBacklink = false } = Astro.props;
 ---
 
-<section class="hero">
-  <div class="hero__inner">
-    <div class="hero__backlink-wrapper">
-      <!-- 
-      We can keep track of the curentpage and what the last page was that 
-      the user was on. When keeping track, we can always navigate to the page the user was before. We can store tha pages title and url in memory and then navigate to that page when the user clicks the backlink. (or use history back, but we still need the last pages title to display it in the backlink -> You can get to the speakers detail page from home or the speakers overview page)
-      -->
-      {displayBacklink && <p>TODO Backlink</p>}
-    </div>
-    <h1 class="hero__title">{title}</h1>
-  </div>
+<section class="hero container">
+  {
+    displayBacklink && (
+      <div class="hero__backlink-wrapper">
+        {/**
+         * We can keep track of the curentpage and what the last page was that
+         * the user was on. When keeping track, we can always navigate to the page the user was before. We can store tha pages title and url in memory and then navigate to that page when the user clicks the backlink. (or use history back, but we still need the last pages title to display it in the backlink -> You can get to the speakers detail page from home or the speakers overview page)
+         */}
+        <p>TODO Backlink</p>
+      </div>
+    )
+  }
+  <h1 class="hero__title">{title}</h1>
 </section>
 
 <style lang="scss">
   @import "../styles/_imports.scss";
 
   .hero {
+    display: flex;
+    flex-direction: column;
+    max-width: var(--max-content-width);
     height: pxToRem(420);
     background: var(--color-black);
+    padding-block-end: var(--spacing-16x);
 
-    &__inner {
-      display: flex;
-      max-width: var(--max-content-width);
-      padding-inline: var(--grid-padding);
-      padding-block-end: var(--spacing-16x);
-      margin: 0 auto;
-      justify-content: space-between;
-      flex-direction: column;
-      height: 100%;
-
-      @include breakpoint-up("lg") {
-        padding-block-end: var(--spacing-20x);
-      }
+    @include breakpoint-up("lg") {
+      padding-block-end: var(--spacing-20x);
     }
 
     &__backlink-wrapper {
@@ -49,7 +44,7 @@ const { title, displayBacklink = false } = Astro.props;
     &__title {
       @extend %typo-h1;
       color: var(--color-white);
-      margin: 0;
+      margin-block: auto 0;
     }
   }
 </style>
