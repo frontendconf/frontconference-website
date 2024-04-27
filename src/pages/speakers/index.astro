@@ -3,11 +3,11 @@ import { graphql } from "gql.tada";
 import Layout from "../../layouts/Layout.astro";
 import { client } from "../../utils/graphql-client";
 import { notEmpty } from "../../utils/helpers";
-import Hero from "../../layouts/Hero.astro";
+import Hero from "../../components/Hero.astro";
 
 Astro.response.headers.set(
   "Cache-Control",
-  "s-maxage=60, stale-while-revalidate"
+  "s-maxage=60, stale-while-revalidate",
 );
 
 // TODO: Update $yearTag when enough speakers are there

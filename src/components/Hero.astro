@@ -7,7 +7,7 @@ export interface Props {
 const { title, displayBacklink = false } = Astro.props;
 ---
 
-<div class="hero">
+<section class="hero">
   <div class="hero__inner">
     <div class="hero__backlink-wrapper">
       <!-- 
@@ -18,7 +18,7 @@ const { title, displayBacklink = false } = Astro.props;
     </div>
     <h1 class="hero__title">{title}</h1>
   </div>
-</div>
+</section>
 
 <style lang="scss">
   @import "../styles/_imports.scss";
