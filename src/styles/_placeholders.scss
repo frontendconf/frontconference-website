@@ -1,0 +1,124 @@
+%typo-h1 {
+  @include typo-family-light;
+  font-size: pxToRem(54);
+  line-height: calc(62 / 54);
+  letter-spacing: -0.5%;
+
+  @include breakpoint-up("lg") {
+    font-size: pxToRem(64);
+    line-height: calc(72 / 64);
+  }
+}
+
+%typo-h2 {
+  @include typo-family-light;
+  font-size: pxToRem(38);
+  line-height: calc(46 / 38);
+  letter-spacing: -0.5%;
+
+  @include breakpoint-up("lg") {
+    font-size: pxToRem(48);
+    line-height: calc(56 / 48);
+  }
+}
+
+%typo-h3 {
+  @include typo-family-light;
+  font-size: pxToRem(26);
+  line-height: calc(32 / 26);
+  letter-spacing: -0.5%;
+
+  @include breakpoint-up("lg") {
+    font-size: pxToRem(36);
+    line-height: calc(40 / 36);
+  }
+}
+
+%typo-h4 {
+  @include typo-family-bold;
+  font-size: pxToRem(22);
+  line-height: calc(30 / 22);
+  letter-spacing: -0.5%;
+
+  @include breakpoint-up("lg") {
+    font-size: pxToRem(32);
+    line-height: calc(36 / 32);
+  }
+}
+
+%typo-h5 {
+  @include typo-family-bold;
+  font-size: pxToRem(18);
+  line-height: calc(24 / 18);
+
+  @include breakpoint-up("lg") {
+    font-size: pxToRem(24);
+    line-height: calc(28 / 24);
+  }
+}
+
+%typo-h6 {
+  @include typo-family-bold;
+  font-size: pxToRem(16);
+  line-height: calc(20 / 16);
+
+  @include breakpoint-up("lg") {
+    font-size: pxToRem(20);
+    line-height: calc(24 / 20);
+  }
+}
+
+%typo-lead {
+  @include typo-family-regular;
+  font-size: pxToRem(18);
+  line-height: calc(28 / 18);
+
+  @include breakpoint-up("lg") {
+    font-size: pxToRem(20);
+    line-height: calc(32 / 20);
+  }
+}
+
+%typo-body {
+  @include typo-family-regular;
+  font-size: pxToRem(14);
+  line-height: calc(20 / 14);
+  letter-spacing: 0.25%;
+
+  @include breakpoint-up("lg") {
+    font-size: pxToRem(16);
+    line-height: calc(24 / 16);
+  }
+}
+
+%typo-body-caption {
+  @include typo-family-bold;
+  font-size: pxToRem(14);
+  line-height: calc(20 / 14);
+  letter-spacing: 0.25%;
+
+  @include breakpoint-up("lg") {
+    font-size: pxToRem(16);
+    line-height: calc(24 / 16);
+  }
+}
+
+%typo-small {
+  @include typo-family-regular;
+  font-size: pxToRem(11);
+  line-height: calc(14 / 11);
+  letter-spacing: 0.5%;
+
+  @include breakpoint-up("lg") {
+    font-size: pxToRem(12);
+    line-height: calc(16 / 12);
+  }
+}
+
+%typo-label {
+  @include typo-family-regular;
+  font-size: pxToRem(10);
+  line-height: calc(14 / 10);
+  letter-spacing: 1%;
+  // No desktop styles
+}

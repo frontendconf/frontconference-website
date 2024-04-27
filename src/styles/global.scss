@@ -8,3 +8,8 @@ body {
 * {
   box-sizing: border-box;
 }
+
+a,
+button {
+  outline-offset: 4px;
+}

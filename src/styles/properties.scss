@@ -28,6 +28,7 @@
 
   // typography
   --font-family-fallback: system-ui, sans-serif;
+  --font-family-light: "BrutalType-Light", var(--font-family-fallback);
   --font-family-regular: "BrutalType-Regular", var(--font-family-fallback);
   --font-family-medium: "BrutalType-Medium", var(--font-family-fallback);
   --font-family-bold: "BrutalType-Bold", var(--font-family-fallback);
@@ -48,6 +49,7 @@
   --spacing-30x: calc(30 * var(--spacing-1x)); // spacing-xxl
 
   // grid
+  --max-content-width: calc(#{pxToRem(1400)} + 2 * var(--grid-padding));
   --grid-gap: var(--spacing-5x);
   --grid-padding: var(--spacing-6x);
 

@@ -5,7 +5,7 @@ import { client } from "../utils/graphql-client";
 import Logo from "./Logo.astro";
 import MenuBurger from "./MenuBurger.astro";
 
-// TODO: find solution to identify current page other than slug (for special pages like speakers etc)
+// TODO: find solution to identify current page other than slug (for non-standard pages like speakers etc.)
 const { slug } = Astro.params;
 
 const query = graphql(`
@@ -67,7 +67,7 @@ const menuItems =
                       {item.menu || item.title}
                     </a>
                   </li>
-                ),
+                )
             )
           }
         </ul>
@@ -118,7 +118,7 @@ const menuItems =
       console.log("page load");
       attachListeners();
     },
-    { once: true },
+    { once: true }
   );
 </script>
 
@@ -134,8 +134,8 @@ const menuItems =
 
   .inner {
     display: flex;
-    max-width: 1400px; // TODO: use rem & variable
-    padding-inline: var(--spacing-6x);
+    max-width: var(--max-content-width);
+    padding-inline: var(--grid-padding);
     margin-inline: auto;
     justify-content: space-between;
     align-items: center;
@@ -160,7 +160,6 @@ const menuItems =
     }
   }
 
-  // TODO: Implement & use font mixins
   .home-link-wrapper {
     display: flex;
     flex-direction: column;
@@ -183,6 +182,7 @@ const menuItems =
 
   .home-link-text {
     font-family: var(--font-family-bold);
+    @include typo-family-medium;
     font-size: 14px;
     line-height: 1.14; /* 114.286% */
     letter-spacing: 0.42px;
