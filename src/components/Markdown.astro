@@ -42,7 +42,35 @@ const content = text && marked.parse(text);
     }
 
     table {
-      // TODO
+      width: 100%;
+      border-collapse: collapse;
+      overflow-x: auto;
+      // fix for responsive table overflow - since no wrapper is available
+      display: block;
+
+      th,
+      td {
+        padding-block: var(--spacing-2x);
+        padding-inline: var(--spacing-2x);
+
+        @include breakpoint-up("md") {
+          padding-inline: var(--spacing-4x);
+        }
+      }
+
+      th {
+        text-align: left;
+      }
+
+      tbody {
+        tr:nth-child(odd) {
+          background: var(--color-gray-50);
+        }
+
+        tr {
+          border-top: 1px solid var(--color-gray-100);
+        }
+      }
     }
 
     ul {
@@ -57,8 +85,24 @@ const content = text && marked.parse(text);
       }
     }
 
+    // TODO: add links with icon
     a {
-      // TODO
+      color: var(--color-green-300);
+      text-underline-offset: 4px;
+      transition: color var(--transition-duration-quick)
+        var(--transition-easing-default);
+
+      &:hover {
+        color: var(--color-green-100);
+      }
+
+      &:active {
+        color: var(--color-green-300);
+      }
+
+      &:focus {
+        text-decoration-color: var(--color-green-100);
+      }
     }
 
     // Embedded videos
