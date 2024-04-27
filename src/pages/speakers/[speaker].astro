@@ -1,7 +1,6 @@
 ---
 import { graphql } from "gql.tada";
-import Hero from "../../components/Hero.astro";
-import Layout from "../../layouts/Layout.astro";
+import ContentLayout from "../../layouts/ContentLayout.astro";
 import { client } from "../../utils/graphql-client";
 
 const { speaker: slug } = Astro.params;
@@ -32,7 +31,6 @@ if (!speaker || !speaker.name) {
 }
 ---
 
-<Layout title={speaker.name}>
-  <Hero title={speaker.name} displayBacklink />
+<ContentLayout title={speaker.name} displayBacklink>
   <p>{speaker.description}</p>
-</Layout>
+</ContentLayout>
