@@ -1,0 +1,132 @@
+---
+import { marked } from "marked";
+
+export interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+
+const content = text && marked.parse(text);
+---
+
+<div class="markdown" set:html={content} />
+
+<style lang="scss" is:global>
+  @import "../styles/_imports.scss";
+
+  .markdown {
+    h2 {
+      @extend %typo-h2;
+    }
+
+    h3 {
+      @extend %typo-h3;
+    }
+
+    h4 {
+      @extend %typo-h4;
+    }
+
+    h5 {
+      @extend %typo-h5;
+    }
+
+    h6 {
+      @extend %typo-h6;
+    }
+
+    p {
+      @extend %typo-body;
+      margin: 0 0 pxToRem(16);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow-x: auto;
+      // fix for responsive table overflow - since no wrapper is available
+      display: block;
+
+      th,
+      td {
+        padding-block: var(--spacing-2x);
+        padding-inline: var(--spacing-2x);
+
+        @include breakpoint-up("md") {
+          padding-inline: var(--spacing-4x);
+        }
+      }
+
+      th {
+        text-align: left;
+      }
+
+      tbody {
+        tr:nth-child(odd) {
+          background: var(--color-gray-50);
+        }
+
+        tr {
+          border-top: 1px solid var(--color-gray-100);
+        }
+      }
+    }
+
+    ul {
+      padding-inline-start: var(--spacing-4x);
+
+      @include breakpoint-up("md") {
+        padding-inline-start: 0;
+      }
+
+      li {
+        @extend %typo-body;
+      }
+    }
+
+    // TODO: add links with icon
+    a {
+      color: var(--color-green-300);
+      text-underline-offset: 4px;
+      transition: color var(--transition-duration-quick)
+        var(--transition-easing-default);
+
+      &:hover {
+        color: var(--color-green-100);
+      }
+
+      &:active {
+        color: var(--color-green-300);
+      }
+
+      &:focus {
+        text-decoration-color: var(--color-green-100);
+      }
+    }
+
+    // Embedded videos
+    .video {
+      height: 0;
+      padding-block-end: 56.25%;
+      position: relative;
+      margin: var(--spacing-10x) 0;
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+    }
+
+    // Remove unnecessary margins from trailing elements
+    > * {
+      &:first-child {
+        margin-block-start: 0;
+      }
+      &:last-child {
+        margin-block-end: 0;
+      }
+    }
+  }
+</style>

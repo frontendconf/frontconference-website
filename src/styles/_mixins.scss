@@ -14,3 +14,23 @@
     @content;
   }
 }
+
+@mixin typo-family-light {
+  font-family: var(--font-family-light);
+  font-weight: normal;
+}
+
+@mixin typo-family-regular {
+  font-family: var(--font-family-regular);
+  font-weight: normal;
+}
+
+@mixin typo-family-medium {
+  font-family: var(--font-family-light);
+  font-weight: normal;
+}
+
+@mixin typo-family-bold {
+  font-family: var(--font-family-bold);
+  font-weight: normal;
+}
