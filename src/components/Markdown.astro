@@ -38,7 +38,7 @@ const content = text && marked.parse(text);
 
     p {
       @extend %typo-body;
-      margin: 0 0 pxToRem(16);
+      margin-block-end: var(--spacing-4x);
     }
 
     table {
@@ -76,7 +76,7 @@ const content = text && marked.parse(text);
     ul {
       padding-inline-start: var(--spacing-4x);
 
-      @include breakpoint-up("md") {
+      @include breakpoint-up("xxl") {
         padding-inline-start: 0;
       }
 
@@ -103,6 +103,11 @@ const content = text && marked.parse(text);
       &:focus {
         text-decoration-color: var(--color-green-100);
       }
+    }
+
+    // Images
+    img {
+      max-width: 100%;
     }
 
     // Embedded videos
