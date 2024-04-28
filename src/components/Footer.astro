@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { client } from "../utils/graphql-client";
 import { graphql } from "gql.tada";
 import Button from "./Button.astro";
@@ -108,8 +109,8 @@ const socialMediaItems =
     {
       socialMediaItems.map((item) => (
         <li>
-          <a href={`${item.link}`} target="_blank">
-            {item.title}
+          <a href={`${item.link}`} target="_blank" title={item.title}>
+            <Icon name={item.title.toLowerCase()} aria-hidden="true" />
           </a>
         </li>
       ))
@@ -176,11 +177,18 @@ const socialMediaItems =
   }
 
   .nav-list__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4x);
+
+    @include breakpoint-up("lg") {
+      flex-direction: column;
+    }
   }
 
   .nav {
     grid-area: nav;
-    margin-block-start: var(--spacing-8x);
+    margin-block-start: var(--spacing-6x);
 
     @include breakpoint-up("lg") {
       margin-block-start: 0;
@@ -192,7 +200,6 @@ const socialMediaItems =
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: var(--spacing-6x);
-    row-gap: var(--spacing-4x);
 
     @include breakpoint-up("lg") {
       column-gap: var(--spacing-10x);
@@ -200,6 +207,7 @@ const socialMediaItems =
 
     a {
       color: var(--color-green-100);
+      padding-block: var(--spacing-2x);
 
       &:hover {
         color: var(--color-green-300);
@@ -221,6 +229,19 @@ const socialMediaItems =
   }
 
   .nav-list__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4x);
+
+    a {
+      color: var(--color-white);
+      font-size: pxToRem(20);
+      padding: var(--spacing-2x);
+
+      &:hover {
+        color: var(--color-green-100);
+      }
+    }
   }
 
   .meta {
@@ -252,6 +273,7 @@ const socialMediaItems =
     a {
       @extend %typo-label;
       color: var(--color-gray-400);
+      padding-block: var(--spacing-2x);
 
       &:hover {
         color: var(--color-gray-50);
