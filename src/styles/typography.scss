@@ -7,3 +7,7 @@ b,
 strong {
   @include typo-family-bold;
 }
+
+pre {
+  white-space: normal;
+}
