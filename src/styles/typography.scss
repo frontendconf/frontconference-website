@@ -3,7 +3,26 @@ body {
   color: var(--color-white);
 }
 
+// TODO: reset headlines and add default spacings
+//h1,
+//h2,
+//h3,
+//h4,
+//h5,
+//h6,
+p,
+ul,
+ol,
+dl {
+  margin-block-start: var(--bb-typo-margin-block-start, 0);
+  margin-block-end: var(--bb-typo-margin-block-end, 0);
+}
+
 b,
 strong {
   @include typo-family-bold;
+}
+
+pre {
+  white-space: normal;
 }
