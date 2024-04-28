@@ -38,15 +38,20 @@ const menuItems =
 
 <header class="header">
   <div class="inner">
-    <div class="left">
-      <a href="/" class="home-link">
-        <Logo class={"logo"} />
-        <span class="home-link-text-mobile">
-          FRONT<br />CONF 24
-        </span>
-      </a>
-    </div>
-    <div class="right">
+    <a href="/" class="home-link">
+      <Logo class="logo" />
+      <div class="home-link-wrapper">
+        <h1 class="home-link-text home-link-text--desktop">FRONT CONFERENCE</h1>
+        <h1 class="home-link-text home-link-text--mobile">
+          FRONT<br aria-hidden="true" />CONF 24
+        </h1>
+        <p role="doc-subtitle">
+          <span>29 – 30 Aug 2024</span>
+          <span>Alte Papierfabrik, Zurich</span>
+        </p>
+      </div>
+    </a>
+    <div class="nav-wrapper">
       <nav id="navigation" class="nav">
         <ul class="nav-list">
           {
@@ -67,8 +72,9 @@ const menuItems =
           }
         </ul>
       </nav>
-      <Button as="a" href={`/tickets`} variant="tertiary">
-        Get your ticket
+      <Button as="a" href="/tickets" variant="tertiary">
+        <span class="display--sm">Get your ticket</span>
+        <span class="hide--sm">Tickets</span>
       </Button>
       <MenuBurger />
     </div>
@@ -84,6 +90,7 @@ const menuItems =
       menuBurger.classList.add("open");
       menuBurger.setAttribute("aria-expanded", "true");
       navigation.classList.add("is-open");
+      // TOOD: add focus trap
     }
 
     function closeMenu() {
@@ -132,53 +139,100 @@ const menuItems =
     align-items: center;
     // we can't use container here due to sticky behaviour
     max-width: var(--max-content-width);
-    padding: var(--spacing-5x) var(--grid-padding);
+    padding-inline: var(--grid-padding);
     margin-inline: auto;
+    height: 80px;
   }
 
   .home-link {
     display: flex;
     gap: var(--spacing-2x);
-    text-decoration: none !important;
+    text-decoration: none;
     overflow: hidden;
+    color: var(--color-gray-50);
+
+    @include breakpoint-up("sm") {
+      margin-block-start: var(--spacing-1x);
+    }
   }
 
   .logo {
     display: block;
-    height: pxToRem(40);
     width: pxToRem(40);
+    aspect-ratio: 1;
+
+    @include breakpoint-up("sm") {
+      width: pxToRem(52);
+    }
   }
 
-  .home-link-text-mobile {
-    position: relative;
-    color: var(--color-gray-50);
-    @include typo-family-medium;
+  .home-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1x);
+    margin-block-start: pxToRem(-2);
+
+    [role="doc-subtitle"] {
+      display: none;
+      flex-direction: column;
+      gap: var(--spacing-1x);
+      font-size: pxToRem(10);
+      line-height: pxToRem(12);
+      margin: 0;
+
+      @include breakpoint-up("sm") {
+        display: flex;
+      }
+    }
+  }
+
+  .home-link-text {
+    @include typo-family-bold;
     font-size: 14px;
     line-height: 1.14; /* 114.286% */
     letter-spacing: 0.42px;
     text-transform: uppercase;
-    top: pxToRem(-2);
+    margin: 0;
+
+    &--desktop {
+      display: none;
+      font-size: pxToRem(16);
+      line-height: pxToRem(18);
+
+      @include breakpoint-up("sm") {
+        display: flex;
+      }
+    }
+
+    &--mobile {
+      @include breakpoint-up("sm") {
+        display: none;
+      }
+    }
   }
 
-  .right {
+  .nav-wrapper {
     display: flex;
-    gap: pxToRem(16);
+    gap: var(--spacing-4x);
     align-items: center;
 
     @include breakpoint-up("md") {
-      gap: var(--spacing-10x);
+      gap: var(--spacing-6x);
+    }
+
+    @include breakpoint-up("xl") {
+      gap: var(--spacing-12x);
     }
   }
 
   .nav {
     @include breakpoint-down("md") {
+      display: none;
       position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
+      inset: 0;
       z-index: 1;
       background-color: var(--color-black);
-      padding: 20px 0 20px;
+      padding-block: 20px;
       transform: translateY(60px);
       transition: all var(--transition-duration-medium) ease;
       opacity: 0;
@@ -187,6 +241,7 @@ const menuItems =
       pointer-events: none;
 
       &.is-open {
+        display: block;
         transform: translateY(80px);
         opacity: 1;
         pointer-events: all;
@@ -201,50 +256,55 @@ const menuItems =
     @include breakpoint-up("lg") {
       display: flex;
       align-items: flex-start;
-      gap: var(--spacing-5x);
+      // linear-clamp from 1024px to 1440px
+      gap: clamp(var(--spacing-4x), -3.5577rem + 6.7308vw, var(--spacing-10x));
       list-style: none;
-    }
-
-    @include breakpoint-up("xl") {
-      gap: var(--spacing-10x);
     }
   }
 
   .nav-list-item {
     display: block;
     border-top: 1px solid var(--color-gray-600);
+
     &:last-child {
       border-bottom: 1px solid var(--color-gray-600);
     }
 
     @include breakpoint-up("lg") {
       border-top: none;
+
       &:last-child {
         border-bottom: none;
       }
     }
   }
 
-  // TODO: Implement & use font mixins
   .link {
     display: block;
     color: var(--color-white);
-    padding: pxToRem(16) var(--grid-padding);
-    font-size: 16px;
+    padding: var(--spacing-4x) var(--grid-padding);
+    font-size: pxToRem(16);
     line-height: 1;
     text-decoration: none;
 
-    &.active {
+    &:hover,
+    &:focus {
       color: var(--color-green-100);
     }
 
+    &.active {
+      color: var(--color-green-100);
+
+      &:hover,
+      &:focus {
+        color: var(--color-green-100);
+      }
+    }
+
     @include breakpoint-up("lg") {
-      padding: 0;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 1.14;
-      letter-spacing: 0.14px;
+      padding-inline: 0;
+      font-size: pxToRem(14);
+      letter-spacing: getLetterSpacing(14, 1, 1);
     }
   }
 </style>
