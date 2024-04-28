@@ -90,6 +90,7 @@ const menuItems =
       menuBurger.classList.add("open");
       menuBurger.setAttribute("aria-expanded", "true");
       navigation.classList.add("is-open");
+      // TOOD: add focus trap
     }
 
     function closeMenu() {
@@ -257,7 +258,7 @@ const menuItems =
       display: flex;
       align-items: flex-start;
       // linear-clamp from 1024px to 1440px
-      gap: clamp(var(--spacing-3x), -3.5577rem + 6.7308vw, var(--spacing-10x));
+      gap: clamp(var(--spacing-4x), -3.5577rem + 6.7308vw, var(--spacing-10x));
       list-style: none;
     }
   }
@@ -279,25 +280,41 @@ const menuItems =
     }
   }
 
-  // TODO: Implement & use font mixins
   .link {
     display: block;
     color: var(--color-white);
-    padding: pxToRem(16) var(--grid-padding);
+    padding: var(--spacing-4x) var(--grid-padding);
     font-size: 16px;
     line-height: 1;
     text-decoration: none;
+    text-underline-offset: 4px;
+
+    &:hover,
+    &:active {
+      color: var(--color-green-100);
+    }
+
+    &:focus {
+      text-decoration: underline;
+      text-decoration-color: var(--color-green-100);
+    }
 
     &.active {
       color: var(--color-green-100);
+
+      &:hover,
+      &:active {
+        color: var(--color-green-100);
+      }
+
+      &:focus {
+        text-decoration-color: var(--color-green-200);
+      }
     }
 
     @include breakpoint-up("lg") {
       padding-inline: 0;
       font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 1.14;
       letter-spacing: 0.14px;
     }
   }
