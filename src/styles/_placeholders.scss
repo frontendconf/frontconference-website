@@ -1,5 +1,5 @@
 @function getLetterSpacing($base-size, $multiplier: -1, $divider: 2) {
-  @return pxToRem($base-size / $divider / 100 * $multiplier);
+  @return pxToRem(calc($base-size / $divider / 100) * $multiplier);
 }
 
 %typo-h1 {

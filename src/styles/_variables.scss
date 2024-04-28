@@ -1,10 +1,3 @@
-$grid-columns: 12;
-
-$grid-gutters: (
-  xs: 20px,
-  rg: 20px,
-);
-
 $grid-breakpoints: (
   xs: 0,
   sm: 600px,
@@ -14,23 +7,3 @@ $grid-breakpoints: (
   xxl: 1440px,
   xxxl: 1920px,
 );
-
-// $transition-time-simple: 150ms !default;
-// $transition-time-default: 250ms !default;
-// $transition-time-morph: 500ms !default; // Original
-// $transition-time-fade-in: 200ms !default;
-// $transition-time-fade-out: 125ms !default;
-// $transition-time-title-out: 500ms !default;
-// $transition-time-title-in: 250ms !default;
-
-// Area
-// $transition-time-area-small: $transition-time-simple !default;
-// $transition-time-area-medium: 350ms !default;
-// $transition-time-area-large: 500ms !default;
-
-// Easings
-// $transition-easing-default: cubic-bezier(0.4, 0, 0.2, 1) !default;
-// $transition-easing-decelerate: cubic-bezier(0, 0, 0.2, 1) !default;
-// $transition-easing-accelerate: cubic-bezier(0.4, 0, 1, 1) !default;
-
-//$font-size-tiny: 30px;

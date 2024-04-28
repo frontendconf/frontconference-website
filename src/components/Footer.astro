@@ -1,8 +1,9 @@
 ---
+import { Icon } from "astro-icon/components";
 import { client } from "../utils/graphql-client";
 import { graphql } from "gql.tada";
 import Button from "./Button.astro";
-import NewsletterSignup from "./NewsletterSignup.astro";
+// import NewsletterSignup from "./NewsletterSignup.astro";
 import Logo from "./Logo.astro";
 
 const { slug } = Astro.params;
@@ -72,87 +73,62 @@ const socialMediaItems =
 ---
 
 <footer class="footer container">
-  <div class="right">
-    <NewsletterSignup />
-  </div>
-
-  <div class="left">
-    <ul class="cta-nav-list">
+  {
+    /** TODO: add NewsletterSignup
+     * <div class="newsletter"><NewsletterSignup /></div>
+     */
+  }
+  <ul class="cta nav-list nav-list__cta">
+    {
+      ctas.map((item) => (
+        <li class="nav-list__cta-item">
+          <Button as="a" href={`/${item.slug}`} variant="tertiary">
+            {item.title}
+          </Button>
+        </li>
+      ))
+    }
+  </ul>
+  <nav class="nav">
+    <ul class="nav-list nav-list__main">
       {
-        ctas.map(
-          (item) =>
-            item && (
-              <li class="cta-nav-list-item">
-                <Button as="a" href={`/${item.slug}`} variant="tertiary">
-                  {item.title}
-                </Button>
-              </li>
-            ),
-        )
+        menuItems.map((item) => (
+          <li>
+            <a
+              href={`/${item.slug}`}
+              class:list={[{ active: item.slug === slug }]}
+            >
+              {item.title}
+            </a>
+          </li>
+        ))
       }
     </ul>
-    <nav class="nav">
-      <ul class="nav-list">
-        {
-          menuItems.map(
-            (item) =>
-              item && (
-                <li class="nav-list-item">
-                  <a
-                    href={`/${item.slug}`}
-                    class:list={[
-                      "nav-list-item-link",
-                      { active: item.slug === slug },
-                    ]}
-                  >
-                    {item.title}
-                  </a>
-                </li>
-              ),
-          )
-        }
-      </ul>
-    </nav>
-  </div>
-  <!--  -->
-  <!-- <ul class="nav-list">
-      {
-        socialMediaItems.map(
-          (item) =>
-            item && (
-              <li class="nav-list-item">
-                <a href={`/${item.link}`}>{item.title}</a>
-              </li>
-            )
-        )
-      }
-    </ul> -->
+  </nav>
+  <ul class="social nav-list nav-list__social">
+    {
+      socialMediaItems.map((item) => (
+        <li>
+          <a href={`${item.link}`} target="_blank" title={item.title}>
+            <Icon name={item.title.toLowerCase()} aria-hidden="true" />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
 
-  <div class="copyright">
-    <Logo class={"copyright__logo"} />
-    <p class="copyright__text">
+  <div class="meta">
+    <Logo class="meta__logo" />
+    <p class="meta__text">
       2011-{new Date().getFullYear()} Front Conference Zurich
     </p>
-
-    <ul class="copyright__nav">
+    <ul class="nav-list nav-list__meta">
       {
-        metaMenuItems.map(
-          (item) =>
-            item && (
-              <>
-                <li class="copyright__nav-item">
-                  <a href={`/${item.slug}`} class="copyright__nav-link">
-                    {item.title}
-                  </a>
-                </li>
-                <li class="copyright__nav-item">
-                  <a href={`/${item.slug}`} class="copyright__nav-link">
-                    {item.title}
-                  </a>
-                </li>
-              </>
-            ),
-        )
+        metaMenuItems.map((item) => (
+          <li>
+            <a href={`/${item.slug}`}>{item.title}</a>
+          </li>
+        ))
       }
     </ul>
   </div>
@@ -162,119 +138,159 @@ const socialMediaItems =
   @import "../styles/_imports.scss";
 
   .footer {
-    display: flex;
-    flex-wrap: wrap;
-    background: var(--color-black);
-    padding: var(--spacing-10x) var(--spacing-6x);
-    gap: 64px; // no spacing for this??
-  }
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "newsletter" "social" "cta" "nav" "meta";
+    padding-block-start: var(--spacing-10x);
+    padding-block-end: var(--spacing-12x);
 
-  .right,
-  .left {
-    flex: 0 0 100%;
-  }
-
-  .newsletter-wrapper {
-    margin-bottom: var(--spacing-10x);
-  }
-
-  .cta-nav-list {
-    display: flex;
-    gap: var(--spacing-2x);
-    padding: 0;
-    margin: 0 0 var(--spacing-10x);
-    list-style: none;
-  }
-
-  .nav {
+    @include breakpoint-up("lg") {
+      padding-block-start: var(--spacing-16x);
+      grid-template-columns: auto 1fr 1fr;
+      grid-template-areas:
+        "cta nav newsletter"
+        "meta meta social";
+      row-gap: var(--spacing-20x);
+    }
   }
 
   .nav-list {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    row-gap: 16px; // no spacing for this??
-    padding: 8px 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .nav-list-item {
-  }
-
-  // TODO: Fix active/hover states
-  .nav-list-item-link {
-    display: block;
-    color: var(--color-green-100);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.14;
-    letter-spacing: 0.14px;
-    text-decoration: none;
-    transition: color var(--transition-duration-quick) ease-in-out;
-
-    &:hover,
-    &:active {
-      color: var(--color-green-300);
-    }
-
-    &:focus {
-      color: var(--color-green-300);
-      text-decoration: underline;
-    }
-  }
-
-  .copyright {
     display: flex;
-    flex: 0 0 100%;
+    list-style: none;
+    padding-inline-start: 0;
+
+    a {
+      display: flex;
+      text-decoration: none;
+      transition: color var(--transition-duration-quick)
+        var(--transition-easing-default);
+    }
+  }
+
+  .cta {
+    grid-area: cta;
+    margin-block-start: var(--spacing-16x);
+
+    @include breakpoint-up("lg") {
+      margin-block-start: 0;
+    }
+  }
+
+  .nav-list__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4x);
+
+    @include breakpoint-up("lg") {
+      flex-direction: column;
+    }
+  }
+
+  .nav {
+    grid-area: nav;
+    margin-block-start: var(--spacing-6x);
+
+    @include breakpoint-up("lg") {
+      margin-block-start: 0;
+      margin-inline-start: var(--spacing-20x);
+    }
+  }
+
+  .nav-list__main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--spacing-6x);
+
+    @include breakpoint-up("lg") {
+      column-gap: var(--spacing-10x);
+    }
+
+    a {
+      color: var(--color-green-100);
+      padding-block: var(--spacing-2x);
+
+      &:hover {
+        color: var(--color-green-300);
+      }
+    }
+  }
+
+  .newsletter {
+    grid-area: newsletter;
+  }
+
+  .social {
+    grid-area: social;
+
+    @include breakpoint-up("lg") {
+      align-self: center;
+      justify-self: end;
+    }
+  }
+
+  .nav-list__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4x);
+
+    a {
+      color: var(--color-white);
+      font-size: pxToRem(20);
+      padding: var(--spacing-2x);
+
+      &:hover {
+        color: var(--color-green-100);
+      }
+    }
+  }
+
+  .meta {
+    grid-area: meta;
+    display: flex;
     align-items: center;
+    margin-block-start: var(--spacing-16x);
+
+    @include breakpoint-up("lg") {
+      margin-block-start: 0;
+    }
 
     &__logo {
       display: block;
       width: 40px;
       height: 40px;
-      margin-right: var(--spacing-2x);
     }
 
     &__text {
+      @extend %typo-label;
       color: var(--color-gray-400);
-      font-size: 10px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 1.4;
-      letter-spacing: 0.1px;
-      margin: 0 var(--spacing-6x) 0 0;
+      margin-inline-start: var(--spacing-2x);
+    }
+  }
+
+  .nav-list__meta {
+    margin-inline-start: var(--spacing-6x);
+
+    a {
+      @extend %typo-label;
+      color: var(--color-gray-400);
+      padding-block: var(--spacing-2x);
+
+      &:hover {
+        color: var(--color-gray-50);
+      }
+    }
+  }
+
+  .social,
+  .nav,
+  .meta {
+    // custom breakpoint because on small viewports we don't have enough space
+    @media (width >= pxToRem(390)) {
+      padding-inline: var(--spacing-4x);
     }
 
-    &__nav {
-      display: flex;
-      gap: var(--spacing-2x);
-      list-style: none;
-      margin: 0;
-      padding: 0;
-
-      &-item {
-        display: block;
-        list-style: none;
-        line-height: 1.4;
-      }
-
-      &-link {
-        display: block;
-        color: var(--color-gray-400);
-        font-size: 10px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 1.4;
-        letter-spacing: 0.1px;
-        text-decoration: none;
-        transition: color var(--transition-duration-quick)
-          var(--transition-easing-default);
-
-        &:hover {
-          color: var(--color-gray-50);
-        }
-      }
+    @include breakpoint-up("lg") {
+      padding-inline: 0;
     }
   }
 </style>
