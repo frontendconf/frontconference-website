@@ -11,6 +11,7 @@
   "dependencies": {
     "@astrojs/vercel": "^7.4.0",
     "astro": "^4.5.9",
+    "astro-icon": "^1.1.0",
     "gql.tada": "^1.4.1",
     "graphql-request": "^6.1.0",
     "marked": "^12.0.1",
