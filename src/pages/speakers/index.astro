@@ -1,13 +1,12 @@
 ---
 import { graphql } from "gql.tada";
-import Layout from "../../layouts/Layout.astro";
+import ContentLayout from "../../layouts/ContentLayout.astro";
 import { client } from "../../utils/graphql-client";
 import { notEmpty } from "../../utils/helpers";
-import Hero from "../../layouts/Hero.astro";
 
 Astro.response.headers.set(
   "Cache-Control",
-  "s-maxage=60, stale-while-revalidate"
+  "s-maxage=60, stale-while-revalidate",
 );
 
 // TODO: Update $yearTag when enough speakers are there
@@ -66,8 +65,7 @@ speakers.sort((a, b) => {
 const time = new Date().toLocaleTimeString();
 ---
 
-<Layout title="Speakers">
-  <Hero title={currentPage.title} />
+<ContentLayout title="Speakers">
   <p>Time: {time}</p>
   <ul>
     {
@@ -78,4 +76,4 @@ const time = new Date().toLocaleTimeString();
       ))
     }
   </ul>
-</Layout>
+</ContentLayout>

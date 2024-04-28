@@ -1,8 +1,7 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import ContentLayout from "../layouts/ContentLayout.astro";
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
-import Hero from "../layouts/Hero.astro";
 import Markdown from "../components/Markdown.astro";
 
 const { slug } = Astro.params;
@@ -82,47 +81,8 @@ if (!currentPage || !currentPage.title) {
 }
 ---
 
-<Layout title={currentPage.title}>
-  <Hero title={currentPage.title} />
+<ContentLayout title={currentPage.title}>
   <!-- TODO: What about the lead, is this not used anymore? -->
   <!-- <p>{currentPage.lead}</p> -->
-  <div class="white">
-    <div class="content">
-      <div class="content__inner">
-        {currentPage.body && <Markdown text={currentPage.body} />}
-      </div>
-    </div>
-  </div>
-</Layout>
-
-<style lang="scss">
-  @import "../styles/_imports.scss";
-
-  .white {
-    background-color: var(--color-white);
-    color: var(--color-black);
-  }
-
-  .content {
-    max-width: var(--max-content-width);
-    padding: var(--spacing-12x) var(--grid-padding);
-    margin: 0 auto;
-
-    @include breakpoint-up("md") {
-      padding: var(--spacing-20x) var(--grid-padding);
-
-      &__inner {
-        max-width: 920px;
-        padding: 0 80px;
-      }
-    }
-
-    @include breakpoint-up("xl") {
-      padding: 120px var(--grid-padding);
-
-      &__inner {
-        padding: 0 120px;
-      }
-    }
-  }
-</style>
+  {currentPage.body && <Markdown text={currentPage.body} />}
+</ContentLayout>

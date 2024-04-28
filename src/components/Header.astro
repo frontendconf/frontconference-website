@@ -134,11 +134,12 @@ const menuItems =
 
   .inner {
     display: flex;
-    max-width: var(--max-content-width);
-    padding-inline: var(--grid-padding);
-    margin-inline: auto;
     justify-content: space-between;
     align-items: center;
+    // we can't use container here due to sticky behaviour
+    max-width: var(--max-content-width);
+    padding: var(--spacing-5x) var(--grid-padding);
+    margin-inline: auto;
     height: 80px;
   }
 

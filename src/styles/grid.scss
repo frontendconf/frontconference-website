@@ -1,0 +1,48 @@
+.container {
+  max-width: var(--max-content-width);
+  padding-inline: var(--grid-padding);
+  margin-inline: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: [content-start] repeat(var(--grid-columns), 1fr) [content-end];
+  gap: var(--spacing-5x);
+  // TODO: define row-gap for responsive behavior with main and side columns
+
+  @include breakpoint-up("md") {
+    gap: var(--spacing-6x);
+  }
+
+  @include breakpoint-up("lg") {
+    gap: var(--spacing-10x);
+  }
+
+  > * {
+    grid-column: content;
+  }
+}
+
+.column {
+  grid-column: content;
+
+  &--main {
+    @include breakpoint-up("xl") {
+      grid-column: 1 / 8;
+    }
+  }
+
+  &--side {
+    @include breakpoint-up("xl") {
+      grid-column: -5 / -1;
+    }
+  }
+}
+
+.section {
+  padding-block: var(--spacing-12x);
+
+  @include breakpoint-up("md") {
+    padding-block: var(--spacing-20x);
+  }
+}
