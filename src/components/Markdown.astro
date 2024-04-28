@@ -10,7 +10,7 @@ const { text } = Astro.props;
 const content = text && marked.parse(text);
 ---
 
-<div class="markdown" set:html={content} />
+<div class="markdown column--main" set:html={content} />
 
 <style lang="scss" is:global>
   @import "../styles/_imports.scss";

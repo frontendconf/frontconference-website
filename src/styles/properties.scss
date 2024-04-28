@@ -50,8 +50,8 @@
 
   // grid
   --max-content-width: calc(#{pxToRem(1400)} + 2 * var(--grid-padding));
-  --grid-gap: var(--spacing-5x);
   --grid-padding: var(--spacing-6x);
+  --grid-columns: 12;
 
   // transition
   --transition-duration-quick: 150ms;
