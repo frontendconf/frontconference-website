@@ -283,38 +283,28 @@ const menuItems =
     display: block;
     color: var(--color-white);
     padding: var(--spacing-4x) var(--grid-padding);
-    font-size: 16px;
+    font-size: pxToRem(16);
     line-height: 1;
     text-decoration: none;
-    text-underline-offset: 4px;
 
     &:hover,
-    &:active {
-      color: var(--color-green-100);
-    }
-
     &:focus {
-      text-decoration: underline;
-      text-decoration-color: var(--color-green-100);
+      color: var(--color-green-100);
     }
 
     &.active {
       color: var(--color-green-100);
 
       &:hover,
-      &:active {
-        color: var(--color-green-100);
-      }
-
       &:focus {
-        text-decoration-color: var(--color-green-200);
+        color: var(--color-green-100);
       }
     }
 
     @include breakpoint-up("lg") {
       padding-inline: 0;
-      font-size: 14px;
-      letter-spacing: 0.14px;
+      font-size: pxToRem(14);
+      letter-spacing: getLetterSpacing(14, 1, 1);
     }
   }
 </style>
