@@ -1,0 +1,170 @@
+---
+import Markdown from "./Markdown.astro";
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  category: string;
+  sponsors: Array<any>;
+}
+
+const { category, sponsors } = Astro.props;
+
+const socialsKeys = [
+  { key: "twitter", link: "https://twitter.com/", label: "Twitter Profile" },
+  { key: "linkedin", link: "https://linkedin.com/", label: "Linkedin Profile" },
+  { key: "link", link: "", label: "Website" },
+  { key: "facebook", link: "https://facebook.com/", label: "Facebook Profile" },
+  {
+    key: "instagram",
+    link: "https://instagram.com/",
+    label: "Instagram Profile",
+  },
+];
+
+const getSocials = (sponsor) => {
+  const array = [];
+
+  socialsKeys.map((social) => {
+    if (!!sponsor[social.key]) {
+      array.push({
+        key: social.key,
+        href: `${social.link}${sponsor[social.key]}`,
+        icon: social.key,
+        title: `${sponsor.title} ${social.label}`,
+      });
+    }
+  });
+
+  return array;
+};
+
+const getSocial = (sponsor, key) =>
+  getSocials(sponsor).find((item) => item.key === key);
+---
+
+<div>
+  <h3 class="list__title">{category}</h3>
+  <ul class="list">
+    {
+      sponsors.map((sponsor) => (
+        <li class="list__item grid">
+          <a
+            {...getSocial(sponsor, "link")}
+            class="logo"
+            target="_blank"
+            set:html={sponsor.logoSvg}
+          />
+          <div class="content">
+            <h4 class="title">{sponsor.title}</h4>
+            <Markdown text={sponsor.body} />
+            <ul class="socials">
+              {getSocials(sponsor).map((item) => (
+                <a {...item} target="_blank">
+                  <Icon name={item.icon} aria-hidden="true" />
+                </a>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style lang="scss">
+  @import "../styles/_imports.scss";
+
+  .list__title {
+    @extend %typo-h6;
+
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2x);
+    margin-block: 0;
+
+    &:after {
+      content: "";
+      display: block;
+      height: 1px;
+      background-color: var(--color-gray-100);
+      flex: 1;
+    }
+  }
+
+  .list {
+    list-style: none;
+    padding-inline-start: 0;
+  }
+
+  .list__item {
+    padding-block: var(--spacing-10x);
+  }
+
+  .logo {
+    :global(svg) {
+      width: 50%;
+      height: auto;
+    }
+
+    @include breakpoint-up("lg") {
+      grid-column: 1 / 5;
+
+      :global(svg) {
+        width: 100%;
+      }
+    }
+  }
+
+  .content {
+    @include breakpoint-up("lg") {
+      grid-column: 6 / -1;
+    }
+  }
+
+  .title {
+    @extend %typo-h5;
+
+    margin-block-start: 0;
+    margin-block-end: var(--spacing-3x);
+  }
+
+  .socials {
+    list-style: none;
+    padding-inline-start: 0;
+    margin-block-start: var(--spacing-6x);
+
+    display: flex;
+    gap: var(--spacing-5x);
+
+    a {
+      position: relative;
+      color: var(--color-gray-900);
+      font-size: pxToRem(24);
+      z-index: 1;
+      transition: color var(--transition-duration-medium)
+        var(--transition-easing-default);
+
+      &:before {
+        content: "";
+        position: absolute;
+        inset: pxToRem(-8);
+        aspect-ratio: 1;
+        background: var(--color-gray-50);
+        z-index: -1;
+        clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+        opacity: 0;
+        transition: opacity var(--transition-duration-medium)
+          var(--transition-easing-default);
+      }
+
+      &:hover,
+      &:focus-visible {
+        color: var(--color-green-300);
+
+        &:before {
+          opacity: 1;
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,90 @@
+---
+import { graphql } from "gql.tada";
+import ContentLayout from "../../layouts/ContentLayout.astro";
+import { client } from "../../utils/graphql-client";
+import {
+  SPONSOR_FILTER_TAG_KEY,
+  SPONSOR_CATEGORY_SORTING_KEYS,
+} from "../../utils/constants";
+import Sponsor from "../../components/Sponsor.astro";
+
+Astro.response.headers.set(
+  "Cache-Control",
+  "s-maxage=60, stale-while-revalidate",
+);
+
+const query = graphql(`
+  query GetSponsorPage {
+    collection: sponsorCollection {
+      items {
+        title
+        link
+        logo {
+          url
+        }
+        logoSvg
+        body
+        twitter
+        linkedin
+        facebook
+        instagram
+        order
+        category {
+          title
+        }
+        tagCollection(limit: 1, order: [title_DESC]) {
+          items {
+            title
+          }
+        }
+      }
+    }
+  }
+`);
+
+const data = await client.request(query, {});
+const sponsors = data.collection.items;
+
+// filter sponsors by current event year
+const filteredSponsors = sponsors.filter((sponsor) => {
+  return sponsor.tagCollection.items.some(
+    (tag) => tag.title === SPONSOR_FILTER_TAG_KEY,
+  );
+});
+
+// group sponsors by category
+const groupedSponsors = filteredSponsors.reduce((acc, sponsor) => {
+  const category = sponsor.category.title;
+
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+
+  acc[category].push(sponsor);
+
+  return acc;
+}, {});
+
+// sort sponsors by custom category order
+const sortedSponsors = Object.keys(groupedSponsors)
+  .sort((a, b) => {
+    return (
+      SPONSOR_CATEGORY_SORTING_KEYS.indexOf(a) -
+      SPONSOR_CATEGORY_SORTING_KEYS.indexOf(b)
+    );
+  })
+  .map((category) => {
+    return {
+      category,
+      sponsors: groupedSponsors[category],
+    };
+  });
+---
+
+<ContentLayout title="Sponsors">
+  {
+    sortedSponsors.map((item) => (
+      <Sponsor category={item.category} sponsors={item.sponsors} />
+    ))
+  }
+</ContentLayout>
