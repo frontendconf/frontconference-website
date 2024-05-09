@@ -1,0 +1,130 @@
+---
+import { Icon } from "astro-icon/components";
+import Link from "./Link.astro";
+
+export interface Props {
+  title: string;
+  text: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+  link?: string;
+}
+
+const { title, text, image, link, class: className, ...rest } = Astro.props;
+---
+
+<div class:list={["spotTeaser", className]} {...rest}>
+  <div class="image__wrapper">
+    <img class="image" {...image} />
+  </div>
+  <div class="content">
+    <h3 class="title">
+      {title}
+      <Icon class="title__icon" name="arrowRight" aria-hidden="true" />
+    </h3>
+    <p class="text">
+      {text}
+      <Link class="link" href={link} target="_blank" icon>Learn more</Link>
+    </p>
+  </div>
+</div>
+
+<style lang="scss">
+  @import "../styles/_imports.scss";
+
+  .spotTeaser {
+    position: relative;
+    display: flex;
+    @extend %grid-gap;
+    transition: color var(--transition-duration-quick)
+      var(--transition-easing-default);
+
+    &:hover {
+      color: var(--color-green-100);
+
+      .title__icon {
+        opacity: 1;
+      }
+
+      .image__wrapper:before {
+        width: pxToRem(40);
+        height: pxToRem(40);
+
+        @include breakpoint-up("md") {
+          width: pxToRem(64);
+          height: pxToRem(64);
+        }
+      }
+    }
+
+    &:has(:focus-visible) {
+      .image {
+        outline: 2px solid var(--color-green-100);
+      }
+
+      .title {
+        color: var(--color-green-100);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .image__wrapper {
+    position: relative;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      // TODO: finalise background color
+      background: linear-gradient(225deg, #fff 50%, #d5ccc4 50%);
+      transition: var(--transition-duration-medium)
+        var(--transition-easing-default);
+      transition-property: width, height;
+    }
+  }
+
+  .image {
+    max-width: pxToRem(100);
+    aspect-ratio: 1 / 1;
+
+    @include breakpoint-up("md") {
+      max-width: pxToRem(200);
+    }
+  }
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-1x);
+    @extend %typo-h5;
+  }
+
+  .title__icon {
+    opacity: 0;
+    transition: opacity var(--transition-duration-quick)
+      var(--transition-easing-default);
+  }
+
+  .text {
+    margin-block-start: var(--spacing-2x);
+
+    @include breakpoint-up("md") {
+      margin-block-start: var(--spacing-4x);
+    }
+  }
+
+  .link {
+    &:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+  }
+</style>
