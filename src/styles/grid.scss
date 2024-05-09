@@ -9,6 +9,10 @@
   grid-template-columns: [content-start] repeat(var(--grid-columns), 1fr) [content-end];
   @extend %grid-gap;
 
+  &--row-gap-double {
+    @extend %grid-row-gap-double;
+  }
+
   > * {
     grid-column: content;
   }

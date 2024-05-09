@@ -177,3 +177,15 @@
     gap: var(--spacing-10x);
   }
 }
+
+%grid-row-gap-double {
+  row-gap: var(--spacing-12x);
+
+  @include breakpoint-up("md") {
+    row-gap: var(--spacing-14x);
+  }
+
+  @include breakpoint-up("lg") {
+    row-gap: var(--spacing-20x);
+  }
+}
