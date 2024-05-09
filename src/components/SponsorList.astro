@@ -1,13 +1,86 @@
 ---
 import Markdown from "./Markdown.astro";
 import { Icon } from "astro-icon/components";
+import { graphql } from "gql.tada";
+import { client } from "../utils/graphql-client";
+import {
+  SPONSOR_LIST_CATEGORY_SORTING_KEYS,
+  SPONSOR_LIST_FILTER_TAG_KEY,
+} from "../utils/constants";
 
-export interface Props {
-  category: string;
-  sponsors: Array<any>;
-}
+Astro.response.headers.set(
+  "Cache-Control",
+  "s-maxage=60, stale-while-revalidate",
+);
 
-const { category, sponsors } = Astro.props;
+// TODO: find why to filter sponsors by tagCollection title
+// like tagCollection(where: {title: "FRONT24"})
+const query = graphql(`
+  query GetSponsorPage {
+    collection: sponsorCollection {
+      items {
+        title
+        link
+        logo {
+          url
+        }
+        logoSvg
+        body
+        twitter
+        linkedin
+        facebook
+        instagram
+        order
+        category {
+          title
+        }
+        tagCollection(limit: 1, order: [title_DESC]) {
+          items {
+            title
+          }
+        }
+      }
+    }
+  }
+`);
+
+const data = await client.request(query, {});
+const sponsors = data.collection.items;
+
+// filter sponsors by current event year
+const filteredSponsors = sponsors.filter((sponsor) => {
+  return sponsor.tagCollection.items.some(
+    (tag) => tag.title === SPONSOR_LIST_FILTER_TAG_KEY,
+  );
+});
+
+// group sponsors by category
+const groupedSponsors = filteredSponsors.reduce((acc, sponsor) => {
+  const category = sponsor.category.title;
+
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+
+  acc[category].push(sponsor);
+
+  return acc;
+}, {});
+
+// sort sponsors by custom category order
+const sortedSponsors = Object.keys(groupedSponsors)
+  .sort((a, b) => {
+    return (
+      SPONSOR_LIST_CATEGORY_SORTING_KEYS.indexOf(a) -
+      SPONSOR_LIST_CATEGORY_SORTING_KEYS.indexOf(b)
+    );
+  })
+  .map((category) => {
+    return {
+      category,
+      sponsors: groupedSponsors[category],
+    };
+  });
 
 const socialsKeys = [
   { key: "twitter", link: "https://twitter.com/", label: "Twitter Profile" },
@@ -42,31 +115,33 @@ const getSocial = (sponsor, key) =>
   getSocials(sponsor).find((item) => item.key === key);
 ---
 
-<div>
-  <h3 class="list__title">{category}</h3>
-  <ul class="list">
-    {
-      sponsors.map((sponsor) => (
-        <li class="list__item grid">
-          <a {...getSocial(sponsor, "link")} class="logo" target="_blank">
-            <span class="logo__wrapper" set:html={sponsor.logoSvg} />
-          </a>
-          <div class="content">
-            <h4 class="title">{sponsor.title}</h4>
-            <Markdown text={sponsor.body} />
-            <ul class="socials">
-              {getSocials(sponsor).map((item) => (
-                <a {...item} target="_blank">
-                  <Icon name={item.icon} aria-hidden="true" />
-                </a>
-              ))}
-            </ul>
-          </div>
-        </li>
-      ))
-    }
-  </ul>
-</div>
+{
+  sortedSponsors.map((item) => (
+    <div>
+      <h3 class="list__title">{item.category}</h3>
+      <ul class="list">
+        {item.sponsors.map((sponsor) => (
+          <li class="list__item grid">
+            <a {...getSocial(sponsor, "link")} class="logo" target="_blank">
+              <span class="logo__wrapper" set:html={sponsor.logoSvg} />
+            </a>
+            <div class="content">
+              <h4 class="title">{sponsor.title}</h4>
+              <Markdown text={sponsor.body} />
+              <ul class="socials">
+                {getSocials(sponsor).map((item) => (
+                  <a {...item} target="_blank">
+                    <Icon name={item.icon} aria-hidden="true" />
+                  </a>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))
+}
 
 <style lang="scss">
   @import "../styles/_imports.scss";

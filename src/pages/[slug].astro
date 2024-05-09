@@ -3,6 +3,7 @@ import ContentLayout from "../layouts/ContentLayout.astro";
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
 import Markdown from "../components/Markdown.astro";
+import SponsorList from "../components/SponsorList.astro";
 
 const { slug } = Astro.params;
 
@@ -85,4 +86,17 @@ if (!currentPage || !currentPage.title) {
   <!-- TODO: What about the lead, is this not used anymore? -->
   <!-- <p>{currentPage.lead}</p> -->
   {currentPage.body && <Markdown text={currentPage.body} />}
+
+  <div class="additionalContent">
+    {currentPage.showSponsorsDetailed && <SponsorList />}
+  </div>
 </ContentLayout>
+
+<style lang="scss">
+  @import "../styles/_imports.scss";
+
+  // TODO: re-check after grid row gap got implemented
+  .additionalContent:has(> *) {
+    margin-block-start: var(--spacing-10x);
+  }
+</style>
