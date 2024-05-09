@@ -156,10 +156,11 @@
   }
 
   &:has(svg) {
-    text-decoration-thickness: 0;
+    text-decoration: none;
 
     &:focus {
-      text-decoration-thickness: 1px;
+      text-decoration: underline;
+      text-decoration-color: var(--color-green-100);
     }
   }
 }
