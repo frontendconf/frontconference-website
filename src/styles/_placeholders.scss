@@ -133,3 +133,33 @@
   letter-spacing: getLetterSpacing(10, 1, 1);
   // No desktop styles
 }
+
+%link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1x);
+  text-underline-offset: 4px;
+  color: var(--color-green-300);
+  transition: color var(--transition-duration-quick)
+    var(--transition-easing-default);
+
+  &:hover {
+    color: var(--color-green-100);
+  }
+
+  &:active {
+    color: var(--color-green-300);
+  }
+
+  &:focus {
+    text-decoration-color: var(--color-green-100);
+  }
+
+  &:has(svg) {
+    text-decoration-thickness: 0;
+
+    &:focus {
+      text-decoration-thickness: 1px;
+    }
+  }
+}
