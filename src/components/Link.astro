@@ -5,10 +5,10 @@ export interface Props extends HTMLLinkElement {
   icon?: boolean | string;
 }
 
-const { icon, ...rest } = Astro.props;
+const { icon, class: className, ...rest } = Astro.props;
 ---
 
-<a {...rest}>
+<a class={className} {...rest}>
   <slot />
   {
     icon && (
