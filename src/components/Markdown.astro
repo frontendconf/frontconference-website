@@ -16,28 +16,17 @@ const content = text && marked.parse(text);
   @import "../styles/_imports.scss";
 
   .markdown {
-    h2 {
-      @extend %typo-h2;
-    }
-
-    h3 {
-      @extend %typo-h3;
-    }
-
-    h4 {
-      @extend %typo-h4;
-    }
-
-    h5 {
-      @extend %typo-h5;
-    }
-
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
     h6 {
-      @extend %typo-h6;
+      --typo-margin-block-start: 1.5rem;
+      --typo-margin-block-end: 1.5rem;
     }
 
     p {
-      @extend %typo-body;
       margin-block-end: var(--spacing-4x);
     }
 
@@ -79,30 +68,10 @@ const content = text && marked.parse(text);
       @include breakpoint-up("xxl") {
         padding-inline-start: 0;
       }
-
-      li {
-        @extend %typo-body;
-      }
     }
 
-    // TODO: add links with icon
     a {
-      color: var(--color-green-300);
-      text-underline-offset: 4px;
-      transition: color var(--transition-duration-quick)
-        var(--transition-easing-default);
-
-      &:hover {
-        color: var(--color-green-100);
-      }
-
-      &:active {
-        color: var(--color-green-300);
-      }
-
-      &:focus {
-        text-decoration-color: var(--color-green-100);
-      }
+      @extend %link;
     }
 
     // Images

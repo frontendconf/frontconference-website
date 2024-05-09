@@ -1,28 +1,96 @@
 body {
-  @include typo-family-regular;
+  @extend %typo-body;
   color: var(--color-white);
 }
 
 // TODO: reset headlines and add default spacings
-//h1,
-//h2,
-//h3,
-//h4,
-//h5,
-//h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 p,
 ul,
 ol,
 dl {
-  margin-block-start: var(--bb-typo-margin-block-start, 0);
-  margin-block-end: var(--bb-typo-margin-block-end, 0);
+  margin-block-start: var(--typo-margin-block-start, 0);
+  margin-block-end: var(--typo-margin-block-end, 0);
+}
+
+h1 {
+  @extend %typo-h1;
+}
+
+h2 {
+  @extend %typo-h2;
+}
+
+h3 {
+  @extend %typo-h3;
+}
+
+h4 {
+  @extend %typo-h4;
+}
+
+h5 {
+  @extend %typo-h5;
+}
+
+h6 {
+  @extend %typo-h6;
 }
 
 b,
 strong {
-  @include typo-family-bold;
+  @extend %typo-body-caption;
 }
 
 pre {
   white-space: normal;
+}
+
+.typo-h1 {
+  @extend %typo-h1;
+}
+
+.typo-h2 {
+  @extend %typo-h2;
+}
+
+.typo-h3 {
+  @extend %typo-h3;
+}
+
+.typo-h4 {
+  @extend %typo-h4;
+}
+
+.typo-h5 {
+  @extend %typo-h5;
+}
+
+.typo-h6 {
+  @extend %typo-h6;
+}
+
+.typo-lead {
+  @extend %typo-lead;
+}
+
+.typo-body {
+  @extend %typo-body;
+}
+
+.typo-body-caption {
+  @extend %typo-body-caption;
+}
+
+.typo-small {
+  @extend %typo-small;
+}
+
+.typo-label {
+  @extend %typo-label;
 }
