@@ -3,7 +3,9 @@ import ContentLayout from "../layouts/ContentLayout.astro";
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
 import Markdown from "../components/Markdown.astro";
+
 import SponsorList from "../components/SponsorList.astro";
+import HotelList from "../components/HotelList.astro";
 
 const { slug } = Astro.params;
 
@@ -87,8 +89,9 @@ if (!currentPage || !currentPage.title) {
   <!-- <p>{currentPage.lead}</p> -->
   {currentPage.body && <Markdown text={currentPage.body} />}
 
-  <div class="additionalContent">
+  <div class="additionalContent grid">
     {currentPage.showSponsorsDetailed && <SponsorList />}
+    {currentPage.showHotels && <HotelList />}
   </div>
 </ContentLayout>
 
