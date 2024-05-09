@@ -3,10 +3,10 @@ import { graphql } from "gql.tada";
 import ContentLayout from "../../layouts/ContentLayout.astro";
 import { client } from "../../utils/graphql-client";
 import {
-  SPONSOR_FILTER_TAG_KEY,
-  SPONSOR_CATEGORY_SORTING_KEYS,
+  SPONSOR_LIST_FILTER_TAG_KEY,
+  SPONSOR_LIST_CATEGORY_SORTING_KEYS,
 } from "../../utils/constants";
-import Sponsor from "../../components/Sponsor.astro";
+import SponsorList from "../../components/SponsorList.astro";
 
 Astro.response.headers.set(
   "Cache-Control",
@@ -50,7 +50,7 @@ const sponsors = data.collection.items;
 // filter sponsors by current event year
 const filteredSponsors = sponsors.filter((sponsor) => {
   return sponsor.tagCollection.items.some(
-    (tag) => tag.title === SPONSOR_FILTER_TAG_KEY,
+    (tag) => tag.title === SPONSOR_LIST_FILTER_TAG_KEY,
   );
 });
 
@@ -71,8 +71,8 @@ const groupedSponsors = filteredSponsors.reduce((acc, sponsor) => {
 const sortedSponsors = Object.keys(groupedSponsors)
   .sort((a, b) => {
     return (
-      SPONSOR_CATEGORY_SORTING_KEYS.indexOf(a) -
-      SPONSOR_CATEGORY_SORTING_KEYS.indexOf(b)
+      SPONSOR_LIST_CATEGORY_SORTING_KEYS.indexOf(a) -
+      SPONSOR_LIST_CATEGORY_SORTING_KEYS.indexOf(b)
     );
   })
   .map((category) => {
@@ -86,7 +86,7 @@ const sortedSponsors = Object.keys(groupedSponsors)
 <ContentLayout title="Sponsors">
   {
     sortedSponsors.map((item) => (
-      <Sponsor category={item.category} sponsors={item.sponsors} />
+      <SponsorList category={item.category} sponsors={item.sponsors} />
     ))
   }
 </ContentLayout>
