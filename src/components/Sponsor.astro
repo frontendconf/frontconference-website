@@ -48,12 +48,9 @@ const getSocial = (sponsor, key) =>
     {
       sponsors.map((sponsor) => (
         <li class="list__item grid">
-          <a
-            {...getSocial(sponsor, "link")}
-            class="logo"
-            target="_blank"
-            set:html={sponsor.logoSvg}
-          />
+          <a {...getSocial(sponsor, "link")} class="logo" target="_blank">
+            <span class="logo__wrapper" set:html={sponsor.logoSvg} />
+          </a>
           <div class="content">
             <h4 class="title">{sponsor.title}</h4>
             <Markdown text={sponsor.body} />
@@ -97,26 +94,32 @@ const getSocial = (sponsor, key) =>
   }
 
   .list__item {
+    align-items: start;
     padding-block: var(--spacing-10x);
   }
 
   .logo {
-    :global(svg) {
-      width: 50%;
-      height: auto;
+    @include breakpoint-up("sm") {
+      grid-column: 1 / 5;
+    }
+  }
+
+  .logo__wrapper {
+    display: block;
+    max-width: 80%;
+
+    @include breakpoint-up("sm") {
+      max-width: 100%;
     }
 
-    @include breakpoint-up("lg") {
-      grid-column: 1 / 5;
-
-      :global(svg) {
-        width: 100%;
-      }
+    :global(svg) {
+      width: 100%;
+      height: 100%;
     }
   }
 
   .content {
-    @include breakpoint-up("lg") {
+    @include breakpoint-up("sm") {
       grid-column: 6 / -1;
     }
   }
