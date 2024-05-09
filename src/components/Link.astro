@@ -1,0 +1,33 @@
+---
+import { Icon } from "astro-icon/components";
+
+export interface Props extends HTMLLinkElement {
+  icon?: boolean | string;
+}
+
+const { icon, ...rest } = Astro.props;
+---
+
+<a {...rest}>
+  <slot />
+  {
+    icon && (
+      <Icon
+        name={typeof icon === "string" ? icon : "arrowRight"}
+        aria-hidden="true"
+      />
+    )
+  }
+</a>
+
+<style lang="scss">
+  @import "../styles/_imports.scss";
+
+  a {
+    @extend %link;
+  }
+
+  svg {
+    font-size: inherit;
+  }
+</style>
