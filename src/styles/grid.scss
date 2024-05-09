@@ -7,16 +7,7 @@
 .grid {
   display: grid;
   grid-template-columns: [content-start] repeat(var(--grid-columns), 1fr) [content-end];
-  gap: var(--spacing-5x);
-  // TODO: define row-gap for responsive behavior with main and side columns
-
-  @include breakpoint-up("md") {
-    gap: var(--spacing-6x);
-  }
-
-  @include breakpoint-up("lg") {
-    gap: var(--spacing-10x);
-  }
+  @extend %grid-gap;
 
   > * {
     grid-column: content;
@@ -45,4 +36,10 @@
   @include breakpoint-up("md") {
     padding-block: var(--spacing-20x);
   }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  @extend %grid-gap;
 }
