@@ -6,6 +6,7 @@ import Markdown from "../components/Markdown.astro";
 
 import SponsorList from "../components/SponsorList.astro";
 import HotelList from "../components/HotelList.astro";
+import RestaurantList from "../components/RestaurantList.astro";
 
 const { slug } = Astro.params;
 
@@ -89,9 +90,10 @@ if (!currentPage || !currentPage.title) {
   <!-- <p>{currentPage.lead}</p> -->
   {currentPage.body && <Markdown text={currentPage.body} />}
 
-  <div class="additionalContent grid">
+  <div class="additionalContent grid grid--row-gap-double">
     {currentPage.showSponsorsDetailed && <SponsorList />}
     {currentPage.showHotels && <HotelList />}
+    {currentPage.showRestaurants && <RestaurantList />}
   </div>
 </ContentLayout>
 
