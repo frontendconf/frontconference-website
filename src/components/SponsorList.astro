@@ -1,12 +1,12 @@
 ---
 import Markdown from "./Markdown.astro";
-import { Icon } from "astro-icon/components";
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
 import {
   SPONSOR_LIST_CATEGORY_SORTING_KEYS,
   SPONSOR_LIST_FILTER_TAG_KEY,
 } from "../utils/constants";
+import Link from "./Link.astro";
 
 Astro.response.headers.set(
   "Cache-Control",
@@ -130,9 +130,7 @@ const getSocial = (sponsor, key) =>
               <Markdown text={sponsor.body} />
               <ul class="socials">
                 {getSocials(sponsor).map((item) => (
-                  <a {...item} target="_blank">
-                    <Icon name={item.icon} aria-hidden="true" />
-                  </a>
+                  <Link {...item} target="_blank" interactive />
                 ))}
               </ul>
             </div>
@@ -213,36 +211,5 @@ const getSocial = (sponsor, key) =>
 
     display: flex;
     gap: var(--spacing-5x);
-
-    a {
-      position: relative;
-      color: var(--color-gray-900);
-      font-size: pxToRem(24);
-      z-index: 1;
-      transition: color var(--transition-duration-medium)
-        var(--transition-easing-default);
-
-      &:before {
-        content: "";
-        position: absolute;
-        inset: pxToRem(-8);
-        aspect-ratio: 1;
-        background: var(--color-gray-50);
-        z-index: -1;
-        clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
-        opacity: 0;
-        transition: opacity var(--transition-duration-medium)
-          var(--transition-easing-default);
-      }
-
-      &:hover,
-      &:focus-visible {
-        color: var(--color-green-300);
-
-        &:before {
-          opacity: 1;
-        }
-      }
-    }
   }
 </style>

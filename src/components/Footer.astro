@@ -1,10 +1,10 @@
 ---
-import { Icon } from "astro-icon/components";
 import { client } from "../utils/graphql-client";
 import { graphql } from "gql.tada";
 import Button from "./Button.astro";
 // import NewsletterSignup from "./NewsletterSignup.astro";
 import Logo from "./Logo.astro";
+import Link from "./Link.astro";
 
 const { slug } = Astro.params;
 
@@ -109,9 +109,14 @@ const socialMediaItems =
     {
       socialMediaItems.map((item) => (
         <li>
-          <a href={`${item.link}`} target="_blank" title={item.title}>
-            <Icon name={item.title.toLowerCase()} aria-hidden="true" />
-          </a>
+          <Link
+            href={item.link}
+            target="_blank"
+            title={item.title}
+            icon={item.title.toLowerCase()}
+            interactive
+            inverted
+          />
         </li>
       ))
     }
@@ -231,16 +236,10 @@ const socialMediaItems =
   .nav-list__social {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-4x);
+    gap: var(--spacing-10x);
 
     a {
-      color: var(--color-white);
       font-size: pxToRem(20);
-      padding: var(--spacing-2x);
-
-      &:hover {
-        color: var(--color-green-100);
-      }
     }
   }
 

@@ -151,15 +151,41 @@
     color: var(--color-green-300);
   }
 
-  &:focus {
+  &:focus-visible {
     text-decoration-color: var(--color-green-100);
   }
 
   &:has(svg) {
-    text-decoration-thickness: 0;
+    text-decoration: none;
 
-    &:focus {
-      text-decoration-thickness: 1px;
+    &:focus-visible {
+      text-decoration: underline;
+      text-decoration-color: var(--color-green-100);
     }
+  }
+}
+
+%grid-gap {
+  gap: var(--spacing-5x);
+  // TODO: define row-gap for responsive behavior with main and side columns
+
+  @include breakpoint-up("md") {
+    gap: var(--spacing-6x);
+  }
+
+  @include breakpoint-up("lg") {
+    gap: var(--spacing-10x);
+  }
+}
+
+%grid-row-gap-double {
+  row-gap: var(--spacing-12x);
+
+  @include breakpoint-up("md") {
+    row-gap: var(--spacing-14x);
+  }
+
+  @include breakpoint-up("lg") {
+    row-gap: var(--spacing-20x);
   }
 }

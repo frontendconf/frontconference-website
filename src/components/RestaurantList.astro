@@ -1,0 +1,48 @@
+---
+import { graphql } from "gql.tada";
+import { client } from "../utils/graphql-client";
+import SpotTeaser from "./SpotTeaser.astro";
+
+Astro.response.headers.set(
+  "Cache-Control",
+  "s-maxage=60, stale-while-revalidate",
+);
+
+const query = graphql(`
+  query GetRestaurants {
+    collection: restaurantCollection {
+      items {
+        name
+        description
+        link
+        photo {
+          src: url(transform: { width: 600, height: 600, resizeStrategy: FILL })
+          alt: title
+        }
+      }
+    }
+  }
+`);
+
+const data = await client.request(query, {});
+const restaurants = data.collection.items;
+---
+
+<div class="column--main stack">
+  <div class="markdown">
+    <h2>Eating and drinking in Zurich</h2>
+    <p>Handpicked recommendations from our staff!</p>
+  </div>
+  {
+    restaurants.map((hotel) => (
+      <SpotTeaser
+        title={hotel.name}
+        text={hotel.description}
+        image={hotel.photo}
+        link={hotel.link}
+      />
+    ))
+  }
+</div>
+
+<style lang="scss"></style>
