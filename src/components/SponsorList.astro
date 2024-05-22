@@ -83,14 +83,30 @@ const sortedSponsors = Object.keys(groupedSponsors)
   });
 
 const socialsKeys = [
-  { key: "twitter", link: "https://twitter.com/", label: "Twitter Profile" },
-  { key: "linkedin", link: "https://linkedin.com/", label: "Linkedin Profile" },
-  { key: "link", link: "", label: "Website" },
-  { key: "facebook", link: "https://facebook.com/", label: "Facebook Profile" },
+  {
+    key: "twitter",
+    link: "https://twitter.com/",
+    label: "Twitter Profile",
+    icon: "twitter",
+  },
+  {
+    key: "linkedin",
+    link: "https://linkedin.com/",
+    label: "Linkedin Profile",
+    icon: "linkedin",
+  },
+  { key: "link", link: "", label: "Website", icon: "web" },
+  {
+    key: "facebook",
+    link: "https://facebook.com/",
+    label: "Facebook Profile",
+    icon: "facebook",
+  },
   {
     key: "instagram",
     link: "https://instagram.com/",
     label: "Instagram Profile",
+    icon: "instagram",
   },
 ];
 
@@ -102,7 +118,7 @@ const getSocials = (sponsor) => {
       array.push({
         key: social.key,
         href: `${social.link}${sponsor[social.key]}`,
-        icon: social.key,
+        icon: social.icon,
         title: `${sponsor.title} ${social.label}`,
       });
     }
