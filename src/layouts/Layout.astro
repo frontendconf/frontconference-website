@@ -32,9 +32,15 @@ const { title, isHome } = Astro.props;
     <Header />
     <slot name="after-header" />
     <main class:list={[isHome && "home"]}>
-      <div class="container grid section">
-        <slot />
-      </div>
+      {
+        isHome ? (
+          <slot />
+        ) : (
+          <div class="container grid section">
+            <slot />
+          </div>
+        )
+      }
     </main>
     <Footer />
   </body>
