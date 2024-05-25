@@ -38,8 +38,14 @@ const venueTeaser = data.collection.items[0].venueTeaser;
         <h2 class="title">{venueTeaser.title}</h2>
         <p class="text">{venueTeaser.body}</p>
         {
-          venueTeaser.ctaLabel && (
-            <Button class="ctaButton" variant="tertiary" icon="arrowRight">
+          venueTeaser.link && venueTeaser.ctaLabel && (
+            <Button
+              as="a"
+              href={venueTeaser.link.slug}
+              class="ctaButton"
+              variant="tertiary"
+              icon="arrowRight"
+            >
               {venueTeaser.ctaLabel}
             </Button>
           )
