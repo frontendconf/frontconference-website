@@ -2,12 +2,14 @@
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
 import Layout from "../layouts/Layout.astro";
+import VenueTeaser from "../components/VenueTeaser.astro";
 import SponsorList from "../components/SponsorList.astro";
 
 const query = graphql(`
   query {
     collection: pageCollection(limit: 1, where: { slug: "/" }) {
       items {
+        showVenue
         showSponsors
       }
     }
@@ -20,7 +22,21 @@ const page = data.collection?.items[0];
 ---
 
 <Layout title="Front Conference Zurich" isHome>
-  {page.showSponsors && <SponsorList variant="teaser" groupTitleTag="h4" />}
+  {
+    page.showVenue && (
+      <div class="section">
+        {" "}
+        <VenueTeaser />
+      </div>
+    )
+  }
+  {
+    page.showSponsors && (
+      <div class="container grid">
+        <SponsorList variant="teaser" groupTitleTag="h4" />
+      </div>
+    )
+  }
 </Layout>
 
 <style></style>
