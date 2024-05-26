@@ -1,24 +1,27 @@
 ---
+import BackButton from "../components/BackButton.astro";
+
 export interface Props {
   title: string;
   displayBacklink?: boolean;
+  backLinkTitle?: string;
+  backLinkUrl?: string;
 }
 
-const { title, displayBacklink = false } = Astro.props;
+const {
+  title,
+  displayBacklink = false,
+  backLinkTitle,
+  backLinkUrl,
+} = Astro.props;
 ---
 
 <section class="hero container">
-  {
-    displayBacklink && (
-      <div class="hero__backlink-wrapper">
-        {/**
-         * We can keep track of the curentpage and what the last page was that
-         * the user was on. When keeping track, we can always navigate to the page the user was before. We can store tha pages title and url in memory and then navigate to that page when the user clicks the backlink. (or use history back, but we still need the last pages title to display it in the backlink -> You can get to the speakers detail page from home or the speakers overview page)
-         */}
-        <p>TODO Backlink</p>
-      </div>
-    )
-  }
+  <BackButton
+    title={backLinkTitle}
+    url={backLinkUrl}
+    displayBacklink={displayBacklink}
+  />
   <h1 class="hero__title">{title}</h1>
 </section>
 
@@ -27,6 +30,7 @@ const { title, displayBacklink = false } = Astro.props;
 
   .hero {
     display: flex;
+    align-items: start;
     flex-direction: column;
     max-width: var(--max-content-width);
     height: pxToRem(420);
