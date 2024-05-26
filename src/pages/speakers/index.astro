@@ -1,8 +1,10 @@
 ---
 import { graphql } from "gql.tada";
+import Markdown from "../../components/Markdown.astro";
 import ContentLayout from "../../layouts/ContentLayout.astro";
 import { client } from "../../utils/graphql-client";
 import { notEmpty } from "../../utils/helpers";
+import { SPEAKER_YEAR_TAG_KEY } from "../../utils/constants";
 
 Astro.response.headers.set(
   "Cache-Control",
@@ -11,10 +13,11 @@ Astro.response.headers.set(
 
 // TODO: Update $yearTag when enough speakers are there
 const query = graphql(`
-  query GetSpeakersPage($limit: Int = 200, $yearTag: String = "FRONT22") {
+  query GetSpeakersPage($limit: Int = 200, $yearTag: String!) {
     collection: pageCollection(where: { slug: "speakers" }) {
       items {
         title
+        lead
         body
         slug
       }
@@ -22,18 +25,18 @@ const query = graphql(`
     tags: tagCollection(limit: 1, where: { title: $yearTag }) {
       items {
         linkedFrom {
-          speakers: speakerCollection(limit: $limit) {
+          speakers: speakerCollection(limit: $limit, order: name_ASC) {
             items {
               name
-              role
-              company
-              description
-              bio
+              #              role
+              #              company
+              #              description
+              #              bio
               slug
-              order
-              photo {
-                url(transform: { resizeStrategy: FILL })
-              }
+              #              order
+              #              photo {
+              #                url(transform: { resizeStrategy: FILL })
+              #              }
             }
           }
         }
@@ -42,7 +45,7 @@ const query = graphql(`
   }
 `);
 
-const data = await client.request(query, {});
+const data = await client.request(query, { yearTag: SPEAKER_YEAR_TAG_KEY });
 
 const speakers =
   data.tags?.items[0]?.linkedFrom?.speakers?.items.filter(notEmpty) || [];
@@ -55,18 +58,11 @@ if (!currentPage || !currentPage.title) {
     error: "Page not found",
   };
 }
-
-speakers.sort((a, b) => {
-  if (!a.name || !b.name) return 0; // Why is this even possible...
-  if (a.name! > b.name!) return 1;
-  else return -1;
-});
-
-const time = new Date().toLocaleTimeString();
 ---
 
-<ContentLayout title="Speakers">
-  <p>Time: {time}</p>
+<ContentLayout title={currentPage.title}>
+  {currentPage.lead && <div>{currentPage.lead}</div>}
+  {currentPage.body && <Markdown text={currentPage.body} />}
   <ul>
     {
       speakers.map((speaker) => (

@@ -8,3 +8,5 @@ export const SPONSOR_LIST_CATEGORY_SORTING_KEYS = [
   "SILVER",
   "CONTRIBUTING",
 ];
+
+export const SPEAKER_YEAR_TAG_KEY = "FRONT22";
