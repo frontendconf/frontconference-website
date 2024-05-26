@@ -5,8 +5,11 @@ import { client } from "../utils/graphql-client";
 import Logo from "./Logo.astro";
 import MenuBurger from "./MenuBurger.astro";
 
-// TODO: find solution to identify current page other than slug (for non-standard pages like speakers etc.)
 const { slug } = Astro.params;
+const { pathname, href } = Astro.url;
+
+const path = pathname.match(/^\/$/) ? pathname : pathname.slice(0, -1);
+const currentPage = href.split("/").pop();
 
 const query = graphql(`
   query menu {
@@ -62,7 +65,15 @@ const menuItems =
                   <li class="nav-list-item">
                     <a
                       href={`/${item.slug}`}
-                      class:list={["link", { active: item.slug === slug }]}
+                      class:list={[
+                        "link",
+                        {
+                          active:
+                            item.slug === slug ||
+                            item.slug === currentPage ||
+                            path.includes(item.slug),
+                        },
+                      ]}
                     >
                       {item.menu || item.title}
                     </a>
