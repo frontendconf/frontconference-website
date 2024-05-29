@@ -36,7 +36,7 @@ const page = data.collection?.items[0];
           <Fragment set:html={introMobile} class="introMobile" />
         </div>
         <div class="arrowWrapper">
-          <button id="scrollDown" class="arrow">
+          <button id="scrollTrigger" class="arrow">
             <Icon name="arrowDown" />
           </button>
         </div>
@@ -45,7 +45,7 @@ const page = data.collection?.items[0];
   }
   {
     page.showVenue && (
-      <div class="section">
+      <div class="section" id="scrollTarget">
         <VenueTeaser />
       </div>
     )
@@ -117,10 +117,10 @@ const page = data.collection?.items[0];
 </style>
 
 <script>
-  const scrollDown = document.getElementById("scrollDown");
-  const firstSection = document.querySelector(".section");
+  const scrollTrigger = document.getElementById("scrollTrigger");
+  const scrollTarget = document.getElementById("scrollTarget");
 
-  scrollDown.addEventListener("click", () => {
-    firstSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  scrollTrigger.addEventListener("click", () => {
+    scrollTarget.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 </script>
