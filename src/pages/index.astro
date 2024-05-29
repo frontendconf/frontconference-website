@@ -28,19 +28,24 @@ const page = data.collection?.items[0];
 <Layout title="Front Conference Zurich" isHome>
   {
     page.showIntro && (
-      <div class="introWrapper">
-        <div class="intro intro--desktop">
-          <Fragment set:html={introDesktop} class="introDesktop" />
-        </div>
-        <div class="intro intro--mobile">
-          <Fragment set:html={introMobile} class="introMobile" />
+      <>
+        <div class="introWrapper">
+          <div class="intro intro--desktop">
+            <Fragment set:html={introDesktop} class="introDesktop" />
+          </div>
+          <div class="intro intro--mobile">
+            <Fragment set:html={introMobile} class="introMobile" />
+          </div>
+          <a href="#" class="ticket">
+            <img src="public/ticket.webp" alt="Get your ticket" />
+          </a>
         </div>
         <div class="arrowWrapper">
           <button id="scrollTrigger" class="arrow">
             <Icon name="arrowDown" />
           </button>
         </div>
-      </div>
+      </>
     )
   }
   {
@@ -63,13 +68,18 @@ const page = data.collection?.items[0];
   @import "../styles/_imports.scss";
 
   .introWrapper {
+    position: relative;
     max-width: calc(var(--max-content-width) + 10%);
     margin-block-start: var(--spacing-6x);
     margin-inline: auto;
+    container-type: inline-size;
+
+    @include breakpoint-up("sm") {
+      padding-inline: var(--grid-padding);
+    }
 
     @include breakpoint-up("lg") {
       margin-block-start: var(--spacing-8x);
-      padding-inline: var(--grid-padding);
     }
   }
 
@@ -99,7 +109,7 @@ const page = data.collection?.items[0];
   .arrowWrapper {
     display: flex;
     justify-content: center;
-    margin-block-start: var(--spacing-12x);
+    margin-block-start: var(--spacing-16x);
   }
 
   .arrow {
@@ -112,6 +122,22 @@ const page = data.collection?.items[0];
     svg {
       width: pxToRem(80);
       height: pxToRem(24);
+    }
+  }
+
+  .ticket {
+    position: absolute;
+    inset: auto 5cqw clamp(6rem, 27.5cqw, 11.5rem) 5cqw;
+
+    @include breakpoint-up("sm") {
+      width: 42.5cqw;
+      max-width: 600px;
+      inset: auto auto 0 12.5cqw;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
     }
   }
 </style>
