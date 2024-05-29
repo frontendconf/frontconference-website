@@ -40,6 +40,10 @@
   @include breakpoint-up("md") {
     padding-block: var(--spacing-20x);
   }
+
+  .home & {
+    padding-block: var(--spacing-20x);
+  }
 }
 
 .stack {

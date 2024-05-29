@@ -13,11 +13,21 @@ Astro.response.headers.set(
   "s-maxage=60, stale-while-revalidate",
 );
 
+export interface Props {
+  variant?: "teaser";
+  groupTitleTag: "h3" | "h4" | "h5";
+}
+
+const { variant, groupTitleTag = "h3" } = Astro.props;
+
+const isTeaser = variant === "teaser";
+const GroupTitleTag = groupTitleTag;
+
 // TODO: find why to filter sponsors by tagCollection title
 // like tagCollection(where: {title: "FRONT24"})
 const query = graphql(`
   query GetSponsorPage {
-    collection: sponsorCollection {
+    collection: sponsorCollection(order: [title_ASC]) {
       items {
         title
         link
@@ -133,23 +143,25 @@ const getSocial = (sponsor, key) =>
 
 {
   sortedSponsors.map((item) => (
-    <div>
-      <h3 class="list__title">{item.category}</h3>
+    <div class:list={[isTeaser && "var-teaser"]}>
+      <GroupTitleTag class="list__title">{item.category}</GroupTitleTag>
       <ul class="list">
         {item.sponsors.map((sponsor) => (
-          <li class="list__item grid">
+          <li class:list={["list__item", !isTeaser && "grid"]}>
             <a {...getSocial(sponsor, "link")} class="logo" target="_blank">
               <span class="logo__wrapper" set:html={sponsor.logoSvg} />
             </a>
-            <div class="content">
-              <h4 class="title">{sponsor.title}</h4>
-              <Markdown text={sponsor.body} />
-              <ul class="socials">
-                {getSocials(sponsor).map((item) => (
-                  <Link {...item} target="_blank" interactive />
-                ))}
-              </ul>
-            </div>
+            {!isTeaser && (
+              <div class="content">
+                <h4 class="title">{sponsor.title}</h4>
+                <Markdown text={sponsor.body} />
+                <ul class="socials">
+                  {getSocials(sponsor).map((item) => (
+                    <Link {...item} target="_blank" interactive />
+                  ))}
+                </ul>
+              </div>
+            )}
           </li>
         ))}
       </ul>
@@ -227,5 +239,61 @@ const getSocial = (sponsor, key) =>
 
     display: flex;
     gap: var(--spacing-5x);
+  }
+
+  .var-teaser {
+    --sponsor-teaser-item-cols: 1;
+    --sponsor-teaser-logo-height: 200px;
+
+    .list__title {
+      @extend %typo-h5;
+    }
+
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      column-gap: var(--spacing-10x);
+    }
+
+    .list__item {
+      width: 100%;
+
+      @include breakpoint-up("sm") {
+        width: calc(
+          1 / var(--sponsor-teaser-item-cols) * 100% - var(--spacing-10x)
+        );
+      }
+    }
+
+    .logo__wrapper {
+      max-width: 100%;
+      height: var(--sponsor-teaser-logo-height);
+    }
+
+    :global(svg) {
+      fill: white;
+    }
+
+    &:nth-child(2) {
+      --sponsor-teaser-item-cols: 2;
+      --sponsor-teaser-logo-height: 160px;
+    }
+
+    &:nth-child(3) {
+      --sponsor-teaser-item-cols: 3;
+      --sponsor-teaser-logo-height: 64px;
+    }
+
+    &:nth-child(4) {
+      --sponsor-teaser-item-cols: 4;
+      --sponsor-teaser-logo-height: 48px;
+    }
+
+    &:nth-child(n + 5) {
+      --sponsor-teaser-item-cols: 5;
+      --sponsor-teaser-logo-height: 36px;
+    }
   }
 </style>

@@ -1,15 +1,26 @@
 ---
 import type { HTMLTag, Polymorphic } from "astro/types";
+import { Icon } from "astro-icon/components";
 
 export type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
   variant?: "primary" | "secondary" | "tertiary" | "quaternary";
+  prefixIcon?: string;
+  suffixIcon?: string;
 };
 
-const { as: Tag = "button", variant, ...rest } = Astro.props;
+const {
+  as: Tag = "button",
+  variant,
+  prefixIcon,
+  suffixIcon,
+  ...rest
+} = Astro.props;
 ---
 
 <Tag class:list={["button", variant]} {...rest}>
+  {prefixIcon && <Icon class="icon" name={prefixIcon} aria-hidden="true" />}
   <span class="inner"><slot /></span>
+  {suffixIcon && <Icon class="icon" name={suffixIcon} aria-hidden="true" />}
 </Tag>
 
 <style lang="scss">
@@ -43,6 +54,7 @@ const { as: Tag = "button", variant, ...rest } = Astro.props;
       12px 100%,
       0% 50%
     );
+    column-gap: var(--spacing-1x);
     border: 0 none;
     appearance: none;
     padding-inline: pxToRem(30);
@@ -158,7 +170,8 @@ const { as: Tag = "button", variant, ...rest } = Astro.props;
     }
   }
 
-  .inner {
+  .inner,
+  .icon {
     position: relative;
     z-index: 2;
   }
