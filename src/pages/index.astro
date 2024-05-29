@@ -5,6 +5,7 @@ import { client } from "../utils/graphql-client";
 import Layout from "../layouts/Layout.astro";
 import VenueTeaser from "../components/VenueTeaser.astro";
 import SponsorList from "../components/SponsorList.astro";
+import Ticket from "../components/Ticket.astro";
 import introDesktop from "../assets/intro/introDesktop.svg?raw";
 import introMobile from "../assets/intro/introMobile.svg?raw";
 
@@ -36,9 +37,7 @@ const page = data.collection?.items[0];
           <div class="intro intro--mobile">
             <Fragment set:html={introMobile} class="introMobile" />
           </div>
-          <a href="#" class="ticket">
-            <img src="public/ticket.webp" alt="Get your ticket" />
-          </a>
+          <Ticket />
         </div>
         <div class="arrowWrapper">
           <button id="scrollTrigger" class="arrow">
@@ -124,22 +123,6 @@ const page = data.collection?.items[0];
       height: pxToRem(24);
     }
   }
-
-  .ticket {
-    position: absolute;
-    inset: auto 5cqw clamp(6rem, 27.5cqw, 11.5rem) 5cqw;
-
-    @include breakpoint-up("sm") {
-      width: 42.5cqw;
-      max-width: 600px;
-      inset: auto auto 0 12.5cqw;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-  }
 </style>
 
 <script>
@@ -147,6 +130,6 @@ const page = data.collection?.items[0];
   const scrollTarget = document.getElementById("scrollTarget");
 
   scrollTrigger.addEventListener("click", () => {
-    scrollTarget.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    scrollTarget.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 </script>
