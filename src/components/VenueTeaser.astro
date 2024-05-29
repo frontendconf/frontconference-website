@@ -18,7 +18,7 @@ const query = graphql(`
             }
           }
           photo {
-            url
+            url(transform: { width: 2000, resizeStrategy: FILL, format: WEBP })
           }
         }
       }
