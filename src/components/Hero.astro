@@ -1,4 +1,6 @@
 ---
+import { Icon } from "astro-icon/components";
+
 export interface Props {
   title: string;
   displayBacklink?: boolean;
@@ -20,12 +22,16 @@ const { title, displayBacklink = false } = Astro.props;
     )
   }
   <h1 class="hero__title">{title}</h1>
+  <div class="hero__icon-wrapper">
+    <Icon class="hero__icon" name={`glyph${title.charAt(0).toUpperCase()}`} />
+  </div>
 </section>
 
 <style lang="scss">
   @import "../styles/_imports.scss";
 
   .hero {
+    position: relative;
     display: flex;
     flex-direction: column;
     max-width: var(--max-content-width);
@@ -45,6 +51,43 @@ const { title, displayBacklink = false } = Astro.props;
       @extend %typo-h1;
       color: var(--color-white);
       margin-block: auto 0;
+
+      @include breakpoint-up("lg") {
+        max-width: 70%;
+      }
+    }
+
+    &__icon-wrapper {
+      position: absolute;
+      inset: pxToRem(48) 0 auto auto;
+      overflow: hidden;
+      width: pxToRem(216);
+      aspect-ratio: 1;
+
+      @include breakpoint-up("lg") {
+        width: pxToRem(360);
+        inset: auto 0 pxToRem(-80) auto;
+      }
+
+      @include breakpoint-up("xl") {
+        width: pxToRem(480);
+        inset: auto 0 pxToRem(-120) auto;
+      }
+    }
+
+    &__icon {
+      width: 100%;
+      height: auto;
+      color: var(--color-green-100);
+      translate: pxToRem(48);
+
+      @include breakpoint-up("lg") {
+        translate: pxToRem(80);
+      }
+
+      @include breakpoint-up("xxl") {
+        translate: 0;
+      }
     }
   }
 </style>
