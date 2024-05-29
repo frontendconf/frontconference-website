@@ -1,14 +1,18 @@
 ---
+import { Icon } from "astro-icon/components";
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
 import Layout from "../layouts/Layout.astro";
 import VenueTeaser from "../components/VenueTeaser.astro";
 import SponsorList from "../components/SponsorList.astro";
+import introDesktop from "../assets/intro/introDesktop.svg?raw";
+import introMobile from "../assets/intro/introMobile.svg?raw";
 
 const query = graphql(`
   query {
     collection: pageCollection(limit: 1, where: { slug: "/" }) {
       items {
+        showIntro
         showVenue
         showSponsors
       }
@@ -22,6 +26,23 @@ const page = data.collection?.items[0];
 ---
 
 <Layout title="Front Conference Zurich" isHome>
+  {
+    page.showIntro && (
+      <div class="introWrapper">
+        <div class="intro intro--desktop">
+          <Fragment set:html={introDesktop} class="introDesktop" />
+        </div>
+        <div class="intro intro--mobile">
+          <Fragment set:html={introMobile} class="introMobile" />
+        </div>
+        <div class="arrowWrapper">
+          <button id="scrollDown" class="arrow">
+            <Icon name="arrowDown" />
+          </button>
+        </div>
+      </div>
+    )
+  }
   {
     page.showVenue && (
       <div class="section">
@@ -38,4 +59,68 @@ const page = data.collection?.items[0];
   }
 </Layout>
 
-<style></style>
+<style lang="scss">
+  @import "../styles/_imports.scss";
+
+  .introWrapper {
+    max-width: calc(var(--max-content-width) + 10%);
+    margin-block-start: var(--spacing-6x);
+    margin-inline: auto;
+
+    @include breakpoint-up("lg") {
+      margin-block-start: var(--spacing-8x);
+      padding-inline: var(--grid-padding);
+    }
+  }
+
+  .intro {
+    display: none;
+
+    :global(svg) {
+      width: 100%;
+      height: auto;
+    }
+
+    &.intro--mobile {
+      display: block;
+    }
+
+    @include breakpoint-up("sm") {
+      &.intro--mobile {
+        display: none;
+      }
+
+      &.intro--desktop {
+        display: block;
+      }
+    }
+  }
+
+  .arrowWrapper {
+    display: flex;
+    justify-content: center;
+    margin-block-start: var(--spacing-12x);
+  }
+
+  .arrow {
+    appearance: none;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+
+    svg {
+      width: pxToRem(80);
+      height: pxToRem(24);
+    }
+  }
+</style>
+
+<script>
+  const scrollDown = document.getElementById("scrollDown");
+  const firstSection = document.querySelector(".section");
+
+  scrollDown.addEventListener("click", () => {
+    firstSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+</script>
