@@ -21,7 +21,8 @@ export interface Props {
 const { speaker, variant = "dark" } = Astro.props;
 ---
 
-<a class="speaker" href={`/speakers/${speaker.slug}`}>
+<!-- <a class="speaker" href={`/speakers/${speaker.slug}`}> -->
+<article class:list={["speaker", `speaker--${variant}`]}>
 	<img
 		class="speaker__image"
 		src={`${speaker.photo?.url}&w=295&h=395`}
@@ -47,7 +48,8 @@ const { speaker, variant = "dark" } = Astro.props;
 		{speaker.role ? <p class="speaker__role">{speaker.role}</p> : null}
 		{speaker.company ? <p class="speaker__company">{speaker.company}</p> : null}
 	</div>
-</a>
+</article>
+<!-- </a> -->
 
 <style lang="scss">
 	@import "../styles/_imports.scss";
@@ -94,6 +96,15 @@ const { speaker, variant = "dark" } = Astro.props;
 
 		&__role + &__company {
 			margin-top: var(--spacing-3x);
+		}
+
+		&--light {
+			background-color: var(--color-white);
+			color: var(--color-gray-900);
+
+			.speaker__company {
+				color: var(--color-gray-500);
+			}
 		}
 	}
 </style>
