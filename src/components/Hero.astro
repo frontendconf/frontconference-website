@@ -7,6 +7,12 @@ export interface Props {
 }
 
 const { title, displayBacklink = false } = Astro.props;
+const { slug } = Astro.params;
+
+const heroGlyphChar = slug || title;
+const glyphColor = ["green-100", "cardboard", "red", "orange"][
+  Math.floor(Math.random() * 4)
+];
 ---
 
 <section class="hero container">
@@ -23,7 +29,10 @@ const { title, displayBacklink = false } = Astro.props;
   }
   <h1 class="hero__title">{title}</h1>
   <div class="hero__icon-wrapper">
-    <Icon class="hero__icon" name={`glyph${title.charAt(0).toUpperCase()}`} />
+    <Icon
+      class:list={["hero__icon", glyphColor && `color--${glyphColor}`]}
+      name={`glyph${heroGlyphChar.charAt(0).toUpperCase()}`}
+    />
   </div>
 </section>
 
@@ -78,7 +87,6 @@ const { title, displayBacklink = false } = Astro.props;
     &__icon {
       width: 100%;
       height: auto;
-      color: var(--color-green-100);
       translate: pxToRem(48);
 
       @include breakpoint-up("lg") {
@@ -87,6 +95,22 @@ const { title, displayBacklink = false } = Astro.props;
 
       @include breakpoint-up("xxl") {
         translate: 0;
+      }
+
+      &.color--green-100 {
+        color: var(--color-green-100);
+      }
+
+      &.color--cardboard {
+        color: var(--color-cardboard);
+      }
+
+      &.color--red {
+        color: var(--color-red);
+      }
+
+      &.color--orange {
+        color: var(--color-orange);
       }
     }
   }
