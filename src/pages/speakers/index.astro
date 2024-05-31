@@ -1,52 +1,26 @@
 ---
 import { graphql } from "gql.tada";
+import { client } from "../../utils/graphql-client";
 import Markdown from "../../components/Markdown.astro";
 import ContentLayout from "../../layouts/ContentLayout.astro";
-import { client } from "../../utils/graphql-client";
-import { notEmpty } from "../../utils/helpers";
-import { SPEAKER_YEAR_TAG_KEY } from "../../utils/constants";
-import SpeakerCard, {
-	speakerCardFragment,
-} from "../../components/SpeakerCard.astro";
+import SpeakerList from "../../components/SpeakerList.astro";
 
-Astro.response.headers.set(
-	"Cache-Control",
-	"s-maxage=60, stale-while-revalidate",
-);
-
-// TODO: Update $yearTag when enough speakers are there
-const query = graphql(
-	`
-		query GetSpeakersPage($limit: Int = 200, $yearTag: String!) {
-			collection: pageCollection(where: { slug: "speakers" }) {
-				items {
-					title
-					lead
-					body
-					slug
-					menu
-				}
-			}
-			tags: tagCollection(limit: 1, where: { title: $yearTag }) {
-				items {
-					linkedFrom {
-						speakers: speakerCollection(limit: $limit, order: name_ASC) {
-							items {
-								...SpeakerCardFragment
-							}
-						}
-					}
-				}
+const query = graphql(`
+	query GetSpeakersPage {
+		collection: pageCollection(where: { slug: "speakers" }) {
+			items {
+				title
+				lead
+				body
+				slug
+				menu
 			}
 		}
-	`,
-	[speakerCardFragment],
-);
+	}
+`);
 
-const data = await client.request(query, { yearTag: SPEAKER_YEAR_TAG_KEY });
+const data = await client.request(query);
 
-const speakers =
-	data.tags?.items[0]?.linkedFrom?.speakers?.items.filter(notEmpty) || [];
 const currentPage = data.collection?.items[0];
 
 // TODO: double check if this is correct
@@ -62,26 +36,5 @@ if (!currentPage || !currentPage.title) {
 	{currentPage.lead && <div class="typo-lead">{currentPage.lead}</div>}
 	{currentPage.body && <Markdown text={currentPage.body} />}
 
-	<ul class="speaker-list">
-		{
-			speakers.map((speaker) => (
-				<li class="speaker-list__item">
-					<SpeakerCard speaker={speaker} variant="dark" />
-				</li>
-			))
-		}
-	</ul>
+	<SpeakerList />
 </ContentLayout>
-
-<style lang="scss">
-	@import "../../styles/_imports.scss";
-
-	.speaker-list {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-		gap: var(--spacing-10x);
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
-</style>
