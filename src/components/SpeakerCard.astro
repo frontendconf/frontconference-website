@@ -8,7 +8,7 @@ export const speakerCardFragment = graphql(`
 		company
 		slug
 		photo {
-			url(transform: { resizeStrategy: FILL })
+			url(transform: { resizeStrategy: FILL, format: WEBP })
 		}
 	}
 `);
@@ -21,8 +21,8 @@ export interface Props {
 const { speaker, variant = "dark" } = Astro.props;
 ---
 
-<!-- <a class="speaker" href={`/speakers/${speaker.slug}`}> -->
-<article class:list={["speaker", `speaker--${variant}`]}>
+{/*<a class="speaker" href={`/speakers/${speaker.slug}`}>*/}
+<article class:list={["speaker", `var--${variant}`]}>
 	<img
 		class="speaker__image"
 		src={`${speaker.photo?.url}&w=295&h=395`}
@@ -49,16 +49,14 @@ const { speaker, variant = "dark" } = Astro.props;
 		{speaker.company ? <p class="speaker__company">{speaker.company}</p> : null}
 	</div>
 </article>
-<!-- </a> -->
+{/*</a>*/}
 
 <style lang="scss">
 	@import "../styles/_imports.scss";
 
 	.speaker {
-		display: block;
 		background-color: var(--color-black);
 		color: var(--color-white);
-		text-decoration: none;
 		clip-path: polygon(
 			0% 0,
 			0% 100%,
@@ -66,14 +64,14 @@ const { speaker, variant = "dark" } = Astro.props;
 			100% calc(100% - 20px),
 			100% 0
 		);
-
-		// TODO: Implement hover / active states
-		// TODO: Implement Light Variant
+		// TODO: replace with masonry layout
+		height: 100%;
 
 		&__image {
 			display: block;
 			width: 100%;
-			aspect-ratio: 0.7434944238;
+			aspect-ratio: 1;
+			object-fit: cover;
 		}
 
 		&__content {
@@ -82,29 +80,25 @@ const { speaker, variant = "dark" } = Astro.props;
 
 		&__name {
 			@extend %typo-h6;
+			text-transform: uppercase;
 		}
 
-		&__role,
-		&__company {
-			@extend %typo-body;
-			margin: var(--spacing-1x) 0 0 0;
+		&__role {
+			margin-block-start: var(--spacing-1x);
 		}
 
 		&__company {
 			color: var(--color-gray-400);
+			margin-block-start: var(--spacing-3x);
 		}
+	}
 
-		&__role + &__company {
-			margin-top: var(--spacing-3x);
-		}
+	.var--light {
+		background-color: var(--color-white);
+		color: var(--color-gray-900);
 
-		&--light {
-			background-color: var(--color-white);
-			color: var(--color-gray-900);
-
-			.speaker__company {
-				color: var(--color-gray-500);
-			}
+		.speaker__company {
+			color: var(--color-gray-500);
 		}
 	}
 </style>
