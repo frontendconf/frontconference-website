@@ -1,0 +1,102 @@
+---
+
+---
+
+<a href="#" class="ticket">
+  <img src="/ticket.webp" alt="Get your ticket" />
+  <div class="emoji__wrapper">
+    <div class="emoji sparkles">✨</div>
+    <div class="emoji rocket">🚀</div>
+    <div class="emoji smiley">😀</div>
+  </div>
+</a>
+
+<style lang="scss">
+  @import "../styles/_imports.scss";
+
+  .ticket {
+    position: absolute;
+    inset: auto 5cqw clamp(6rem, 27.5cqw, 11.5rem) 5cqw;
+    outline-width: 0;
+
+    @include breakpoint-up("sm") {
+      width: 42.5cqw;
+      max-width: 600px;
+      inset: auto auto 0 12.5cqw;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    &:hover,
+    &:focus-visible {
+      .emoji {
+        opacity: 1;
+      }
+
+      .sparkles {
+        inset: 125% 50%;
+        rotate: 0deg;
+      }
+
+      .rocket {
+        inset: -25% 75%;
+        rotate: 0deg;
+      }
+
+      .smiley {
+        inset: -25% 15%;
+        rotate: -20deg;
+      }
+
+      img {
+        outline: inherit;
+        outline-width: 1px;
+      }
+    }
+  }
+
+  .emoji__wrapper {
+    position: absolute;
+    inset: 0;
+  }
+
+  .emoji {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    width: pxToRem(40);
+    aspect-ratio: 1 / 1;
+    translate: -50% -50%;
+    transition: var(--transition-duration-medium)
+      var(--transition-easing-default);
+    transition-property: inset, rotate, opacity;
+    font-size: pxToRem(40);
+
+    @include breakpoint-up("lg") {
+      width: pxToRem(48);
+      font-size: pxToRem(48);
+    }
+
+    @include breakpoint-up("xl") {
+      width: pxToRem(64);
+      font-size: pxToRem(64);
+    }
+  }
+
+  .sparkles {
+    inset: 50% 50%;
+    rotate: 180deg;
+  }
+
+  .rocket {
+    inset: 50% calc(50% + 48px);
+    rotate: -90deg;
+  }
+
+  .smiley {
+    inset: 50% calc(50% - 48px);
+  }
+</style>

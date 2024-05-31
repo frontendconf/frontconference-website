@@ -2,6 +2,7 @@
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
 import SpotTeaser from "./SpotTeaser.astro";
+import Markdown from "./Markdown.astro";
 
 Astro.response.headers.set(
   "Cache-Control",
@@ -21,23 +22,21 @@ const query = graphql(`
         }
       }
     }
+    config: configCollection(limit: 1) {
+      items {
+        leadHotels
+      }
+    }
   }
 `);
 
 const data = await client.request(query, {});
 const hotels = data.collection.items;
+const config = data.config.items[0];
 ---
 
 <div class="column--main stack">
-  <div class="markdown">
-    <h2>Sleeping in Zurich</h2>
-    <p>
-      You can book approximately 200 hotels free of charge through Zurich
-      Tourism – online or by telephone. The range includes everything from youth
-      hostels to luxury hotels, rooms in the center of the Old Town, on the edge
-      of Lake Zurich, or in one of Zurich’s trendy districts.
-    </p>
-  </div>
+  {config.leadHotels && <Markdown text={config.leadHotels} />}
   {
     hotels.map((hotel) => (
       <SpotTeaser

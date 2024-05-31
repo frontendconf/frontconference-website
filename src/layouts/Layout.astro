@@ -26,7 +26,7 @@ const { title, isHome } = Astro.props;
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <title>{title}</title>
+    <title>{title} - Front Conference Zurich</title>
     <ViewTransitions />
     <style lang="scss" is:global>
       @import "../styles/fonts.scss";
@@ -41,9 +41,15 @@ const { title, isHome } = Astro.props;
     <Header />
     <slot name="after-header" />
     <main class:list={[isHome && "home"]}>
-      <div class="container grid section">
-        <slot />
-      </div>
+      {
+        isHome ? (
+          <slot />
+        ) : (
+          <div class="container grid section">
+            <slot />
+          </div>
+        )
+      }
     </main>
     <Footer />
   </body>

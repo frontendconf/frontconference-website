@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import BackButton from "../components/BackButton.astro";
 
 export interface Props {
@@ -14,6 +15,12 @@ const {
   backLinkTitle,
   backLinkUrl,
 } = Astro.props;
+const { slug } = Astro.params;
+
+const heroGlyphChar = slug || title;
+const glyphColor = ["green-100", "cardboard", "red", "orange"][
+  Math.floor(Math.random() * 4)
+];
 ---
 
 <section class="hero container">
@@ -23,12 +30,19 @@ const {
     displayBacklink={displayBacklink}
   />
   <h1 class="hero__title">{title}</h1>
+  <div class="hero__icon-wrapper">
+    <Icon
+      class:list={["hero__icon", glyphColor && `color--${glyphColor}`]}
+      name={`glyph${heroGlyphChar.charAt(0).toUpperCase()}`}
+    />
+  </div>
 </section>
 
 <style lang="scss">
   @import "../styles/_imports.scss";
 
   .hero {
+    position: relative;
     display: flex;
     align-items: start;
     flex-direction: column;
@@ -49,6 +63,58 @@ const {
       @extend %typo-h1;
       color: var(--color-white);
       margin-block: auto 0;
+
+      @include breakpoint-up("lg") {
+        max-width: 70%;
+      }
+    }
+
+    &__icon-wrapper {
+      position: absolute;
+      inset: pxToRem(48) 0 auto auto;
+      overflow: hidden;
+      width: pxToRem(216);
+      aspect-ratio: 1;
+
+      @include breakpoint-up("lg") {
+        width: pxToRem(360);
+        inset: auto 0 pxToRem(-80) auto;
+      }
+
+      @include breakpoint-up("xl") {
+        width: pxToRem(480);
+        inset: auto 0 pxToRem(-120) auto;
+      }
+    }
+
+    &__icon {
+      width: 100%;
+      height: auto;
+      translate: pxToRem(48);
+
+      @include breakpoint-up("lg") {
+        translate: pxToRem(80);
+      }
+
+      @include breakpoint-up("xxl") {
+        translate: 0;
+      }
+
+      &.color--green-100 {
+        color: var(--color-green-100);
+      }
+
+      &.color--cardboard {
+        color: var(--color-cardboard);
+      }
+
+      &.color--red {
+        color: var(--color-red);
+      }
+
+      &.color--orange {
+        color: var(--color-orange);
+      }
     }
   }
 </style>
