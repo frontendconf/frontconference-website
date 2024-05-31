@@ -1,0 +1,143 @@
+---
+import { graphql } from "gql.tada";
+import type { FragmentOf } from "gql.tada";
+import Markdown from "./Markdown.astro";
+import Link from "./Link.astro";
+
+export const speakerDetailFragment = graphql(`
+	fragment SpeakerDetailFragment on Speaker @_unmask {
+		name
+		role
+		company
+		slug
+		bio
+		twitter
+		linkedin
+		website
+		photo {
+			url(transform: { resizeStrategy: FILL, format: WEBP })
+		}
+	}
+`);
+
+export interface Props {
+	speaker: FragmentOf<typeof speakerDetailFragment>;
+}
+
+const { speaker } = Astro.props;
+
+const socialsKeys = [
+	{
+		key: "twitter",
+		link: "https://twitter.com/",
+		label: "Twitter Profile",
+		icon: "twitter",
+	},
+	{
+		key: "linkedin",
+		link: "https://linkedin.com/",
+		label: "Linkedin Profile",
+		icon: "linkedin",
+	},
+	{ key: "website", link: "", label: "Website", icon: "web" },
+];
+
+const getSocials = (speaker) => {
+	const array = [];
+
+	socialsKeys.map((social) => {
+		if (!!speaker[social.key]) {
+			array.push({
+				key: social.key,
+				href: `${social.link}${speaker[social.key]}`,
+				icon: social.icon,
+				title: `${speaker.title} ${social.label}`,
+			});
+		}
+	});
+
+	return array;
+};
+---
+
+<article class="speakerDetail">
+	<img
+		class="speakerDetail__image"
+		src={speaker.photo?.url}
+		alt={speaker.name}
+		loading="lazy"
+	/>
+	<div class="speakerDetail__content">
+		<div>
+			<h3 class="speakerDetail__name">{speaker.name}</h3>
+			{speaker.role ? <p class="speakerDetail__role">{speaker.role}</p> : null}
+		</div>
+		{
+			speaker.bio ? (
+				<Markdown class="speakerDetail__bio" text={speaker.bio} />
+			) : null
+		}
+		<ul class="speakerDetail__socials">
+			{
+				getSocials(speaker).map((item) => (
+					<Link {...item} target="_blank" interactive inverted />
+				))
+			}
+		</ul>
+	</div>
+</article>
+
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	.speakerDetail {
+		background: var(--color-black);
+		color: var(--color-white);
+
+		&__image {
+			display: block;
+			width: 100%;
+			aspect-ratio: 3 / 2;
+			object-fit: cover;
+		}
+
+		&__content {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-6x);
+			padding: var(--spacing-4x);
+
+			@include breakpoint-up("sm") {
+				padding: var(--spacing-8x);
+			}
+		}
+
+		&__name {
+			@extend %typo-h6;
+		}
+
+		&__bio {
+			color: var(--color-gray-400);
+
+			:global(a) {
+				color: var(--color-white);
+
+				&:hover,
+				&:focus-visible {
+					color: var(--color-green-100);
+				}
+			}
+		}
+
+		&__socials {
+			list-style: none;
+			padding-inline-start: 0;
+			display: flex;
+			gap: var(--spacing-6x);
+
+			a {
+				font-size: pxToRem(20);
+			}
+		}
+	}
+</style>
