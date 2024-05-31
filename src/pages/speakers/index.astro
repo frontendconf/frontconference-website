@@ -11,7 +11,7 @@ import SpeakerCard, {
 
 Astro.response.headers.set(
 	"Cache-Control",
-	"s-maxage=60, stale-while-revalidate"
+	"s-maxage=60, stale-while-revalidate",
 );
 
 // TODO: Update $yearTag when enough speakers are there
@@ -24,6 +24,7 @@ const query = graphql(
 					lead
 					body
 					slug
+					menu
 				}
 			}
 			tags: tagCollection(limit: 1, where: { title: $yearTag }) {
@@ -39,7 +40,7 @@ const query = graphql(
 			}
 		}
 	`,
-	[speakerCardFragment]
+	[speakerCardFragment],
 );
 
 const data = await client.request(query, { yearTag: SPEAKER_YEAR_TAG_KEY });
@@ -57,9 +58,8 @@ if (!currentPage || !currentPage.title) {
 }
 ---
 
-<!-- Hardcoded title as in old website -->
-<ContentLayout title={"Industry Leading Speakers"}>
-	{currentPage.lead && <div>{currentPage.lead}</div>}
+<ContentLayout title={currentPage.title}>
+	{currentPage.lead && <div class="typo-lead">{currentPage.lead}</div>}
 	{currentPage.body && <Markdown text={currentPage.body} />}
 
 	<ul class="speaker-list">
