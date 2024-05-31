@@ -47,17 +47,46 @@ const page = data.collection?.items[0];
       </>
     )
   }
+  {/* TODO: make dynamic and move to Contentful */}
+  <div class="section" id="scrollTarget">
+    <div class="container grid">
+      <div class="teaser">
+        <div class="teaser__content">
+          <h2>
+            Technology<br />
+            Design<br />
+            Come together
+          </h2>
+          <p>
+            Designers and developers have a common mission – to create amazing
+            front-end experiences. But it isn't always easy for these two tribes
+            to communicate; they must learn each other's languages, share
+            perspectives, and find compromises that work best for both parties.
+            Take the chance to meet international web leaders and be part of our
+            community – live or remote.
+          </p>
+        </div>
+        <div class="teaser__image">
+          <img src="/home-teaser.webp" alt="Front Conference Zurich" />
+          <p class="teaser__legend">Front Conference Zurich</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   {
     page.showVenue && (
-      <div class="section" id="scrollTarget">
+      <div class="section">
         <VenueTeaser />
       </div>
     )
   }
   {
     page.showSponsors && (
-      <div class="container grid">
-        <SponsorList variant="teaser" groupTitleTag="h4" />
+      <div class="section">
+        <div class="container grid">
+          <SponsorList variant="teaser" groupTitleTag="h4" />
+        </div>
       </div>
     )
   }
@@ -65,6 +94,11 @@ const page = data.collection?.items[0];
 
 <style lang="scss">
   @import "../styles/_imports.scss";
+
+  // makes sure there is some space between the header and the scrollTarget
+  #scrollTarget {
+    scroll-margin-block-start: var(--spacing-20x);
+  }
 
   .introWrapper {
     position: relative;
@@ -121,6 +155,69 @@ const page = data.collection?.items[0];
     svg {
       width: pxToRem(80);
       height: pxToRem(24);
+    }
+  }
+
+  .teaser {
+    display: grid;
+    margin-inline: calc(var(--grid-padding) * -1);
+
+    @include breakpoint-up("md") {
+      grid-template-columns: subgrid;
+      margin-inline: 0;
+    }
+
+    &__image {
+      margin-block-start: var(--spacing-16x);
+      padding-inline-start: var(--grid-padding);
+
+      @include breakpoint-up("md") {
+        grid-column: 1 / span 7;
+        grid-row: 1;
+        margin-block-start: 0;
+        padding-inline-start: 0;
+      }
+
+      img {
+        max-width: 100%;
+        aspect-ratio: 5 / 4;
+        object-fit: cover;
+
+        @include breakpoint-up("lg") {
+          aspect-ratio: 16 / 10;
+        }
+      }
+    }
+
+    &__legend {
+      @extend %typo-h5;
+
+      display: table-caption;
+      margin-block-start: var(--spacing-5x);
+      text-transform: uppercase;
+    }
+
+    &__content {
+      @extend %typo-lead;
+
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-10x);
+      padding-block: clamp(var(--spacing-20x), 10cqw, var(--spacing-30x));
+      padding-inline: clamp(var(--grid-padding), 4cqw, var(--spacing-30x));
+      background: var(--color-white);
+      color: var(--color-gray-900);
+      z-index: 1;
+
+      @include breakpoint-up("md") {
+        grid-column: span 6 / -1;
+        grid-row: 1;
+        margin-block-start: var(--spacing-16x);
+      }
+
+      h2 {
+        @extend %typo-h3;
+      }
     }
   }
 </style>
