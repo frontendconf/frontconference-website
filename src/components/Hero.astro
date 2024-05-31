@@ -6,15 +6,9 @@ export interface Props {
 	title: string;
 	displayBacklink?: boolean;
 	backLinkTitle?: string;
-	backLinkUrl?: string;
 }
 
-const {
-	title,
-	displayBacklink = false,
-	backLinkTitle,
-	backLinkUrl,
-} = Astro.props;
+const { title, displayBacklink = false, backLinkTitle } = Astro.props;
 const { slug } = Astro.params;
 
 const heroGlyphChar = slug || title;
@@ -24,11 +18,7 @@ const glyphColor = ["green-100", "cardboard", "red", "orange"][
 ---
 
 <section class="hero container">
-	<BackButton
-		title={backLinkTitle}
-		url={backLinkUrl}
-		displayBacklink={displayBacklink}
-	/>
+	<BackButton title={backLinkTitle} displayBacklink={displayBacklink} />
 	<h1 class="hero__title">{title}</h1>
 	<div class="hero__icon-wrapper">
 		<Icon
