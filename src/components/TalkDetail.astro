@@ -1,0 +1,115 @@
+---
+import { graphql, FragmentOf } from "gql.tada";
+import Markdown from "./Markdown.astro";
+
+const formatDate = (date: string) => {
+	return new Date(date).toLocaleDateString("en-US", {
+		weekday: "long",
+		month: "short",
+		day: "numeric",
+	});
+};
+
+export const talkDetailFragment = graphql(`
+	fragment TalkDetailFragment on Talk @_unmask {
+		title
+		abstract
+		room
+		date
+		fromTime
+		toTime
+		tagsCollection {
+			items {
+				title
+			}
+		}
+	}
+`);
+
+export interface Props {
+	talk: FragmentOf<typeof talkDetailFragment>;
+}
+
+const { talk } = Astro.props;
+---
+
+<article class="talk">
+	<h3>{talk.title}</h3>
+	<div class="meta">
+		<div class="metaGroup">
+			<div class="talkType typo-body-caption">Talk</div>
+			<div>{formatDate(talk.date)}</div>
+		</div>
+		<div class="metaGroup">
+			{
+				talk.fromTime && (
+					<div>
+						{talk.fromTime} - {talk.toTime}
+					</div>
+				)
+			}
+			{talk.room && <div>{talk.room}</div>}
+		</div>
+	</div>
+	<Markdown class="abstract" text={talk.abstract} />
+</article>
+
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	.meta {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-2x);
+		margin-block-start: var(--spacing-6x);
+		overflow: hidden;
+
+		@include breakpoint-up("sm") {
+			flex-direction: row;
+			gap: var(--spacing-6x);
+		}
+	}
+
+	.metaGroup {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-6x);
+
+		&:after {
+			content: "";
+			position: absolute;
+			height: 1px;
+			width: 100%;
+			background: var(--color-gray-100);
+		}
+
+		> div {
+			background: var(--color-white);
+			z-index: 1;
+			padding-inline: var(--spacing-2x);
+
+			@include breakpoint-down("sm") {
+				&:first-child {
+					padding-inline-start: 0;
+				}
+			}
+		}
+
+		@include breakpoint-up("sm") {
+			&:first-child {
+				> div {
+					padding-inline-start: 0;
+				}
+			}
+		}
+	}
+
+	.talkType {
+		text-transform: uppercase;
+	}
+
+	.abstract {
+		margin-block-start: var(--spacing-10x);
+	}
+</style>
