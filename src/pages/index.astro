@@ -16,13 +16,6 @@ const query = graphql(`
         showIntro
         showVenue
         showSponsors
-        leadTeaser {
-          title
-          body
-          photo {
-            url(transform: { format: WEBP })
-          }
-        }
       }
     }
   }
