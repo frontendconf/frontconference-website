@@ -1,0 +1,110 @@
+---
+import { graphql } from "gql.tada";
+import { client } from "../utils/graphql-client";
+import { SPEAKER_YEAR_TAG_KEY } from "../utils/constants";
+import { notEmpty } from "../utils/helpers";
+import SpeakerCard, { speakerCardFragment } from "./SpeakerCard.astro";
+import Button from "./Button.astro";
+
+Astro.response.headers.set(
+	"Cache-Control",
+	"s-maxage=60, stale-while-revalidate",
+);
+
+export interface Props {
+	variant?: "light" | "dark";
+	limit?: number;
+}
+
+const { variant = "dark", limit, class: className, ...rest } = Astro.props;
+
+// TODO: Update $yearTag when enough speakers are there
+const query = graphql(
+	`
+		query GetSpeakersPage($limit: Int!, $yearTag: String!) {
+			collection: pageCollection(where: { slug: "speakers" }) {
+				items {
+					title
+					lead
+					body
+					slug
+					menu
+				}
+			}
+			tags: tagCollection(limit: 1, where: { title: $yearTag }) {
+				items {
+					linkedFrom {
+						speakers: speakerCollection(limit: $limit, order: name_ASC) {
+							items {
+								...SpeakerCardFragment
+							}
+						}
+					}
+				}
+			}
+		}
+	`,
+	[speakerCardFragment],
+);
+
+const data = await client.request(query, {
+	yearTag: SPEAKER_YEAR_TAG_KEY,
+	limit: limit || 200,
+});
+
+const speakers =
+	data.tags?.items[0]?.linkedFrom?.speakers?.items.filter(notEmpty) || [];
+---
+
+<div class:list={["wrapper", className]} {...rest}>
+	<ul class="speaker-list">
+		{
+			speakers.map((speaker) => (
+				<li class="speaker-list__item">
+					<SpeakerCard speaker={speaker} variant={variant} />
+				</li>
+			))
+		}
+	</ul>
+
+	{
+		limit > 0 && speakers.length > 0 && (
+			<Button
+				class="button"
+				as="a"
+				href="/speakers"
+				variant="tertiary"
+				suffixIcon="arrowRight"
+			>
+				All speakers
+			</Button>
+		)
+	}
+</div>
+
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-10x);
+
+		@include breakpoint-up("lg") {
+			gap: var(--spacing-16x);
+		}
+	}
+
+	.speaker-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+		gap: var(--spacing-10x);
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.button {
+		align-self: center;
+	}
+</style>

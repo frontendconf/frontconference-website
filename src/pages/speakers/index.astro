@@ -1,79 +1,40 @@
 ---
 import { graphql } from "gql.tada";
-import ContentLayout from "../../layouts/ContentLayout.astro";
 import { client } from "../../utils/graphql-client";
-import { notEmpty } from "../../utils/helpers";
+import Markdown from "../../components/Markdown.astro";
+import ContentLayout from "../../layouts/ContentLayout.astro";
+import SpeakerList from "../../components/SpeakerList.astro";
 
-Astro.response.headers.set(
-  "Cache-Control",
-  "s-maxage=60, stale-while-revalidate",
-);
-
-// TODO: Update $yearTag when enough speakers are there
 const query = graphql(`
-  query GetSpeakersPage($limit: Int = 200, $yearTag: String = "FRONT22") {
-    collection: pageCollection(where: { slug: "speakers" }) {
-      items {
-        title
-        body
-        slug
-      }
-    }
-    tags: tagCollection(limit: 1, where: { title: $yearTag }) {
-      items {
-        linkedFrom {
-          speakers: speakerCollection(limit: $limit) {
-            items {
-              name
-              role
-              company
-              description
-              bio
-              slug
-              order
-              photo {
-                url(transform: { resizeStrategy: FILL })
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+	query GetSpeakersPage {
+		collection: pageCollection(where: { slug: "speakers" }) {
+			items {
+				title
+				lead
+				body
+				slug
+				menu
+			}
+		}
+	}
 `);
 
-const data = await client.request(query, {});
+const data = await client.request(query);
 
-const speakers =
-  data.tags?.items[0]?.linkedFrom?.speakers?.items.filter(notEmpty) || [];
 const currentPage = data.collection?.items[0];
 
 // TODO: double check if this is correct
 if (!currentPage || !currentPage.title) {
-  return {
-    status: 404,
-    error: "Page not found",
-  };
+	return {
+		status: 404,
+		error: "Page not found",
+	};
 }
-
-speakers.sort((a, b) => {
-  if (!a.name || !b.name) return 0; // Why is this even possible...
-  if (a.name! > b.name!) return 1;
-  else return -1;
-});
-
-const time = new Date().toLocaleTimeString();
 ---
 
-<ContentLayout title="Speakers">
-  <p>Time: {time}</p>
-  <ul>
-    {
-      speakers.map((speaker) => (
-        <li>
-          <a href={`/speakers/${speaker.slug}`}>{speaker.name}</a>
-        </li>
-      ))
-    }
-  </ul>
+<ContentLayout title={currentPage.title}>
+	{currentPage.lead && <div class="typo-lead">{currentPage.lead}</div>}
+	{currentPage.body && <Markdown text={currentPage.body} />}
+
+	<SpeakerList />
 </ContentLayout>

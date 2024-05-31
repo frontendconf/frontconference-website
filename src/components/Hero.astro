@@ -1,117 +1,124 @@
 ---
 import { Icon } from "astro-icon/components";
+import BackButton from "../components/BackButton.astro";
 
 export interface Props {
-  title: string;
-  displayBacklink?: boolean;
+	title: string;
+	displayBacklink?: boolean;
+	backLinkTitle?: string;
+	backLinkUrl?: string;
 }
 
-const { title, displayBacklink = false } = Astro.props;
+const {
+	title,
+	displayBacklink = false,
+	backLinkTitle,
+	backLinkUrl,
+} = Astro.props;
 const { slug } = Astro.params;
 
 const heroGlyphChar = slug || title;
 const glyphColor = ["green-100", "cardboard", "red", "orange"][
-  Math.floor(Math.random() * 4)
+	Math.floor(Math.random() * 4)
 ];
 ---
 
 <section class="hero container">
-  {
-    displayBacklink && (
-      <div class="hero__backlink-wrapper">
-        {/**
-         * We can keep track of the curentpage and what the last page was that
-         * the user was on. When keeping track, we can always navigate to the page the user was before. We can store tha pages title and url in memory and then navigate to that page when the user clicks the backlink. (or use history back, but we still need the last pages title to display it in the backlink -> You can get to the speakers detail page from home or the speakers overview page)
-         */}
-        <p>TODO Backlink</p>
-      </div>
-    )
-  }
-  <h1 class="hero__title">{title}</h1>
-  <div class="hero__icon-wrapper">
-    <Icon
-      class:list={["hero__icon", glyphColor && `color--${glyphColor}`]}
-      name={`glyph${heroGlyphChar.charAt(0).toUpperCase()}`}
-    />
-  </div>
+	<BackButton
+		title={backLinkTitle}
+		url={backLinkUrl}
+		displayBacklink={displayBacklink}
+	/>
+	<h1 class="hero__title">{title}</h1>
+	<div class="hero__icon-wrapper">
+		<Icon
+			class:list={["hero__icon", glyphColor && `color--${glyphColor}`]}
+			name={`glyph${heroGlyphChar.charAt(0).toUpperCase()}`}
+		/>
+	</div>
 </section>
 
 <style lang="scss">
-  @import "../styles/_imports.scss";
+	@import "../styles/_imports.scss";
 
-  .hero {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    max-width: var(--max-content-width);
-    height: pxToRem(420);
-    background: var(--color-black);
-    padding-block-end: var(--spacing-16x);
+	.hero {
+		position: relative;
+		display: flex;
+		align-items: start;
+		flex-direction: column;
+		max-width: var(--max-content-width);
+		height: pxToRem(420);
+		background: var(--color-black);
+		padding-block-end: var(--spacing-16x);
 
-    @include breakpoint-up("lg") {
-      padding-block-end: var(--spacing-20x);
-    }
+		@include breakpoint-up("lg") {
+			padding-block-end: var(--spacing-20x);
+		}
 
-    &__backlink-wrapper {
-      // TODO
-    }
+		&__backlink-wrapper {
+			// TODO
+		}
 
-    &__title {
-      @extend %typo-h1;
-      color: var(--color-white);
-      margin-block: auto 0;
+		&__title {
+			@extend %typo-h1;
+			color: var(--color-white);
+			margin-block: auto 0;
 
-      @include breakpoint-up("lg") {
-        max-width: 70%;
-      }
-    }
+			@include breakpoint-up("lg") {
+				max-width: 70%;
+			}
 
-    &__icon-wrapper {
-      position: absolute;
-      inset: pxToRem(48) 0 auto auto;
-      overflow: hidden;
-      width: pxToRem(216);
-      aspect-ratio: 1;
+			@include breakpoint-up("lg") {
+				max-width: 50%;
+			}
+		}
 
-      @include breakpoint-up("lg") {
-        width: pxToRem(360);
-        inset: auto 0 pxToRem(-80) auto;
-      }
+		&__icon-wrapper {
+			position: absolute;
+			inset: pxToRem(48) 0 auto auto;
+			overflow: hidden;
+			width: pxToRem(216);
+			aspect-ratio: 1;
 
-      @include breakpoint-up("xl") {
-        width: pxToRem(480);
-        inset: auto 0 pxToRem(-120) auto;
-      }
-    }
+			@include breakpoint-up("lg") {
+				width: pxToRem(360);
+				inset: auto 0 pxToRem(-60) auto;
+			}
 
-    &__icon {
-      width: 100%;
-      height: auto;
-      translate: pxToRem(48);
+			@include breakpoint-up("xl") {
+				width: pxToRem(480);
+				inset: auto 0 pxToRem(-120) auto;
+			}
+		}
 
-      @include breakpoint-up("lg") {
-        translate: pxToRem(80);
-      }
+		&__icon {
+			width: 100%;
+			height: auto;
+			translate: pxToRem(48);
 
-      @include breakpoint-up("xxl") {
-        translate: 0;
-      }
+			@include breakpoint-up("lg") {
+				translate: pxToRem(80);
+			}
 
-      &.color--green-100 {
-        color: var(--color-green-100);
-      }
+			@include breakpoint-up("xxl") {
+				translate: 0;
+			}
 
-      &.color--cardboard {
-        color: var(--color-cardboard);
-      }
+			&.color--green-100 {
+				color: var(--color-green-100);
+			}
 
-      &.color--red {
-        color: var(--color-red);
-      }
+			&.color--cardboard {
+				color: var(--color-cardboard);
+			}
 
-      &.color--orange {
-        color: var(--color-orange);
-      }
-    }
-  }
+			&.color--red {
+				color: var(--color-red);
+			}
+
+			&.color--orange {
+				color: var(--color-orange);
+			}
+		}
+	}
 </style>
