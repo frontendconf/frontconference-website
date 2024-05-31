@@ -81,9 +81,7 @@ const page = data.collection?.items[0];
 			<div class="section">
 				<div class="container">
 					<h2 class="speaker__title">Industry Leading Speakers</h2>
-					<div class="speaker__list">
-						<SpeakerList variant="light" />
-					</div>
+					<SpeakerList variant="light" limit={8} class="speaker__list" />
 				</div>
 			</div>
 		)
@@ -241,10 +239,10 @@ const page = data.collection?.items[0];
 	}
 
 	.speaker__list {
-		padding-block: var(--spacing-10x);
+		padding-block-start: var(--spacing-10x);
 
 		@include breakpoint-up("lg") {
-			padding-block: var(--spacing-16x);
+			padding-block-start: var(--spacing-16x);
 		}
 	}
 </style>
