@@ -72,158 +72,161 @@ const page = data.collection?.items[0];
         </div>
       </div>
     </div>
-    {
-      page.showVenue && (
-        <div class="section">
-          <VenueTeaser />
-        </div>
-      )
-    }
-    {
-      page.showSponsors && (
+  </div>
+
+  {
+    page.showVenue && (
+      <div class="section">
+        <VenueTeaser />
+      </div>
+    )
+  }
+  {
+    page.showSponsors && (
+      <div class="section">
         <div class="container grid">
           <SponsorList variant="teaser" groupTitleTag="h4" />
         </div>
-      )
-    }
-  </div>
+      </div>
+    )
+  }
+</Layout>
 
-  <style lang="scss">
-    @import "../styles/_imports.scss";
+<style lang="scss">
+  @import "../styles/_imports.scss";
 
-    // makes sure there is some space between the header and the scrollTarget
-    #scrollTarget {
-      scroll-margin-block-start: var(--spacing-20x);
-    }
+  // makes sure there is some space between the header and the scrollTarget
+  #scrollTarget {
+    scroll-margin-block-start: var(--spacing-20x);
+  }
 
-    .introWrapper {
-      position: relative;
-      max-width: calc(var(--max-content-width) + 10%);
-      margin-block-start: var(--spacing-6x);
-      margin-inline: auto;
-      container-type: inline-size;
+  .introWrapper {
+    position: relative;
+    max-width: calc(var(--max-content-width) + 10%);
+    margin-block-start: var(--spacing-6x);
+    margin-inline: auto;
+    container-type: inline-size;
 
-      @include breakpoint-up("sm") {
-        padding-inline: var(--grid-padding);
-      }
-
-      @include breakpoint-up("lg") {
-        margin-block-start: var(--spacing-8x);
-      }
+    @include breakpoint-up("sm") {
+      padding-inline: var(--grid-padding);
     }
 
-    .intro {
-      display: none;
+    @include breakpoint-up("lg") {
+      margin-block-start: var(--spacing-8x);
+    }
+  }
 
-      :global(svg) {
-        width: 100%;
-        height: auto;
-      }
+  .intro {
+    display: none;
 
+    :global(svg) {
+      width: 100%;
+      height: auto;
+    }
+
+    &.intro--mobile {
+      display: block;
+    }
+
+    @include breakpoint-up("sm") {
       &.intro--mobile {
+        display: none;
+      }
+
+      &.intro--desktop {
         display: block;
       }
+    }
+  }
 
-      @include breakpoint-up("sm") {
-        &.intro--mobile {
-          display: none;
-        }
+  .arrowWrapper {
+    display: flex;
+    justify-content: center;
+    margin-block-start: var(--spacing-16x);
+  }
 
-        &.intro--desktop {
-          display: block;
-        }
-      }
+  .arrow {
+    appearance: none;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+
+    svg {
+      width: pxToRem(80);
+      height: pxToRem(24);
+    }
+  }
+
+  .teaser {
+    display: grid;
+    margin-inline: calc(var(--grid-padding) * -1);
+
+    @include breakpoint-up("md") {
+      grid-template-columns: subgrid;
+      margin-inline: 0;
     }
 
-    .arrowWrapper {
-      display: flex;
-      justify-content: center;
+    &__image {
       margin-block-start: var(--spacing-16x);
-    }
-
-    .arrow {
-      appearance: none;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-
-      svg {
-        width: pxToRem(80);
-        height: pxToRem(24);
-      }
-    }
-
-    .teaser {
-      display: grid;
-      margin-inline: calc(var(--grid-padding) * -1);
+      padding-inline-start: var(--grid-padding);
 
       @include breakpoint-up("md") {
-        grid-template-columns: subgrid;
-        margin-inline: 0;
+        grid-column: 1 / span 7;
+        grid-row: 1;
+        margin-block-start: 0;
+        padding-inline-start: 0;
       }
 
-      &__image {
-        margin-block-start: var(--spacing-16x);
-        padding-inline-start: var(--grid-padding);
+      img {
+        max-width: 100%;
+        aspect-ratio: 5 / 4;
+        object-fit: cover;
 
-        @include breakpoint-up("md") {
-          grid-column: 1 / span 7;
-          grid-row: 1;
-          margin-block-start: 0;
-          padding-inline-start: 0;
-        }
-
-        img {
-          max-width: 100%;
-          aspect-ratio: 5 / 4;
-          object-fit: cover;
-
-          @include breakpoint-up("lg") {
-            aspect-ratio: 16 / 10;
-          }
-        }
-      }
-
-      &__legend {
-        @extend %typo-h5;
-
-        display: table-caption;
-        margin-block-start: var(--spacing-5x);
-        text-transform: uppercase;
-      }
-
-      &__content {
-        @extend %typo-lead;
-
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-10x);
-        padding-block: clamp(var(--spacing-20x), 10cqw, var(--spacing-30x));
-        padding-inline: clamp(var(--grid-padding), 4cqw, var(--spacing-30x));
-        background: var(--color-white);
-        color: var(--color-gray-900);
-        z-index: 1;
-
-        @include breakpoint-up("md") {
-          grid-column: span 6 / -1;
-          grid-row: 1;
-          margin-block-start: var(--spacing-16x);
-        }
-
-        h2 {
-          @extend %typo-h3;
+        @include breakpoint-up("lg") {
+          aspect-ratio: 16 / 10;
         }
       }
     }
-  </style>
 
-  <script>
-    const scrollTrigger = document.getElementById("scrollTrigger");
-    const scrollTarget = document.getElementById("scrollTarget");
+    &__legend {
+      @extend %typo-h5;
 
-    scrollTrigger.addEventListener("click", () => {
-      scrollTarget.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  </script>
-</Layout>
+      display: table-caption;
+      margin-block-start: var(--spacing-5x);
+      text-transform: uppercase;
+    }
+
+    &__content {
+      @extend %typo-lead;
+
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-10x);
+      padding-block: clamp(var(--spacing-20x), 10cqw, var(--spacing-30x));
+      padding-inline: clamp(var(--grid-padding), 4cqw, var(--spacing-30x));
+      background: var(--color-white);
+      color: var(--color-gray-900);
+      z-index: 1;
+
+      @include breakpoint-up("md") {
+        grid-column: span 6 / -1;
+        grid-row: 1;
+        margin-block-start: var(--spacing-16x);
+      }
+
+      h2 {
+        @extend %typo-h3;
+      }
+    }
+  }
+</style>
+
+<script>
+  const scrollTrigger = document.getElementById("scrollTrigger");
+  const scrollTarget = document.getElementById("scrollTarget");
+
+  scrollTrigger.addEventListener("click", () => {
+    scrollTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+</script>
