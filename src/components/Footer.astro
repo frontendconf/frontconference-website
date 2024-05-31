@@ -9,287 +9,290 @@ import Link from "./Link.astro";
 const { slug } = Astro.params;
 
 const query = graphql(`
-  query {
-    configCollection {
-      items {
-        footerMenuCollection(limit: 20) {
-          items {
-            ... on Page {
-              title
-              slug
-              sys {
-                id
-              }
-            }
-          }
-        }
-        footerMenuMetaCollection(limit: 10) {
-          items {
-            ... on Page {
-              title
-              slug
-              sys {
-                id
-              }
-            }
-          }
-        }
-        footerCtasCollection(limit: 10) {
-          items {
-            ... on Page {
-              title
-              slug
-              sys {
-                id
-              }
-            }
-          }
-        }
-        footerSocialMediaCollection(limit: 10) {
-          items {
-            ... on SocialMedia {
-              title
-              link
-              sys {
-                id
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+	query {
+		configCollection {
+			items {
+				footerMenuCollection(limit: 20) {
+					items {
+						... on Page {
+							title
+							slug
+							menu
+							sys {
+								id
+							}
+						}
+					}
+				}
+				footerMenuMetaCollection(limit: 10) {
+					items {
+						... on Page {
+							title
+							slug
+							menu
+							sys {
+								id
+							}
+						}
+					}
+				}
+				footerCtasCollection(limit: 10) {
+					items {
+						... on Page {
+							title
+							slug
+							menu
+							sys {
+								id
+							}
+						}
+					}
+				}
+				footerSocialMediaCollection(limit: 10) {
+					items {
+						... on SocialMedia {
+							title
+							link
+							sys {
+								id
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 `);
 
 const data = await client.request(query);
 
 const menuItems =
-  data.configCollection?.items[0]?.footerMenuCollection?.items || [];
+	data.configCollection?.items[0]?.footerMenuCollection?.items || [];
 const metaMenuItems =
-  data.configCollection?.items[0]?.footerMenuMetaCollection?.items || [];
+	data.configCollection?.items[0]?.footerMenuMetaCollection?.items || [];
 const ctas = data.configCollection?.items[0]?.footerCtasCollection?.items || [];
 const socialMediaItems =
-  data.configCollection?.items[0]?.footerSocialMediaCollection?.items || [];
+	data.configCollection?.items[0]?.footerSocialMediaCollection?.items || [];
 ---
 
 <footer class="footer container">
-  {
-    /** TODO: add NewsletterSignup
-     * <div class="newsletter"><NewsletterSignup /></div>
-     */
-  }
-  <ul class="cta nav-list nav-list__cta">
-    {
-      ctas.map((item) => (
-        <li class="nav-list__cta-item">
-          <Button as="a" href={`/${item.slug}`} variant="tertiary">
-            {item.title}
-          </Button>
-        </li>
-      ))
-    }
-  </ul>
-  <nav class="nav">
-    <ul class="nav-list nav-list__main">
-      {
-        menuItems.map((item) => (
-          <li>
-            <a
-              href={`/${item.slug}`}
-              class:list={[{ active: item.slug === slug }]}
-            >
-              {item.title}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
-  <ul class="social nav-list nav-list__social">
-    {
-      socialMediaItems.map((item) => (
-        <li>
-          <Link
-            href={item.link}
-            target="_blank"
-            title={item.title}
-            icon={item.title.toLowerCase()}
-            interactive
-            inverted
-          />
-        </li>
-      ))
-    }
-  </ul>
+	{
+		/** TODO: add NewsletterSignup
+		 * <div class="newsletter"><NewsletterSignup /></div>
+		 */
+	}
+	<ul class="cta nav-list nav-list__cta">
+		{
+			ctas.map((item) => (
+				<li class="nav-list__cta-item">
+					<Button as="a" href={`/${item.slug}`} variant="tertiary">
+						{item.menu || item.title}
+					</Button>
+				</li>
+			))
+		}
+	</ul>
+	<nav class="nav">
+		<ul class="nav-list nav-list__main">
+			{
+				menuItems.map((item) => (
+					<li>
+						<a
+							href={`/${item.slug}`}
+							class:list={[{ active: item.slug === slug }]}
+						>
+							{item.menu || item.title}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</nav>
+	<ul class="social nav-list nav-list__social">
+		{
+			socialMediaItems.map((item) => (
+				<li>
+					<Link
+						href={item.link}
+						target="_blank"
+						title={item.title}
+						icon={item.title.toLowerCase()}
+						interactive
+						inverted
+					/>
+				</li>
+			))
+		}
+	</ul>
 
-  <div class="meta">
-    <Logo class="meta__logo" />
-    <p class="meta__text">
-      2011-{new Date().getFullYear()} Front Conference Zurich
-    </p>
-    <ul class="nav-list nav-list__meta">
-      {
-        metaMenuItems.map((item) => (
-          <li>
-            <a href={`/${item.slug}`}>{item.title}</a>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+	<div class="meta">
+		<Logo class="meta__logo" />
+		<p class="meta__text">
+			2011-{new Date().getFullYear()} Front Conference Zurich
+		</p>
+		<ul class="nav-list nav-list__meta">
+			{
+				metaMenuItems.map((item) => (
+					<li>
+						<a href={`/${item.slug}`}>{item.menu || item.title}</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
 </footer>
 
 <style lang="scss">
-  @import "../styles/_imports.scss";
+	@import "../styles/_imports.scss";
 
-  .footer {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas: "newsletter" "social" "cta" "nav" "meta";
-    padding-block-start: var(--spacing-10x);
-    padding-block-end: var(--spacing-12x);
+	.footer {
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-areas: "newsletter" "social" "cta" "nav" "meta";
+		padding-block-start: var(--spacing-10x);
+		padding-block-end: var(--spacing-12x);
 
-    @include breakpoint-up("lg") {
-      padding-block-start: var(--spacing-16x);
-      grid-template-columns: auto 1fr 1fr;
-      grid-template-areas:
-        "cta nav newsletter"
-        "meta meta social";
-      row-gap: var(--spacing-20x);
-    }
-  }
+		@include breakpoint-up("lg") {
+			padding-block-start: var(--spacing-16x);
+			grid-template-columns: auto 1fr 1fr;
+			grid-template-areas:
+				"cta nav newsletter"
+				"meta meta social";
+			row-gap: var(--spacing-20x);
+		}
+	}
 
-  .nav-list {
-    display: flex;
-    list-style: none;
-    padding-inline-start: 0;
+	.nav-list {
+		display: flex;
+		list-style: none;
+		padding-inline-start: 0;
 
-    a {
-      display: flex;
-      text-decoration: none;
-      transition: color var(--transition-duration-quick)
-        var(--transition-easing-default);
-    }
-  }
+		a {
+			display: flex;
+			text-decoration: none;
+			transition: color var(--transition-duration-quick)
+				var(--transition-easing-default);
+		}
+	}
 
-  .cta {
-    grid-area: cta;
-    margin-block-start: var(--spacing-16x);
+	.cta {
+		grid-area: cta;
+		margin-block-start: var(--spacing-16x);
 
-    @include breakpoint-up("lg") {
-      margin-block-start: 0;
-    }
-  }
+		@include breakpoint-up("lg") {
+			margin-block-start: 0;
+		}
+	}
 
-  .nav-list__cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-4x);
+	.nav-list__cta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-4x);
 
-    @include breakpoint-up("lg") {
-      flex-direction: column;
-    }
-  }
+		@include breakpoint-up("lg") {
+			flex-direction: column;
+		}
+	}
 
-  .nav {
-    grid-area: nav;
-    margin-block-start: var(--spacing-6x);
+	.nav {
+		grid-area: nav;
+		margin-block-start: var(--spacing-6x);
 
-    @include breakpoint-up("lg") {
-      margin-block-start: 0;
-      margin-inline-start: var(--spacing-20x);
-    }
-  }
+		@include breakpoint-up("lg") {
+			margin-block-start: 0;
+			margin-inline-start: var(--spacing-20x);
+		}
+	}
 
-  .nav-list__main {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: var(--spacing-6x);
+	.nav-list__main {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		column-gap: var(--spacing-6x);
 
-    @include breakpoint-up("lg") {
-      column-gap: var(--spacing-10x);
-    }
+		@include breakpoint-up("lg") {
+			column-gap: var(--spacing-10x);
+		}
 
-    a {
-      color: var(--color-green-100);
-      padding-block: var(--spacing-2x);
+		a {
+			color: var(--color-green-100);
+			padding-block: var(--spacing-2x);
 
-      &:hover {
-        color: var(--color-green-300);
-      }
-    }
-  }
+			&:hover {
+				color: var(--color-green-300);
+			}
+		}
+	}
 
-  .newsletter {
-    grid-area: newsletter;
-  }
+	.newsletter {
+		grid-area: newsletter;
+	}
 
-  .social {
-    grid-area: social;
+	.social {
+		grid-area: social;
 
-    @include breakpoint-up("lg") {
-      align-self: center;
-      justify-self: end;
-    }
-  }
+		@include breakpoint-up("lg") {
+			align-self: center;
+			justify-self: end;
+		}
+	}
 
-  .nav-list__social {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-10x);
+	.nav-list__social {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-10x);
 
-    a {
-      font-size: pxToRem(20);
-    }
-  }
+		a {
+			font-size: pxToRem(20);
+		}
+	}
 
-  .meta {
-    grid-area: meta;
-    display: flex;
-    align-items: center;
-    margin-block-start: var(--spacing-16x);
+	.meta {
+		grid-area: meta;
+		display: flex;
+		align-items: center;
+		margin-block-start: var(--spacing-16x);
 
-    @include breakpoint-up("lg") {
-      margin-block-start: 0;
-    }
+		@include breakpoint-up("lg") {
+			margin-block-start: 0;
+		}
 
-    &__logo {
-      display: block;
-      width: 40px;
-      height: 40px;
-    }
+		&__logo {
+			display: block;
+			width: 40px;
+			height: 40px;
+		}
 
-    &__text {
-      @extend %typo-label;
-      color: var(--color-gray-400);
-      margin-inline-start: var(--spacing-2x);
-    }
-  }
+		&__text {
+			@extend %typo-label;
+			color: var(--color-gray-400);
+			margin-inline-start: var(--spacing-2x);
+		}
+	}
 
-  .nav-list__meta {
-    margin-inline-start: var(--spacing-6x);
+	.nav-list__meta {
+		margin-inline-start: var(--spacing-6x);
 
-    a {
-      @extend %typo-label;
-      color: var(--color-gray-400);
-      padding-block: var(--spacing-2x);
+		a {
+			@extend %typo-label;
+			color: var(--color-gray-400);
+			padding-block: var(--spacing-2x);
 
-      &:hover {
-        color: var(--color-gray-50);
-      }
-    }
-  }
+			&:hover {
+				color: var(--color-gray-50);
+			}
+		}
+	}
 
-  .social,
-  .nav,
-  .meta {
-    // custom breakpoint because on small viewports we don't have enough space
-    @media (width >= pxToRem(390)) {
-      padding-inline: var(--spacing-4x);
-    }
+	.social,
+	.nav,
+	.meta {
+		// custom breakpoint because on small viewports we don't have enough space
+		@media (width >= pxToRem(390)) {
+			padding-inline: var(--spacing-4x);
+		}
 
-    @include breakpoint-up("lg") {
-      padding-inline: 0;
-    }
-  }
+		@include breakpoint-up("lg") {
+			padding-inline: 0;
+		}
+	}
 </style>
