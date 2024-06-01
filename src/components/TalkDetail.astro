@@ -38,7 +38,7 @@ const { talk } = Astro.props;
 	<div class="meta">
 		<div class="metaGroup">
 			<div class="talkType typo-body-caption">Talk</div>
-			<div>{formatDate(talk.date)}</div>
+			{talk.date && <div>{formatDate(talk.date)}</div>}
 		</div>
 		<div class="metaGroup">
 			{
