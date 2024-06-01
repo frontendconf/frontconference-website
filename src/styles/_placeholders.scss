@@ -1,191 +1,278 @@
 @function getLetterSpacing($base-size, $multiplier: -1, $divider: 2) {
-  @return pxToRem(calc($base-size / $divider / 100) * $multiplier);
+	@return pxToRem(calc($base-size / $divider / 100) * $multiplier);
 }
 
 %typo-h1 {
-  @include typo-family-light;
-  font-size: pxToRem(54);
-  line-height: calc(62 / 54);
-  letter-spacing: getLetterSpacing(54);
+	@include typo-family-light;
+	font-size: pxToRem(54);
+	line-height: calc(62 / 54);
+	letter-spacing: getLetterSpacing(54);
 
-  @include breakpoint-up("lg") {
-    font-size: pxToRem(64);
-    line-height: calc(72 / 64);
-    letter-spacing: getLetterSpacing(64);
-  }
+	@include breakpoint-up("lg") {
+		font-size: pxToRem(64);
+		line-height: calc(72 / 64);
+		letter-spacing: getLetterSpacing(64);
+	}
 }
 
 %typo-h2 {
-  @include typo-family-light;
-  font-size: pxToRem(38);
-  line-height: calc(46 / 38);
-  letter-spacing: getLetterSpacing(38);
+	@include typo-family-light;
+	font-size: pxToRem(38);
+	line-height: calc(46 / 38);
+	letter-spacing: getLetterSpacing(38);
 
-  @include breakpoint-up("lg") {
-    font-size: pxToRem(48);
-    line-height: calc(56 / 48);
-    letter-spacing: getLetterSpacing(48);
-  }
+	@include breakpoint-up("lg") {
+		font-size: pxToRem(48);
+		line-height: calc(56 / 48);
+		letter-spacing: getLetterSpacing(48);
+	}
 }
 
 %typo-h3 {
-  @include typo-family-light;
-  font-size: pxToRem(26);
-  line-height: calc(32 / 26);
-  letter-spacing: getLetterSpacing(26);
+	@include typo-family-light;
+	font-size: pxToRem(26);
+	line-height: calc(32 / 26);
+	letter-spacing: getLetterSpacing(26);
 
-  @include breakpoint-up("lg") {
-    font-size: pxToRem(36);
-    line-height: calc(40 / 36);
-    letter-spacing: getLetterSpacing(36);
-  }
+	@include breakpoint-up("lg") {
+		font-size: pxToRem(36);
+		line-height: calc(40 / 36);
+		letter-spacing: getLetterSpacing(36);
+	}
 }
 
 %typo-h4 {
-  @include typo-family-bold;
-  font-size: pxToRem(22);
-  line-height: calc(30 / 22);
-  letter-spacing: getLetterSpacing(22);
+	@include typo-family-bold;
+	font-size: pxToRem(22);
+	line-height: calc(30 / 22);
+	letter-spacing: getLetterSpacing(22);
 
-  @include breakpoint-up("lg") {
-    font-size: pxToRem(32);
-    line-height: calc(36 / 32);
-    letter-spacing: getLetterSpacing(32);
-  }
+	@include breakpoint-up("lg") {
+		font-size: pxToRem(32);
+		line-height: calc(36 / 32);
+		letter-spacing: getLetterSpacing(32);
+	}
 }
 
 %typo-h5 {
-  @include typo-family-bold;
-  font-size: pxToRem(18);
-  line-height: calc(24 / 18);
+	@include typo-family-bold;
+	font-size: pxToRem(18);
+	line-height: calc(24 / 18);
 
-  @include breakpoint-up("lg") {
-    font-size: pxToRem(24);
-    line-height: calc(28 / 24);
-  }
+	@include breakpoint-up("lg") {
+		font-size: pxToRem(24);
+		line-height: calc(28 / 24);
+	}
 }
 
 %typo-h6 {
-  @include typo-family-bold;
-  font-size: pxToRem(16);
-  line-height: calc(20 / 16);
+	@include typo-family-bold;
+	font-size: pxToRem(16);
+	line-height: calc(20 / 16);
 
-  @include breakpoint-up("lg") {
-    font-size: pxToRem(20);
-    line-height: calc(24 / 20);
-  }
+	@include breakpoint-up("lg") {
+		font-size: pxToRem(20);
+		line-height: calc(24 / 20);
+	}
 }
 
 %typo-lead {
-  @include typo-family-regular;
-  font-size: pxToRem(18);
-  line-height: calc(28 / 18);
+	@include typo-family-regular;
+	font-size: pxToRem(18);
+	line-height: calc(28 / 18);
 
-  @include breakpoint-up("lg") {
-    font-size: pxToRem(20);
-    line-height: calc(32 / 20);
-  }
+	@include breakpoint-up("lg") {
+		font-size: pxToRem(20);
+		line-height: calc(32 / 20);
+	}
 }
 
 %typo-body {
-  @include typo-family-regular;
-  font-size: pxToRem(14);
-  line-height: calc(20 / 14);
-  letter-spacing: getLetterSpacing(14, 1, 4);
+	@include typo-family-regular;
+	font-size: pxToRem(14);
+	line-height: calc(20 / 14);
+	letter-spacing: getLetterSpacing(14, 1, 4);
 
-  @include breakpoint-up("lg") {
-    font-size: pxToRem(16);
-    line-height: calc(24 / 16);
-    letter-spacing: getLetterSpacing(16, 1, 4);
-  }
+	@include breakpoint-up("lg") {
+		font-size: pxToRem(16);
+		line-height: calc(24 / 16);
+		letter-spacing: getLetterSpacing(16, 1, 4);
+	}
 }
 
 %typo-body-caption {
-  @include typo-family-bold;
-  font-size: pxToRem(14);
-  line-height: calc(20 / 14);
-  letter-spacing: getLetterSpacing(14, 1, 4);
+	@include typo-family-bold;
+	font-size: pxToRem(14);
+	line-height: calc(20 / 14);
+	letter-spacing: getLetterSpacing(14, 1, 4);
 
-  @include breakpoint-up("lg") {
-    font-size: pxToRem(16);
-    line-height: calc(24 / 16);
-    letter-spacing: getLetterSpacing(16, 1, 4);
-  }
+	@include breakpoint-up("lg") {
+		font-size: pxToRem(16);
+		line-height: calc(24 / 16);
+		letter-spacing: getLetterSpacing(16, 1, 4);
+	}
 }
 
 %typo-small {
-  @include typo-family-regular;
-  font-size: pxToRem(11);
-  line-height: calc(14 / 11);
-  letter-spacing: getLetterSpacing(11, 1);
+	@include typo-family-regular;
+	font-size: pxToRem(11);
+	line-height: calc(14 / 11);
+	letter-spacing: getLetterSpacing(11, 1);
 
-  @include breakpoint-up("lg") {
-    font-size: pxToRem(12);
-    line-height: calc(16 / 12);
-    letter-spacing: getLetterSpacing(12, 1);
-  }
+	@include breakpoint-up("lg") {
+		font-size: pxToRem(12);
+		line-height: calc(16 / 12);
+		letter-spacing: getLetterSpacing(12, 1);
+	}
 }
 
 %typo-label {
-  @include typo-family-regular;
-  font-size: pxToRem(10);
-  line-height: calc(14 / 10);
-  letter-spacing: getLetterSpacing(10, 1, 1);
-  // No desktop styles
+	@include typo-family-regular;
+	font-size: pxToRem(10);
+	line-height: calc(14 / 10);
+	letter-spacing: getLetterSpacing(10, 1, 1);
+	// No desktop styles
 }
 
 %link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-1x);
-  text-underline-offset: 4px;
-  color: var(--color-green-300);
-  transition: color var(--transition-duration-quick)
-    var(--transition-easing-default);
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing-1x);
+	text-underline-offset: 4px;
+	color: var(--color-green-300);
+	transition: color var(--transition-duration-quick)
+		var(--transition-easing-default);
 
-  &:hover {
-    color: var(--color-green-100);
-  }
+	&:hover {
+		color: var(--color-green-100);
+	}
 
-  &:active {
-    color: var(--color-green-300);
-  }
+	&:active {
+		color: var(--color-green-300);
+	}
 
-  &:focus-visible {
-    text-decoration-color: var(--color-green-100);
-  }
+	&:focus-visible {
+		text-decoration-color: var(--color-green-100);
+	}
 
-  &:has(svg) {
-    text-decoration: none;
+	&:has(svg) {
+		text-decoration: none;
 
-    &:focus-visible {
-      text-decoration: underline;
-      text-decoration-color: var(--color-green-100);
-    }
-  }
+		&:focus-visible {
+			text-decoration: underline;
+			text-decoration-color: var(--color-green-100);
+		}
+	}
+}
+
+%button {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+	position: relative;
+	height: pxToRem(40);
+	clip-path: polygon(
+		12px 0%,
+		calc(100% - 12px) 0%,
+		100% 50%,
+		calc(100% - 12px) 100%,
+		12px 100%,
+		0% 50%
+	);
+	column-gap: var(--spacing-1x);
+	border: 0 none;
+	appearance: none;
+	padding-inline: pxToRem(30);
+	color: var(--button-color);
+	background-color: var(--button-background-color);
+	outline: none !important;
+
+	transition: var(--transition-duration-quick) var(--transition-easing-default);
+	transition-property: color, background-color;
+
+	font-variant-numeric: lining-nums tabular-nums;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 1.25;
+	letter-spacing: 0.16px;
+
+	&:not(:disabled) {
+		cursor: pointer;
+	}
+
+	&::before {
+		content: "";
+		display: block;
+		position: absolute;
+		inset: pxToRem(2) pxToRem(3);
+		background-color: var(--button-background-color);
+		transition: background-color var(--transition-duration-quick)
+			var(--transition-easing-default);
+		clip-path: polygon(
+			11px 0%,
+			calc(100% - 11px) 0%,
+			100% 50%,
+			calc(100% - 11px) 100%,
+			11px 100%,
+			0% 50%
+		);
+		z-index: 1;
+	}
+
+	.inner,
+	.icon {
+		position: relative;
+		z-index: 2;
+	}
+
+	&:hover {
+		color: var(--button-hover-color);
+		background-color: var(--button-hover-background-color);
+		&::before {
+			background-color: var(--button-hover-background-color);
+		}
+	}
+
+	&:focus-visible {
+		color: var(--button-focus-color);
+		background-color: var(--button-focus-outline-color);
+		&::before {
+			background-color: var(--button-focus-background-color);
+		}
+	}
+
+	&:active {
+		color: var(--button-active-color);
+		background-color: var(--button-active-background-color);
+		&::before {
+			background-color: var(--button-active-background-color);
+		}
+	}
 }
 
 %grid-gap {
-  gap: var(--spacing-5x);
-  // TODO: define row-gap for responsive behavior with main and side columns
+	gap: var(--spacing-5x);
+	// TODO: define row-gap for responsive behavior with main and side columns
 
-  @include breakpoint-up("md") {
-    gap: var(--spacing-6x);
-  }
+	@include breakpoint-up("md") {
+		gap: var(--spacing-6x);
+	}
 
-  @include breakpoint-up("lg") {
-    gap: var(--spacing-10x);
-  }
+	@include breakpoint-up("lg") {
+		gap: var(--spacing-10x);
+	}
 }
 
 %grid-row-gap-double {
-  row-gap: var(--spacing-12x);
+	row-gap: var(--spacing-12x);
 
-  @include breakpoint-up("md") {
-    row-gap: var(--spacing-14x);
-  }
+	@include breakpoint-up("md") {
+		row-gap: var(--spacing-14x);
+	}
 
-  @include breakpoint-up("lg") {
-    row-gap: var(--spacing-20x);
-  }
+	@include breakpoint-up("lg") {
+		row-gap: var(--spacing-20x);
+	}
 }

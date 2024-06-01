@@ -8,6 +8,7 @@ import SponsorList from "../components/SponsorList.astro";
 import Venue from "../components/Venue.astro";
 import HotelList from "../components/HotelList.astro";
 import RestaurantList from "../components/RestaurantList.astro";
+import AirtableForm from "../components/AirtableForm.astro";
 
 const { slug } = Astro.params;
 
@@ -96,6 +97,20 @@ if (!currentPage || !currentPage.title) {
 		{currentPage.showVenue && <Venue />}
 		{currentPage.showHotels && <HotelList />}
 		{currentPage.showRestaurants && <RestaurantList />}
+		{currentPage.showCallForSpeakers && (
+			<div class="section">
+				<div class="container grid">
+					<AirtableForm id="Call for Speakers" />
+				</div>
+			</div>
+		)}
+		{currentPage.showSpeakersBootcampForm && (
+			<div class="section">
+				<div class="container grid">
+					<AirtableForm id="Speakers Bootcamp" />
+				</div>
+			</div>
+		)}
 	</div>
 </ContentLayout>
 

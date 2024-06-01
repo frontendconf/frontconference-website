@@ -1,9 +1,8 @@
 import { GraphQLClient } from "graphql-request";
 
-const spaceId = import.meta.env.CONTENTFUL_SPACE_ID;
-const environment = import.meta.env.CONTENTFUL_ENVIRONMENT;
-const token = import.meta.env.CONTENTFUL_ACCESS_TOKEN;
+const { CONTENTFUL_SPACE, CONTENTFUL_ENVIRONMENT, CONTENTFUL_API_TOKEN } =
+	import.meta.env;
 
 export const client = new GraphQLClient(
-	`https://graphql.contentful.com/content/v1/spaces/${spaceId}/environments/${environment}?access_token=${token}`,
+	`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE}/environments/${CONTENTFUL_ENVIRONMENT}?access_token=${CONTENTFUL_API_TOKEN}`,
 );
