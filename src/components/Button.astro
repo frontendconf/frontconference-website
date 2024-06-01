@@ -1,178 +1,179 @@
 ---
-import type { HTMLTag, Polymorphic } from "astro/types";
+import type { HTMLAttributes, HTMLTag, Polymorphic } from "astro/types";
 import { Icon } from "astro-icon/components";
 
 export type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
-  variant?: "primary" | "secondary" | "tertiary" | "quaternary";
-  prefixIcon?: string;
-  suffixIcon?: string;
+	variant?: "primary" | "secondary" | "tertiary" | "quaternary";
+	prefixIcon?: string;
+	suffixIcon?: string;
+	type?: HTMLAttributes<"button">["type"];
 };
 
 const {
-  as: Tag = "button",
-  variant,
-  prefixIcon,
-  suffixIcon,
-  ...rest
+	as: Tag = "button",
+	variant,
+	prefixIcon,
+	suffixIcon,
+	...rest
 } = Astro.props;
 ---
 
 <Tag class:list={["button", variant]} {...rest}>
-  {prefixIcon && <Icon class="icon" name={prefixIcon} aria-hidden="true" />}
-  <span class="inner"><slot /></span>
-  {suffixIcon && <Icon class="icon" name={suffixIcon} aria-hidden="true" />}
+	{prefixIcon && <Icon class="icon" name={prefixIcon} aria-hidden="true" />}
+	<span class="inner"><slot /></span>
+	{suffixIcon && <Icon class="icon" name={suffixIcon} aria-hidden="true" />}
 </Tag>
 
 <style lang="scss">
-  @import "../styles/_imports.scss";
+	@import "../styles/_imports.scss";
 
-  .button {
-    --button-color: var(--color-white);
-    --button-background-color: var(--color-black);
+	.button {
+		--button-color: var(--color-white);
+		--button-background-color: var(--color-black);
 
-    --button-hover-color: var(--color-green-100);
-    --button-hover-background-color: var(--color-gray-800);
+		--button-hover-color: var(--color-green-100);
+		--button-hover-background-color: var(--color-gray-800);
 
-    --button-active-color: var(--color-green-100);
-    --button-active-background-color: var(--color-black);
+		--button-active-color: var(--color-green-100);
+		--button-active-background-color: var(--color-black);
 
-    --button-focus-color: var(--color-green-100);
-    --button-focus-background-color: var(--color-black);
-    --button-focus-outline-color: var(--color-green-100);
+		--button-focus-color: var(--color-green-100);
+		--button-focus-background-color: var(--color-black);
+		--button-focus-outline-color: var(--color-green-100);
 
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    position: relative;
-    height: pxToRem(40);
-    clip-path: polygon(
-      12px 0%,
-      calc(100% - 12px) 0%,
-      100% 50%,
-      calc(100% - 12px) 100%,
-      12px 100%,
-      0% 50%
-    );
-    column-gap: var(--spacing-1x);
-    border: 0 none;
-    appearance: none;
-    padding-inline: pxToRem(30);
-    color: var(--button-color);
-    background-color: var(--button-background-color);
-    outline: none !important;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		text-decoration: none;
+		position: relative;
+		height: pxToRem(40);
+		clip-path: polygon(
+			12px 0%,
+			calc(100% - 12px) 0%,
+			100% 50%,
+			calc(100% - 12px) 100%,
+			12px 100%,
+			0% 50%
+		);
+		column-gap: var(--spacing-1x);
+		border: 0 none;
+		appearance: none;
+		padding-inline: pxToRem(30);
+		color: var(--button-color);
+		background-color: var(--button-background-color);
+		outline: none !important;
 
-    transition: var(--transition-duration-quick)
-      var(--transition-easing-default);
-    transition-property: color, background-color;
+		transition: var(--transition-duration-quick)
+			var(--transition-easing-default);
+		transition-property: color, background-color;
 
-    font-variant-numeric: lining-nums tabular-nums; // TODO: type mixins or whatever
-    font-size: 16px; // TODO: type mixins or whatever
-    font-style: normal; // TODO: type mixins or whatever
-    font-weight: 400; // TODO: type mixins or whatever
-    line-height: 1.25; // TODO: type mixins or whatever
-    letter-spacing: 0.16px; // TODO: type mixins or whatever
+		font-variant-numeric: lining-nums tabular-nums; // TODO: type mixins or whatever
+		font-size: 16px; // TODO: type mixins or whatever
+		font-style: normal; // TODO: type mixins or whatever
+		font-weight: 400; // TODO: type mixins or whatever
+		line-height: 1.25; // TODO: type mixins or whatever
+		letter-spacing: 0.16px; // TODO: type mixins or whatever
 
-    &:not(:disabled) {
-      cursor: pointer;
-    }
+		&:not(:disabled) {
+			cursor: pointer;
+		}
 
-    &::before {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 2px; // TODO: use rem
-      left: 3px; // TODO: use rem
-      right: 3px; // TODO: use rem
-      bottom: 2px; // TODO: use rem
-      background-color: var(--button-background-color);
-      transition: background-color var(--transition-duration-quick)
-        var(--transition-easing-default);
-      // TODO: use rem
-      clip-path: polygon(
-        11px 0%,
-        calc(100% - 11px) 0%,
-        100% 50%,
-        calc(100% - 11px) 100%,
-        11px 100%,
-        0% 50%
-      );
-      z-index: 1;
-    }
+		&::before {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 2px; // TODO: use rem
+			left: 3px; // TODO: use rem
+			right: 3px; // TODO: use rem
+			bottom: 2px; // TODO: use rem
+			background-color: var(--button-background-color);
+			transition: background-color var(--transition-duration-quick)
+				var(--transition-easing-default);
+			// TODO: use rem
+			clip-path: polygon(
+				11px 0%,
+				calc(100% - 11px) 0%,
+				100% 50%,
+				calc(100% - 11px) 100%,
+				11px 100%,
+				0% 50%
+			);
+			z-index: 1;
+		}
 
-    &:hover {
-      color: var(--button-hover-color);
-      background-color: var(--button-hover-background-color);
-      &::before {
-        background-color: var(--button-hover-background-color);
-      }
-    }
+		&:hover {
+			color: var(--button-hover-color);
+			background-color: var(--button-hover-background-color);
+			&::before {
+				background-color: var(--button-hover-background-color);
+			}
+		}
 
-    &:focus {
-      color: var(--button-focus-color);
-      background-color: var(--button-focus-outline-color);
-      &::before {
-        background-color: var(--button-focus-background-color);
-      }
-    }
+		&:focus {
+			color: var(--button-focus-color);
+			background-color: var(--button-focus-outline-color);
+			&::before {
+				background-color: var(--button-focus-background-color);
+			}
+		}
 
-    &:active {
-      color: var(--button-active-color);
-      background-color: var(--button-active-background-color);
-      &::before {
-        background-color: var(--button-active-background-color);
-      }
-    }
+		&:active {
+			color: var(--button-active-color);
+			background-color: var(--button-active-background-color);
+			&::before {
+				background-color: var(--button-active-background-color);
+			}
+		}
 
-    &.secondary {
-      --button-color: var(--color-gray-800);
-      --button-background-color: var(--color-gray-50);
+		&.secondary {
+			--button-color: var(--color-gray-800);
+			--button-background-color: var(--color-gray-50);
 
-      --button-hover-color: var(--color-green-300);
-      --button-hover-background-color: var(--color-gray-100);
+			--button-hover-color: var(--color-green-300);
+			--button-hover-background-color: var(--color-gray-100);
 
-      --button-active-color: var(--color-green-300);
-      --button-active-background-color: var(--color-gray-100);
+			--button-active-color: var(--color-green-300);
+			--button-active-background-color: var(--color-gray-100);
 
-      --button-focus-color: var(--color-gray-900);
-      --button-focus-background-color: var(--color-gray-50);
-      --button-focus-outline-color: var(--color-green-100);
-    }
+			--button-focus-color: var(--color-gray-900);
+			--button-focus-background-color: var(--color-gray-50);
+			--button-focus-outline-color: var(--color-green-100);
+		}
 
-    &.tertiary {
-      --button-color: var(--color-gray-900);
-      --button-background-color: var(--color-green-100);
+		&.tertiary {
+			--button-color: var(--color-gray-900);
+			--button-background-color: var(--color-green-100);
 
-      --button-hover-color: var(--color-white);
-      --button-hover-background-color: var(--color-green-200);
+			--button-hover-color: var(--color-white);
+			--button-hover-background-color: var(--color-green-200);
 
-      --button-active-color: var(--color-white);
-      --button-active-background-color: var(--color-green-300);
+			--button-active-color: var(--color-white);
+			--button-active-background-color: var(--color-green-300);
 
-      --button-focus-color: var(--color-gray-900);
-      --button-focus-background-color: var(--color-green-100);
-      --button-focus-outline-color: var(--color-gray-900);
-    }
+			--button-focus-color: var(--color-gray-900);
+			--button-focus-background-color: var(--color-green-100);
+			--button-focus-outline-color: var(--color-gray-900);
+		}
 
-    &.quaternary {
-      --button-color: var(--color-gray-800);
-      --button-background-color: var(--color-white);
+		&.quaternary {
+			--button-color: var(--color-gray-800);
+			--button-background-color: var(--color-white);
 
-      --button-hover-color: var(--color-green-300);
-      --button-hover-background-color: var(--color-gray-50);
+			--button-hover-color: var(--color-green-300);
+			--button-hover-background-color: var(--color-gray-50);
 
-      --button-active-color: var(--color-white);
-      --button-active-background-color: var(--color-black);
+			--button-active-color: var(--color-white);
+			--button-active-background-color: var(--color-black);
 
-      --button-focus-color: var(--color-gray-900);
-      --button-focus-background-color: var(--color-white);
-      --button-focus-outline-color: var(--color-green-100);
-    }
-  }
+			--button-focus-color: var(--color-gray-900);
+			--button-focus-background-color: var(--color-white);
+			--button-focus-outline-color: var(--color-green-100);
+		}
+	}
 
-  .inner,
-  .icon {
-    position: relative;
-    z-index: 2;
-  }
+	.inner,
+	.icon {
+		position: relative;
+		z-index: 2;
+	}
 </style>
