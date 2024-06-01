@@ -1,4 +1,4 @@
-import Airtable from "airtable";
+import Airtable, { type FieldSet } from "airtable";
 import type { APIRoute } from "astro";
 
 const { AIRTABLE_BASE, AIRTABLE_API_KEY } = import.meta.env;
@@ -157,7 +157,7 @@ export const ALL: APIRoute = async ({ request }) => {
 	}
 
 	if (request.method === "POST") {
-		const body = await request.json();
+		const body = await request.formData();
 
 		try {
 			const base = new Airtable({ apiKey: AIRTABLE_API_KEY }).base(
@@ -172,24 +172,21 @@ export const ALL: APIRoute = async ({ request }) => {
 				}, [])
 				.concat(hiddenFields[id]);
 
-			const data = Object.entries(body).reduce(
-				(acc: { [key: string]: any }, [key, value]) => {
-					if (value) {
-						const fieldConfig = fieldConfigs.find(
-							(field) => field.name === key,
-						);
+			let data: FieldSet = {};
 
-						if (!fieldConfig) {
-							return acc;
+			for (const [key, value] of body) {
+				if (value) {
+					const fieldConfig = fieldConfigs.find((field) => field.name === key);
+
+					if (fieldConfig) {
+						if (["true", "false"].includes(String(value))) {
+							data[key] = Boolean(value);
+						} else {
+							data[key] = String(value);
 						}
-
-						acc[key] = value;
 					}
-
-					return acc;
-				},
-				{},
-			);
+				}
+			}
 
 			console.log("Airtable submission (data):", data);
 
