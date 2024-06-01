@@ -114,6 +114,14 @@ if (!currentPage || !currentPage.title) {
 	</div>
 </ContentLayout>
 
+{
+	//@ts-ignore
+	currentPage?.config?.scripts?.map((src, i) => (
+		//@ts-ignore
+		<script src={src} async key={i} />
+	))
+}
+
 <style lang="scss">
 	@import "../styles/_imports.scss";
 
