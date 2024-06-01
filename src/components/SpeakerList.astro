@@ -18,7 +18,6 @@ export interface Props {
 
 const { variant = "dark", limit, class: className, ...rest } = Astro.props;
 
-// TODO: Update $yearTag when enough speakers are there
 const query = graphql(
 	`
 		query GetSpeakersPage($limit: Int!, $yearTag: String!) {

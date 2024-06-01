@@ -1,6 +1,6 @@
 body {
-  @extend %typo-body;
-  color: var(--color-white);
+	@extend %typo-body;
+	color: var(--color-white);
 }
 
 // TODO: reset headlines and add default spacings
@@ -14,93 +14,93 @@ p,
 ul,
 ol,
 dl {
-  margin-block-start: var(--typo-margin-block-start, 0);
-  margin-block-end: var(--typo-margin-block-end, 0);
+	margin-block-start: var(--typo-margin-block-start, 0);
+	margin-block-end: var(--typo-margin-block-end, 0);
 }
 
 h1 {
-  @extend %typo-h1;
+	@extend %typo-h1;
 }
 
 h2 {
-  @extend %typo-h2;
+	@extend %typo-h2;
 }
 
 h3 {
-  @extend %typo-h3;
+	@extend %typo-h3;
 }
 
 h4 {
-  @extend %typo-h4;
+	@extend %typo-h4;
 }
 
 h5 {
-  @extend %typo-h5;
+	@extend %typo-h5;
 }
 
 h6 {
-  @extend %typo-h6;
+	@extend %typo-h6;
 }
 
 b,
 strong {
-  @extend %typo-body-caption;
+	@extend %typo-body-caption;
 }
 
 pre {
-  white-space: normal;
+	white-space: normal;
 }
 
 .typo-h1 {
-  @extend %typo-h1;
+	@extend %typo-h1;
 }
 
 .typo-h2 {
-  @extend %typo-h2;
+	@extend %typo-h2;
 }
 
 .typo-h3 {
-  @extend %typo-h3;
+	@extend %typo-h3;
 }
 
 .typo-h4 {
-  @extend %typo-h4;
+	@extend %typo-h4;
 }
 
 .typo-h5 {
-  @extend %typo-h5;
+	@extend %typo-h5;
 }
 
 .typo-h6 {
-  @extend %typo-h6;
+	@extend %typo-h6;
 }
 
 .typo-lead {
-  @extend %typo-lead;
+	@extend %typo-lead;
 }
 
 .typo-body {
-  @extend %typo-body;
+	@extend %typo-body;
 }
 
 .typo-body-caption {
-  @extend %typo-body-caption;
+	@extend %typo-body-caption;
 }
 
 .typo-small {
-  @extend %typo-small;
+	@extend %typo-small;
 }
 
 .typo-label {
-  @extend %typo-label;
+	@extend %typo-label;
 }
 
-.bb-sr-only:not(:focus):not(:focus-within):not(:active) {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+.sr-only:not(:focus):not(:focus-within):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
 }

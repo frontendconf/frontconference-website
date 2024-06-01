@@ -269,7 +269,7 @@
 	row-gap: var(--spacing-12x);
 
 	@include breakpoint-up("md") {
-		row-gap: var(--spacing-14x);
+		row-gap: var(--spacing-16x);
 	}
 
 	@include breakpoint-up("lg") {

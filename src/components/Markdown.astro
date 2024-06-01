@@ -5,7 +5,7 @@ export interface Props {
 	text: string;
 }
 
-const { text } = Astro.props;
+const { text, class: className, ...rest } = Astro.props;
 
 const renderer = {
 	// wrap CTA class links in a span to style them as buttons
@@ -38,7 +38,11 @@ marked.use({ renderer });
 const content = text && marked.parse(text);
 ---
 
-<div class="markdown column--main" set:html={content} />
+<div
+	class:list={["markdown", "column--main", className]}
+	set:html={content}
+	{...rest}
+/>
 
 <style lang="scss" is:global>
 	@import "../styles/_imports.scss";
@@ -122,9 +126,7 @@ const content = text && marked.parse(text);
 				position: relative;
 				z-index: 2;
 			}
-		}
-
-		// Images
+		}// Images
 		img {
 			max-width: 100%;
 		}
