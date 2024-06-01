@@ -97,20 +97,12 @@ if (!currentPage || !currentPage.title) {
 		{currentPage.showVenue && <Venue />}
 		{currentPage.showHotels && <HotelList />}
 		{currentPage.showRestaurants && <RestaurantList />}
-		{currentPage.showCallForSpeakers && (
-			<div class="section">
-				<div class="container grid">
-					<AirtableForm id="Call for Speakers" />
-				</div>
-			</div>
-		)}
-		{currentPage.showSpeakersBootcampForm && (
-			<div class="section">
-				<div class="container grid">
-					<AirtableForm id="Speakers Bootcamp" />
-				</div>
-			</div>
-		)}
+		{currentPage.showCallForSpeakers && <AirtableForm id="Call for Speakers" />}
+		{
+			currentPage.showSpeakersBootcampForm && (
+				<AirtableForm id="Speakers Bootcamp" />
+			)
+		}
 	</div>
 </ContentLayout>
 
