@@ -12,7 +12,7 @@ const url = new URL(`/api/airtable`, Astro.url);
 url.searchParams.append("id", id);
 
 const { fieldGroups, hiddenFields }: GetResponse = await fetch(
-	url.toString()
+	url.toString(),
 ).then((res) => res.json());
 ---
 
@@ -258,7 +258,10 @@ const { fieldGroups, hiddenFields }: GetResponse = await fetch(
 		font-size: 1.25rem;
 		font-family: var(--font-family-bold);
 		font-weight: normal;
-		margin-bottom: 2em;
+
+		&:not(:empty) {
+			margin-bottom: 2em;
+		}
 	}
 
 	.form__message :global(.error) {
