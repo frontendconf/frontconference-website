@@ -12,310 +12,310 @@ const path = pathname.match(/^\/$/) ? pathname : pathname.slice(0, -1);
 const currentPage = href.split("/").pop();
 
 const query = graphql(`
-  query menu {
-    configCollection {
-      items {
-        menuCollection {
-          items {
-            ... on Page {
-              title
-              menu
-              slug
-              sys {
-                id
-              }
-              __typename
-            }
-          }
-        }
-      }
-    }
-  }
+	query menu {
+		configCollection {
+			items {
+				menuCollection {
+					items {
+						... on Page {
+							title
+							menu
+							slug
+							sys {
+								id
+							}
+							__typename
+						}
+					}
+				}
+			}
+		}
+	}
 `);
 
 const data = await client.request(query);
 
 const menuItems =
-  data?.configCollection?.items?.[0]?.menuCollection?.items || [];
+	data?.configCollection?.items?.[0]?.menuCollection?.items || [];
 ---
 
 <header class="header">
-  <div class="inner">
-    <a href="/" class="home-link">
-      <Logo class="logo" />
-      <div class="home-link-wrapper">
-        <h1 class="home-link-text home-link-text--desktop">FRONT CONFERENCE</h1>
-        <h1 class="home-link-text home-link-text--mobile">
-          FRONT<br aria-hidden="true" />CONF 24
-        </h1>
-        <p role="doc-subtitle">
-          <span>29 – 30 Aug 2024</span>
-          <span>Alte Papierfabrik, Zurich</span>
-        </p>
-      </div>
-    </a>
-    <div class="nav-wrapper">
-      <nav id="navigation" class="nav">
-        <ul class="nav-list">
-          {
-            menuItems.map(
-              (item) =>
-                item &&
-                item.__typename === "Page" && (
-                  <li class="nav-list-item">
-                    <a
-                      href={`/${item.slug}`}
-                      class:list={[
-                        "link",
-                        {
-                          active:
-                            item.slug === slug ||
-                            item.slug === currentPage ||
-                            path.includes(item.slug),
-                        },
-                      ]}
-                    >
-                      {item.menu || item.title}
-                    </a>
-                  </li>
-                ),
-            )
-          }
-        </ul>
-      </nav>
-      <Button as="a" href="/tickets" variant="tertiary">
-        <span class="display--sm">Get your ticket</span>
-        <span class="hide--sm">Tickets</span>
-      </Button>
-      <MenuBurger />
-    </div>
-  </div>
+	<div class="inner">
+		<a href="/" class="home-link">
+			<Logo class="logo" />
+			<div class="home-link-wrapper">
+				<p class="home-link-text home-link-text--desktop">FRONT CONFERENCE</p>
+				<p class="home-link-text home-link-text--mobile">
+					FRONT<br aria-hidden="true" />CONF 24
+				</p>
+				<span>
+					<span>29 – 30 Aug 2024</span>
+					<span>Alte Papierfabrik, Zurich</span>
+				</span>
+			</div>
+		</a>
+		<div class="nav-wrapper">
+			<nav id="navigation" class="nav">
+				<ul class="nav-list">
+					{
+						menuItems.map(
+							(item) =>
+								item &&
+								item.__typename === "Page" && (
+									<li class="nav-list-item">
+										<a
+											href={`/${item.slug}`}
+											class:list={[
+												"link",
+												{
+													active:
+														item.slug === slug ||
+														item.slug === currentPage ||
+														path.includes(item.slug),
+												},
+											]}
+										>
+											{item.menu || item.title}
+										</a>
+									</li>
+								),
+						)
+					}
+				</ul>
+			</nav>
+			<Button as="a" href="/tickets" variant="tertiary">
+				<span class="display--sm">Get your ticket</span>
+				<span class="hide--sm">Tickets</span>
+			</Button>
+			<MenuBurger />
+		</div>
+	</div>
 </header>
 
 <script>
-  function attachListeners() {
-    const menuBurger = document.getElementById("menu-burger")!;
-    const navigation = document.getElementById("navigation")!;
+	function attachListeners() {
+		const menuBurger = document.getElementById("menu-burger")!;
+		const navigation = document.getElementById("navigation")!;
 
-    function openMenu() {
-      menuBurger.classList.add("open");
-      menuBurger.setAttribute("aria-expanded", "true");
-      navigation.classList.add("is-open");
-      // TOOD: add focus trap
-    }
+		function openMenu() {
+			menuBurger.classList.add("open");
+			menuBurger.setAttribute("aria-expanded", "true");
+			navigation.classList.add("is-open");
+			// TOOD: add focus trap
+		}
 
-    function closeMenu() {
-      menuBurger.classList.remove("open");
-      menuBurger.setAttribute("aria-expanded", "false");
-      navigation.classList.remove("is-open");
-    }
-    menuBurger.addEventListener("click", function () {
-      const currentlyOpen = this.getAttribute("aria-expanded") === "true";
-      if (currentlyOpen) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    });
-  }
+		function closeMenu() {
+			menuBurger.classList.remove("open");
+			menuBurger.setAttribute("aria-expanded", "false");
+			navigation.classList.remove("is-open");
+		}
+		menuBurger.addEventListener("click", function () {
+			const currentlyOpen = this.getAttribute("aria-expanded") === "true";
+			if (currentlyOpen) {
+				closeMenu();
+			} else {
+				openMenu();
+			}
+		});
+	}
 
-  document.addEventListener("astro:after-swap", () => {
-    console.log("after swap");
-    attachListeners();
-  });
+	document.addEventListener("astro:after-swap", () => {
+		console.log("after swap");
+		attachListeners();
+	});
 
-  document.addEventListener(
-    "astro:page-load",
-    () => {
-      console.log("page load");
-      attachListeners();
-    },
-    { once: true },
-  );
+	document.addEventListener(
+		"astro:page-load",
+		() => {
+			console.log("page load");
+			attachListeners();
+		},
+		{ once: true },
+	);
 </script>
 
 <style lang="scss">
-  @import "../styles/_imports.scss";
+	@import "../styles/_imports.scss";
 
-  .header {
-    position: sticky;
-    background: var(--color-black);
-    top: 0;
-    z-index: 10;
-  }
+	.header {
+		position: sticky;
+		background: var(--color-black);
+		top: 0;
+		z-index: 10;
+	}
 
-  .inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    // we can't use container here due to sticky behaviour
-    max-width: var(--max-content-width);
-    padding-inline: var(--grid-padding);
-    margin-inline: auto;
-    height: 80px;
-  }
+	.inner {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		// we can't use container here due to sticky behaviour
+		max-width: var(--max-content-width);
+		padding-inline: var(--grid-padding);
+		margin-inline: auto;
+		height: 80px;
+	}
 
-  .home-link {
-    display: flex;
-    gap: var(--spacing-2x);
-    text-decoration: none;
-    overflow: hidden;
-    color: var(--color-gray-50);
+	.home-link {
+		display: flex;
+		gap: var(--spacing-2x);
+		text-decoration: none;
+		overflow: hidden;
+		color: var(--color-gray-50);
 
-    @include breakpoint-up("sm") {
-      margin-block-start: var(--spacing-1x);
-    }
-  }
+		@include breakpoint-up("sm") {
+			margin-block-start: var(--spacing-1x);
+		}
+	}
 
-  .logo {
-    display: block;
-    width: pxToRem(40);
-    aspect-ratio: 1;
+	.logo {
+		display: block;
+		width: pxToRem(40);
+		aspect-ratio: 1;
 
-    @include breakpoint-up("sm") {
-      width: pxToRem(52);
-    }
-  }
+		@include breakpoint-up("sm") {
+			width: pxToRem(52);
+		}
+	}
 
-  .home-link-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-1x);
-    margin-block-start: pxToRem(-2);
+	.home-link-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-1x);
+		margin-block-start: pxToRem(-2);
 
-    [role="doc-subtitle"] {
-      display: none;
-      flex-direction: column;
-      gap: var(--spacing-1x);
-      font-size: pxToRem(10);
-      line-height: pxToRem(12);
-      margin: 0;
+		> span {
+			display: none;
+			flex-direction: column;
+			gap: var(--spacing-1x);
+			font-size: pxToRem(10);
+			line-height: pxToRem(12);
+			margin: 0;
 
-      @include breakpoint-up("sm") {
-        display: flex;
-      }
-    }
-  }
+			@include breakpoint-up("sm") {
+				display: flex;
+			}
+		}
+	}
 
-  .home-link-text {
-    @include typo-family-bold;
-    font-size: 14px;
-    line-height: 1.14; /* 114.286% */
-    letter-spacing: 0.42px;
-    text-transform: uppercase;
-    margin: 0;
+	.home-link-text {
+		@include typo-family-bold;
+		font-size: 14px;
+		line-height: 1.14; /* 114.286% */
+		letter-spacing: 0.42px;
+		text-transform: uppercase;
+		margin: 0;
 
-    &--desktop {
-      display: none;
-      font-size: pxToRem(16);
-      line-height: pxToRem(18);
+		&--desktop {
+			display: none;
+			font-size: pxToRem(16);
+			line-height: pxToRem(18);
 
-      @include breakpoint-up("sm") {
-        display: flex;
-      }
-    }
+			@include breakpoint-up("sm") {
+				display: flex;
+			}
+		}
 
-    &--mobile {
-      @include breakpoint-up("sm") {
-        display: none;
-      }
-    }
-  }
+		&--mobile {
+			@include breakpoint-up("sm") {
+				display: none;
+			}
+		}
+	}
 
-  .nav-wrapper {
-    display: flex;
-    gap: var(--spacing-4x);
-    align-items: center;
+	.nav-wrapper {
+		display: flex;
+		gap: var(--spacing-4x);
+		align-items: center;
 
-    @include breakpoint-up("md") {
-      gap: var(--spacing-6x);
-    }
+		@include breakpoint-up("md") {
+			gap: var(--spacing-6x);
+		}
 
-    @include breakpoint-up("xl") {
-      gap: var(--spacing-12x);
-    }
-  }
+		@include breakpoint-up("xl") {
+			gap: var(--spacing-12x);
+		}
+	}
 
-  .nav {
-    @include breakpoint-down("md") {
-      display: none;
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background-color: var(--color-black);
-      padding-block: 20px;
-      transform: translateY(60px);
-      transition: all var(--transition-duration-medium) ease;
-      opacity: 0;
-      // TODO: Test on different deviced, might be shitty
-      height: calc(100vh - 80px);
-      pointer-events: none;
+	.nav {
+		@include breakpoint-down("md") {
+			display: none;
+			position: absolute;
+			inset: 0;
+			z-index: 1;
+			background-color: var(--color-black);
+			padding-block: 20px;
+			transform: translateY(60px);
+			transition: all var(--transition-duration-medium) ease;
+			opacity: 0;
+			// TODO: Test on different deviced, might be shitty
+			height: calc(100vh - 80px);
+			pointer-events: none;
 
-      &.is-open {
-        display: block;
-        transform: translateY(80px);
-        opacity: 1;
-        pointer-events: all;
-      }
-    }
-  }
+			&.is-open {
+				display: block;
+				transform: translateY(80px);
+				opacity: 1;
+				pointer-events: all;
+			}
+		}
+	}
 
-  .nav-list {
-    padding: 0;
-    margin: 0;
+	.nav-list {
+		padding: 0;
+		margin: 0;
 
-    @include breakpoint-up("lg") {
-      display: flex;
-      align-items: flex-start;
-      // linear-clamp from 1024px to 1440px
-      gap: clamp(var(--spacing-4x), -3.5577rem + 6.7308vw, var(--spacing-10x));
-      list-style: none;
-    }
-  }
+		@include breakpoint-up("lg") {
+			display: flex;
+			align-items: flex-start;
+			// linear-clamp from 1024px to 1440px
+			gap: clamp(var(--spacing-4x), -3.5577rem + 6.7308vw, var(--spacing-10x));
+			list-style: none;
+		}
+	}
 
-  .nav-list-item {
-    display: block;
-    border-top: 1px solid var(--color-gray-600);
+	.nav-list-item {
+		display: block;
+		border-top: 1px solid var(--color-gray-600);
 
-    &:last-child {
-      border-bottom: 1px solid var(--color-gray-600);
-    }
+		&:last-child {
+			border-bottom: 1px solid var(--color-gray-600);
+		}
 
-    @include breakpoint-up("lg") {
-      border-top: none;
+		@include breakpoint-up("lg") {
+			border-top: none;
 
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-  }
+			&:last-child {
+				border-bottom: none;
+			}
+		}
+	}
 
-  .link {
-    display: block;
-    color: var(--color-white);
-    padding: var(--spacing-4x) var(--grid-padding);
-    font-size: pxToRem(16);
-    line-height: 1;
-    text-decoration: none;
+	.link {
+		display: block;
+		color: var(--color-white);
+		padding: var(--spacing-4x) var(--grid-padding);
+		font-size: pxToRem(16);
+		line-height: 1;
+		text-decoration: none;
 
-    &:hover,
-    &:focus {
-      color: var(--color-green-100);
-    }
+		&:hover,
+		&:focus {
+			color: var(--color-green-100);
+		}
 
-    &.active {
-      color: var(--color-green-100);
+		&.active {
+			color: var(--color-green-100);
 
-      &:hover,
-      &:focus {
-        color: var(--color-green-100);
-      }
-    }
+			&:hover,
+			&:focus {
+				color: var(--color-green-100);
+			}
+		}
 
-    @include breakpoint-up("lg") {
-      padding-inline: 0;
-      font-size: pxToRem(14);
-      letter-spacing: getLetterSpacing(14, 1, 1);
-    }
-  }
+		@include breakpoint-up("lg") {
+			padding-inline: 0;
+			font-size: pxToRem(14);
+			letter-spacing: getLetterSpacing(14, 1, 1);
+		}
+	}
 </style>

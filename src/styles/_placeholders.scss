@@ -165,6 +165,93 @@
 	}
 }
 
+%button {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+	position: relative;
+	height: pxToRem(40);
+	clip-path: polygon(
+		12px 0%,
+		calc(100% - 12px) 0%,
+		100% 50%,
+		calc(100% - 12px) 100%,
+		12px 100%,
+		0% 50%
+	);
+	column-gap: var(--spacing-1x);
+	border: 0 none;
+	appearance: none;
+	padding-inline: pxToRem(30);
+	color: var(--button-color);
+	background-color: var(--button-background-color);
+	outline: none !important;
+
+	transition: var(--transition-duration-quick) var(--transition-easing-default);
+	transition-property: color, background-color;
+
+	font-variant-numeric: lining-nums tabular-nums;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 1.25;
+	letter-spacing: 0.16px;
+
+	&:not(:disabled) {
+		cursor: pointer;
+	}
+
+	&::before {
+		content: "";
+		display: block;
+		position: absolute;
+		inset: pxToRem(2) pxToRem(3);
+		background-color: var(--button-background-color);
+		transition: background-color var(--transition-duration-quick)
+			var(--transition-easing-default);
+		clip-path: polygon(
+			11px 0%,
+			calc(100% - 11px) 0%,
+			100% 50%,
+			calc(100% - 11px) 100%,
+			11px 100%,
+			0% 50%
+		);
+		z-index: 1;
+	}
+
+	.inner,
+	.icon {
+		position: relative;
+		z-index: 2;
+	}
+
+	&:hover {
+		color: var(--button-hover-color);
+		background-color: var(--button-hover-background-color);
+		&::before {
+			background-color: var(--button-hover-background-color);
+		}
+	}
+
+	&:focus-visible {
+		color: var(--button-focus-color);
+		background-color: var(--button-focus-outline-color);
+		&::before {
+			background-color: var(--button-focus-background-color);
+		}
+	}
+
+	&:active {
+		color: var(--button-active-color);
+		background-color: var(--button-active-background-color);
+		&::before {
+			background-color: var(--button-active-background-color);
+		}
+	}
+}
+
 %grid-gap {
 	gap: var(--spacing-5x);
 	// TODO: define row-gap for responsive behavior with main and side columns

@@ -7,6 +7,34 @@ export interface Props {
 
 const { text, class: className, ...rest } = Astro.props;
 
+const renderer = {
+	// wrap CTA class links in a span to style them as buttons
+	html(html) {
+		if (html.includes('class="cta"')) {
+			const closingBracketIndex = html.indexOf(">");
+			const modifiedHtml =
+				html.slice(0, closingBracketIndex + 1) +
+				"<span>" +
+				html.slice(closingBracketIndex + 1);
+			return modifiedHtml.replace("</a>", "</span></a>");
+		} else {
+			return html;
+		}
+	},
+	// open external links in a new tab
+	link(href, title, text) {
+		const isExternal = /^https?:\/\//.test(href);
+
+		if (isExternal) {
+			return `<a href="${href}" title="${title || undefined}" target="_blank">${text}</a>`;
+		} else {
+			return `<a href="${href}" title="${title || undefined}">${text}</a>`;
+		}
+	},
+};
+
+marked.use({ renderer });
+
 const content = text && marked.parse(text);
 ---
 
@@ -77,7 +105,28 @@ const content = text && marked.parse(text);
 			@extend %link;
 		}
 
-		// Images
+		.cta {
+			// reuse button tertiary styles
+			--button-color: var(--color-gray-900);
+			--button-background-color: var(--color-green-100);
+
+			--button-hover-color: var(--color-white);
+			--button-hover-background-color: var(--color-green-200);
+
+			--button-active-color: var(--color-white);
+			--button-active-background-color: var(--color-green-300);
+
+			--button-focus-color: var(--color-gray-900);
+			--button-focus-background-color: var(--color-green-100);
+			--button-focus-outline-color: var(--color-gray-900);
+
+			@extend %button;
+
+			span {
+				position: relative;
+				z-index: 2;
+			}
+		}// Images
 		img {
 			max-width: 100%;
 		}
