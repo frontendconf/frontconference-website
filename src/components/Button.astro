@@ -1,11 +1,12 @@
 ---
-import type { HTMLTag, Polymorphic } from "astro/types";
+import type { HTMLAttributes, HTMLTag, Polymorphic } from "astro/types";
 import { Icon } from "astro-icon/components";
 
 export type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 	variant?: "primary" | "secondary" | "tertiary" | "quaternary";
 	prefixIcon?: string;
 	suffixIcon?: string;
+	type?: HTMLAttributes<"button">["type"];
 };
 
 const {
