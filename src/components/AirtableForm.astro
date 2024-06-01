@@ -140,8 +140,6 @@ const { fieldGroups, hiddenFields }: GetResponse = await fetch(
 		async onSubmit(event: Event) {
 			event.preventDefault();
 
-			this.disable();
-
 			if (this.message) {
 				this.message.innerHTML = "";
 			}
@@ -157,6 +155,8 @@ const { fieldGroups, hiddenFields }: GetResponse = await fetch(
 				},
 				{}
 			);
+
+			this.disable();
 
 			let isError = false;
 			const { message } = await fetch(form.action, {
