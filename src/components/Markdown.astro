@@ -21,6 +21,16 @@ const renderer = {
 			return html;
 		}
 	},
+	// open external links in a new tab
+	link(href, title, text) {
+		const isExternal = /^https?:\/\//.test(href);
+
+		if (isExternal) {
+			return `<a href="${href}" title="${title || undefined}" target="_blank">${text}</a>`;
+		} else {
+			return `<a href="${href}" title="${title || undefined}">${text}</a>`;
+		}
+	},
 };
 
 marked.use({ renderer });
