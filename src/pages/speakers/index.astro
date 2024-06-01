@@ -33,7 +33,11 @@ if (!currentPage || !currentPage.title) {
 ---
 
 <ContentLayout title={currentPage.title}>
-	{currentPage.lead && <div class="typo-lead">{currentPage.lead}</div>}
+	{
+		currentPage.lead && (
+			<div class="typo-lead column--main">{currentPage.lead}</div>
+		)
+	}
 	{currentPage.body && <Markdown text={currentPage.body} />}
 
 	<SpeakerList />
