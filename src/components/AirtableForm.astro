@@ -1,0 +1,294 @@
+---
+import type { GetResponse } from "../pages/api/airtable";
+import Button from "./Button.astro";
+
+export interface Props {
+	id: string;
+}
+
+const { id } = Astro.props;
+
+const url = new URL(`/api/airtable`, Astro.url);
+url.searchParams.append("id", id);
+
+const { fieldGroups, hiddenFields }: GetResponse = await fetch(
+	url.toString()
+).then((res) => res.json());
+---
+
+<front-airtable-form class="form">
+	<div data-message class="form__message"></div>
+	<form action={url.toString()} method="POST">
+		{
+			hiddenFields.map((field) => {
+				return <input type="hidden" name={field.name} value={field.value} />;
+			})
+		}
+		{
+			fieldGroups.map((group) => (
+				<fieldset>
+					<legend>{group.title}</legend>
+					<p set:html={group.description} />
+					<dl>
+						{group.fields.map((field) => {
+							let element;
+							const description = `${
+								field.description ? `${field.description} ` : ""
+							}${field.maxLength ? `Max. ${field.maxLength} characters.` : ""}`;
+
+							switch (field.type) {
+								case "select":
+									element = (
+										<select
+											name={field.name}
+											id={field.name}
+											aria-describedby={
+												description ? `${field.name}-desc` : null
+											}
+											required={field.required}
+										>
+											{field.options?.map((option) => (
+												<option>{option}</option>
+											))}
+										</select>
+									);
+									break;
+								case "textarea":
+									element = (
+										<textarea
+											name={field.name}
+											id={field.name}
+											aria-describedby={
+												description ? `${field.name}-desc` : null
+											}
+											required={field.required}
+											maxlength={field.maxLength}
+										/>
+									);
+									break;
+								default:
+									element = (
+										<input
+											type={field.type === "file" ? "text" : field.type}
+											name={field.name}
+											id={field.name}
+											value={field.value}
+											aria-describedby={
+												description ? `${field.name}-desc` : null
+											}
+											checked={field.checked}
+											required={field.required}
+											maxlength={field.maxLength}
+										/>
+									);
+							}
+							return (
+								<div>
+									<dt>
+										<label for={field.name}>
+											{field.label || field.name}
+											{field.required ? (
+												<span aria-label="required">*</span>
+											) : null}
+										</label>
+									</dt>
+									<dd class={`form__field-element--${field.type}`}>
+										{element}
+										{description && (
+											<div
+												id={`${field.name}-desc`}
+												class="form__field-description"
+											>
+												{description}
+											</div>
+										)}
+									</dd>
+								</div>
+							);
+						})}
+					</dl>
+				</fieldset>
+			))
+		}
+		<Button type="submit">Submit</Button>
+	</form>
+</front-airtable-form>
+
+<script>
+	class FrontAirtableForm extends HTMLElement {
+		message;
+		form;
+		fieldsets;
+		submit;
+
+		constructor() {
+			super();
+
+			this.form = this.querySelector("form");
+
+			if (!this.form) {
+				return;
+			}
+
+			this.message = this.querySelector("[data-message]");
+			this.fieldsets = this.form.querySelectorAll("fieldset");
+			this.submit = this.form.querySelector("[type='submit']");
+
+			this.form.addEventListener("submit", this.onSubmit.bind(this));
+		}
+
+		async onSubmit(event: Event) {
+			event.preventDefault();
+
+			this.disable();
+
+			if (this.message) {
+				this.message.innerHTML = "";
+			}
+
+			const form = event.target as HTMLFormElement;
+
+			const formData = new FormData(form);
+			const payload = [...formData.entries()].reduce(
+				(obj: Record<string, FormDataEntryValue | true>, [key, val]) => {
+					obj[key] = val === "true" ? true : val;
+
+					return obj;
+				},
+				{}
+			);
+
+			let isError = false;
+			const { message } = await fetch(form.action, {
+				method: form.method,
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(payload),
+			}).then((response) => {
+				if (!response.ok) {
+					isError = true;
+				}
+
+				return response.json();
+			});
+
+			this.enable();
+
+			if (this.message) {
+				this.message.innerHTML = `<p class="${isError ? `error` : ""}">${message}</p>`;
+
+				this.message.scrollIntoView();
+			}
+
+			if (!isError) {
+				this.removeChild(this.form!);
+			}
+		}
+
+		disable() {
+			this.fieldsets!.forEach((fieldset) => {
+				fieldset.setAttribute("disabled", "");
+			});
+
+			this.submit!.setAttribute("disabled", "");
+		}
+
+		enable() {
+			this.fieldsets!.forEach((fieldset) => {
+				fieldset.removeAttribute("disabled");
+			});
+
+			this.submit!.removeAttribute("disabled");
+		}
+	}
+
+	customElements.define("front-airtable-form", FrontAirtableForm);
+</script>
+
+<style>
+	fieldset {
+		border: 0;
+		margin: 0 0 3em 0;
+		padding: 0;
+
+		&[disabled] {
+			opacity: 0.5;
+			cursor: wait;
+		}
+	}
+
+	legend {
+		padding: 0;
+		font-size: 22px;
+		font-weight: $font-weight-bold;
+		margin: 0 0 18px 0;
+	}
+
+	dl {
+		margin-top: 2em;
+	}
+
+	dd {
+		margin-left: 0;
+		margin-bottom: 2em;
+	}
+
+	label {
+		font-weight: $font-weight-bold;
+		display: block;
+		margin-bottom: 0.5em;
+	}
+
+	input[type="text"],
+	input[type="email"],
+	textarea,
+	select {
+		display: block;
+		border: 1px solid rgba(#1e1732, 0.5);
+		padding: 1em;
+		width: 100%;
+		font: inherit;
+	}
+
+	select {
+		height: 3em;
+	}
+
+	textarea {
+		height: 10em;
+	}
+
+	.form {
+		max-width: 40rem;
+	}
+
+	.form__message {
+		font-size: 22px;
+		font-weight: bold;
+		margin-bottom: 2em;
+	}
+
+	.form__message :global(.error) {
+		color: #c30;
+
+		a {
+			color: inherit;
+		}
+	}
+
+	.form__field-element {
+	}
+	.form__field-element--checkbox {
+		display: flex;
+		gap: 0.5rem;
+
+		.form__field-description {
+			margin-top: 0.125rem;
+		}
+	}
+
+	.form__field-description {
+		margin-top: 1em;
+	}
+</style>
