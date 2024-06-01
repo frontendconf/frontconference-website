@@ -2,10 +2,38 @@
 import { marked } from "marked";
 
 export interface Props {
-  text: string;
+	text: string;
 }
 
 const { text } = Astro.props;
+
+const renderer = {
+	// wrap CTA class links in a span to style them as buttons
+	html(html) {
+		if (html.includes('class="cta"')) {
+			const closingBracketIndex = html.indexOf(">");
+			const modifiedHtml =
+				html.slice(0, closingBracketIndex + 1) +
+				"<span>" +
+				html.slice(closingBracketIndex + 1);
+			return modifiedHtml.replace("</a>", "</span></a>");
+		} else {
+			return html;
+		}
+	},
+	// open external links in a new tab
+	link(href, title, text) {
+		const isExternal = /^https?:\/\//.test(href);
+
+		if (isExternal) {
+			return `<a href="${href}" title="${title || undefined}" target="_blank">${text}</a>`;
+		} else {
+			return `<a href="${href}" title="${title || undefined}">${text}</a>`;
+		}
+	},
+};
+
+marked.use({ renderer });
 
 const content = text && marked.parse(text);
 ---
@@ -13,93 +41,116 @@ const content = text && marked.parse(text);
 <div class="markdown column--main" set:html={content} />
 
 <style lang="scss" is:global>
-  @import "../styles/_imports.scss";
+	@import "../styles/_imports.scss";
 
-  .markdown {
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      --typo-margin-block-start: 1.5rem;
-      --typo-margin-block-end: 1.5rem;
-    }
+	.markdown {
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			--typo-margin-block-start: 1.5rem;
+			--typo-margin-block-end: 1.5rem;
+		}
 
-    p {
-      margin-block-end: var(--spacing-4x);
-    }
+		p {
+			margin-block-end: var(--spacing-4x);
+		}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow-x: auto;
-      // fix for responsive table overflow - since no wrapper is available
-      display: block;
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			overflow-x: auto;
+			// fix for responsive table overflow - since no wrapper is available
+			display: block;
 
-      th,
-      td {
-        padding-block: var(--spacing-2x);
-        padding-inline: var(--spacing-2x);
+			th,
+			td {
+				padding-block: var(--spacing-2x);
+				padding-inline: var(--spacing-2x);
 
-        @include breakpoint-up("md") {
-          padding-inline: var(--spacing-4x);
-        }
-      }
+				@include breakpoint-up("md") {
+					padding-inline: var(--spacing-4x);
+				}
+			}
 
-      th {
-        text-align: left;
-      }
+			th {
+				text-align: left;
+			}
 
-      tbody {
-        tr:nth-child(odd) {
-          background: var(--color-gray-50);
-        }
+			tbody {
+				tr:nth-child(odd) {
+					background: var(--color-gray-50);
+				}
 
-        tr {
-          border-top: 1px solid var(--color-gray-100);
-        }
-      }
-    }
+				tr {
+					border-top: 1px solid var(--color-gray-100);
+				}
+			}
+		}
 
-    ul {
-      padding-inline-start: var(--spacing-4x);
+		ul {
+			padding-inline-start: var(--spacing-4x);
 
-      @include breakpoint-up("xxl") {
-        padding-inline-start: 0;
-      }
-    }
+			@include breakpoint-up("xxl") {
+				padding-inline-start: 0;
+			}
+		}
 
-    a {
-      @extend %link;
-    }
+		a {
+			@extend %link;
+		}
 
-    // Images
-    img {
-      max-width: 100%;
-    }
+		.cta {
+			// reuse button tertiary styles
+			--button-color: var(--color-gray-900);
+			--button-background-color: var(--color-green-100);
 
-    // Embedded videos
-    .video {
-      height: 0;
-      padding-block-end: 56.25%;
-      position: relative;
-      margin: var(--spacing-10x) 0;
+			--button-hover-color: var(--color-white);
+			--button-hover-background-color: var(--color-green-200);
 
-      iframe {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-      }
-    }
+			--button-active-color: var(--color-white);
+			--button-active-background-color: var(--color-green-300);
 
-    // Remove unnecessary margins from trailing elements
-    > * {
-      &:first-child {
-        margin-block-start: 0;
-      }
-      &:last-child {
-        margin-block-end: 0;
-      }
-    }
-  }
+			--button-focus-color: var(--color-gray-900);
+			--button-focus-background-color: var(--color-green-100);
+			--button-focus-outline-color: var(--color-gray-900);
+
+			@extend %button;
+
+			span {
+				position: relative;
+				z-index: 2;
+			}
+		}
+
+		// Images
+		img {
+			max-width: 100%;
+		}
+
+		// Embedded videos
+		.video {
+			height: 0;
+			padding-block-end: 56.25%;
+			position: relative;
+			margin: var(--spacing-10x) 0;
+
+			iframe {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+			}
+		}
+
+		// Remove unnecessary margins from trailing elements
+		> * {
+			&:first-child {
+				margin-block-start: 0;
+			}
+			&:last-child {
+				margin-block-end: 0;
+			}
+		}
+	}
 </style>
