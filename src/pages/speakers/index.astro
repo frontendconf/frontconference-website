@@ -33,8 +33,18 @@ if (!currentPage || !currentPage.title) {
 ---
 
 <ContentLayout title={currentPage.title}>
-	{currentPage.lead && <div class="typo-lead">{currentPage.lead}</div>}
+	{currentPage.lead && <p class="typo-lead">{currentPage.lead}</p>}
 	{currentPage.body && <Markdown text={currentPage.body} />}
 
 	<SpeakerList />
 </ContentLayout>
+
+<style lang="scss">
+	@import "../../styles/_imports.scss";
+
+	.typo-lead {
+		@include breakpoint-up("xl") {
+			grid-column: 1 / 8;
+		}
+	}
+</style>

@@ -42,7 +42,7 @@
 }
 
 %typo-h4 {
-	@include typo-family-bold;
+	@include typo-family-light;
 	font-size: pxToRem(22);
 	line-height: calc(30 / 22);
 	letter-spacing: getLetterSpacing(22);

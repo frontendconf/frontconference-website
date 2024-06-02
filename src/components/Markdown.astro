@@ -48,16 +48,22 @@ const content = text && marked.parse(text);
 	@import "../styles/_imports.scss";
 
 	.markdown {
-		h2,
+		h2 {
+			--typo-margin-block-start: 2.5rem;
+			--typo-margin-block-end: 1.5rem;
+		}
+
 		h3,
 		h4,
 		h5,
 		h6 {
 			--typo-margin-block-start: 1.5rem;
-			--typo-margin-block-end: 1.5rem;
+			--typo-margin-block-end: 1rem;
 		}
 
-		p {
+		p,
+		ul,
+		ol {
 			margin-block-end: var(--spacing-4x);
 		}
 
@@ -93,7 +99,8 @@ const content = text && marked.parse(text);
 			}
 		}
 
-		ul {
+		ul,
+		ol {
 			padding-inline-start: var(--spacing-4x);
 
 			@include breakpoint-up("xxl") {
@@ -126,7 +133,9 @@ const content = text && marked.parse(text);
 				position: relative;
 				z-index: 2;
 			}
-		}// Images
+		}
+
+		// Images
 		img {
 			max-width: 100%;
 		}
