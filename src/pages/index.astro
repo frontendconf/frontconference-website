@@ -42,9 +42,9 @@ const page = data.collection?.items[0];
 					<Ticket />
 				</div>
 				<div class="arrowWrapper">
-					<button id="scrollTrigger" class="arrow">
+					<div class="arrow">
 						<Icon name="arrowDown" />
-					</button>
+					</div>
 				</div>
 			</>
 		)
@@ -163,7 +163,7 @@ const page = data.collection?.items[0];
 		background: none;
 		border: none;
 		color: white;
-		cursor: pointer;
+		// cursor: pointer;
 
 		svg {
 			width: pxToRem(80);
@@ -246,12 +246,3 @@ const page = data.collection?.items[0];
 		}
 	}
 </style>
-
-<script>
-	const scrollTrigger = document.getElementById("scrollTrigger");
-	const scrollTarget = document.getElementById("scrollTarget");
-
-	scrollTrigger.addEventListener("click", () => {
-		scrollTarget.scrollIntoView({ behavior: "smooth", block: "start" });
-	});
-</script>

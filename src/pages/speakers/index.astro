@@ -35,7 +35,7 @@ if (!currentPage || !currentPage.title) {
 <ContentLayout title={currentPage.title}>
 	{
 		currentPage.lead && (
-			<div class="typo-lead column--main">{currentPage.lead}</div>
+			<p class="typo-lead column--main">{currentPage.lead}</p>
 		)
 	}
 	{currentPage.body && <Markdown text={currentPage.body} />}
