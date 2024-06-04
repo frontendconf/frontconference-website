@@ -1,0 +1,85 @@
+---
+import { graphql } from "gql.tada";
+import { client } from "../utils/graphql-client";
+import { WORKSHOP_YEAR_TAG_KEY } from "../utils/constants";
+import SpeakerCard, { speakerCardFragment } from "./SpeakerCard.astro";
+import { speakerDetailFragment } from "./SpeakerDetail.astro";
+import { notEmpty } from "../utils/helpers";
+
+Astro.response.headers.set(
+	"Cache-Control",
+	"s-maxage=60, stale-while-revalidate"
+);
+
+export interface Props {
+	slug: string;
+	class?: string;
+}
+
+const { slug, class: className, ...rest } = Astro.props;
+
+const query = graphql(
+	`
+		query GetWorkshops($limit: Int!, $yearTag: String!) {
+			workshops: workshopCollection(
+				limit: $limit
+				where: { tags: { title: $yearTag } }
+			) {
+				items {
+					title
+					lead
+					slug
+					teacher {
+						...SpeakerDetailFragment
+					}
+				}
+			}
+		}
+	`,
+	[speakerDetailFragment]
+);
+
+const data = await client.request(query, {
+	yearTag: WORKSHOP_YEAR_TAG_KEY,
+	limit: 10,
+});
+
+const workshops = data.workshops?.items.filter(notEmpty) || [];
+---
+
+<div class:list={["wrapper", className]} {...rest}>
+	<ul class="workshop-list">
+		{
+			workshops.map((workshop) => (
+				<li class="workshop-list__item">
+					<SpeakerCard
+						speaker={{
+							slug: workshop.slug,
+							name: workshop.title,
+							role: workshop.lead,
+							photo: null,
+							company: workshop.teacher?.name || null,
+						}}
+						slug={Astro.url.pathname}
+					/>
+				</li>
+			))
+		}
+	</ul>
+</div>
+
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	.wrapper {
+	}
+
+	.workshop-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-10x);
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+</style>

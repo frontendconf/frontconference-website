@@ -16,34 +16,39 @@ export const speakerCardFragment = graphql(`
 export interface Props {
 	speaker: FragmentOf<typeof speakerCardFragment>;
 	variant?: "dark" | "light";
+	slug: string;
 }
 
-const { speaker, variant = "dark" } = Astro.props;
+const { speaker, variant = "dark", slug } = Astro.props;
 ---
 
-<a class="speaker" href={`/speakers/${speaker.slug}`}>
+<a class="speaker" href={`${slug}/${speaker.slug}`}>
 	<article class:list={["speaker__wrapper", `var--${variant}`]}>
-		<div class="speaker__image">
-			<img
-				src={`${speaker.photo?.url}&w=295&h=395`}
-				srcset={`
-			${speaker.photo?.url}&w=200&h=269 200w,
-			${speaker.photo?.url}&w=300&h=403 300w,
-			${speaker.photo?.url}&w=400&h=538 400w,
-			${speaker.photo?.url}&w=500&h=673 500w,
-			${speaker.photo?.url}&w=600&h=807 600w
-		`}
-				sizes={`
-			(min-width: 1448px) 320px,
-			(min-width: 1248px) calc((100vw - 48px - 120px) / 4),
-			(min-width: 938px) calc((100vw - 48px - 80px) / 3),
-			(min-width: 628px) calc((100vw - 48px - 40px) / 2),
-			calc(100vw - 48px)
-		`}
-				alt={speaker.name}
-				loading="lazy"
-			/>
-		</div>
+		{
+			speaker.photo && (
+				<div class="speaker__image">
+					<img
+						src={`${speaker.photo?.url}&w=295&h=395`}
+						srcset={`
+							${speaker.photo?.url}&w=200&h=269 200w,
+							${speaker.photo?.url}&w=300&h=403 300w,
+							${speaker.photo?.url}&w=400&h=538 400w,
+							${speaker.photo?.url}&w=500&h=673 500w,
+							${speaker.photo?.url}&w=600&h=807 600w
+						`}
+						sizes={`
+							(min-width: 1448px) 320px,
+							(min-width: 1248px) calc((100vw - 48px - 120px) / 4),
+							(min-width: 938px) calc((100vw - 48px - 80px) / 3),
+							(min-width: 628px) calc((100vw - 48px - 40px) / 2),
+							calc(100vw - 48px)
+						`}
+						alt={speaker.name}
+						loading="lazy"
+					/>
+				</div>
+			)
+		}
 		<div class="speaker__content">
 			<h3 class="speaker__name">{speaker.name}</h3>
 			{speaker.role ? <p class="speaker__role">{speaker.role}</p> : null}
