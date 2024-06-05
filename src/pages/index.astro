@@ -30,13 +30,12 @@ const page = data.collection?.items[0];
 ---
 
 <Layout title="Front Conference Zurich" isHome>
-	<Spline />
 	{
 		page.showIntro && (
 			<>
 				<div class="introWrapper">
 					<div class="intro intro--desktop">
-						<Fragment set:html={introDesktop} class="introDesktop" />
+						<Spline />
 					</div>
 					<div class="intro intro--mobile">
 						<Fragment set:html={introMobile} class="introMobile" />
@@ -133,6 +132,8 @@ const page = data.collection?.items[0];
 
 	.intro {
 		display: none;
+		position: relative;
+		z-index: -1;
 
 		:global(svg) {
 			width: 100%;
