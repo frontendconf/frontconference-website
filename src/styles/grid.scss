@@ -42,11 +42,7 @@
   }
 
   .home & {
-    padding-block: pxToRem(120);
-
-    @include breakpoint-up("md") {
-      padding-block: pxToRem(180);
-    }
+    padding-block: var(--spacing-20x);
   }
 }
 

@@ -2,104 +2,166 @@
 import { marked } from "marked";
 
 export interface Props {
-  text: string;
+	text: string;
 }
 
-const { text } = Astro.props;
+const { text, class: className, ...rest } = Astro.props;
+
+const renderer = {
+	// wrap CTA class links in a span to style them as buttons
+	html(html) {
+		if (html.includes('class="cta"')) {
+			const closingBracketIndex = html.indexOf(">");
+			const modifiedHtml =
+				html.slice(0, closingBracketIndex + 1) +
+				"<span>" +
+				html.slice(closingBracketIndex + 1);
+			return modifiedHtml.replace("</a>", "</span></a>");
+		} else {
+			return html;
+		}
+	},
+	// open external links in a new tab
+	link(href, title, text) {
+		const isExternal = /^https?:\/\//.test(href);
+
+		if (isExternal) {
+			return `<a href="${href}" title="${title || undefined}" target="_blank">${text}</a>`;
+		} else {
+			return `<a href="${href}" title="${title || undefined}">${text}</a>`;
+		}
+	},
+};
+
+marked.use({ renderer });
 
 const content = text && marked.parse(text);
 ---
 
-<div class="markdown column--main" set:html={content} />
+<div
+	class:list={["markdown", "column--main", className]}
+	set:html={content}
+	{...rest}
+/>
 
 <style lang="scss" is:global>
-  @import "../styles/_imports.scss";
+	@import "../styles/_imports.scss";
 
-  .markdown {
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      --typo-margin-block-start: 1.5rem;
-      --typo-margin-block-end: 1.5rem;
-    }
+	.markdown {
+		h2 {
+			--typo-margin-block-start: 2.5rem;
+			--typo-margin-block-end: 1.5rem;
+		}
 
-    p {
-      margin-block-end: var(--spacing-4x);
-    }
+		h3,
+		h4,
+		h5,
+		h6 {
+			--typo-margin-block-start: 1.5rem;
+			--typo-margin-block-end: 1rem;
+		}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow-x: auto;
-      // fix for responsive table overflow - since no wrapper is available
-      display: block;
+		p,
+		ul,
+		ol {
+			margin-block-end: var(--spacing-4x);
+		}
 
-      th,
-      td {
-        padding-block: var(--spacing-2x);
-        padding-inline: var(--spacing-2x);
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			overflow-x: auto;
+			// fix for responsive table overflow - since no wrapper is available
+			display: block;
 
-        @include breakpoint-up("md") {
-          padding-inline: var(--spacing-4x);
-        }
-      }
+			th,
+			td {
+				padding-block: var(--spacing-2x);
+				padding-inline: var(--spacing-2x);
 
-      th {
-        text-align: left;
-      }
+				@include breakpoint-up("md") {
+					padding-inline: var(--spacing-4x);
+				}
+			}
 
-      tbody {
-        tr:nth-child(odd) {
-          background: var(--color-gray-50);
-        }
+			th {
+				text-align: left;
+			}
 
-        tr {
-          border-top: 1px solid var(--color-gray-100);
-        }
-      }
-    }
+			tbody {
+				tr:nth-child(odd) {
+					background: var(--color-gray-50);
+				}
 
-    ul {
-      padding-inline-start: var(--spacing-4x);
+				tr {
+					border-top: 1px solid var(--color-gray-100);
+				}
+			}
+		}
 
-      @include breakpoint-up("xxl") {
-        padding-inline-start: 0;
-      }
-    }
+		ul,
+		ol {
+			padding-inline-start: var(--spacing-4x);
 
-    a {
-      @extend %link;
-    }
+			@include breakpoint-up("xxl") {
+				padding-inline-start: 0;
+			}
+		}
 
-    // Images
-    img {
-      max-width: 100%;
-    }
+		a {
+			@extend %link;
+		}
 
-    // Embedded videos
-    .video {
-      height: 0;
-      padding-block-end: 56.25%;
-      position: relative;
-      margin: var(--spacing-10x) 0;
+		.cta {
+			// reuse button tertiary styles
+			--button-color: var(--color-gray-900);
+			--button-background-color: var(--color-green-100);
 
-      iframe {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-      }
-    }
+			--button-hover-color: var(--color-white);
+			--button-hover-background-color: var(--color-green-200);
 
-    // Remove unnecessary margins from trailing elements
-    > * {
-      &:first-child {
-        margin-block-start: 0;
-      }
-      &:last-child {
-        margin-block-end: 0;
-      }
-    }
-  }
+			--button-active-color: var(--color-white);
+			--button-active-background-color: var(--color-green-300);
+
+			--button-focus-color: var(--color-gray-900);
+			--button-focus-background-color: var(--color-green-100);
+			--button-focus-outline-color: var(--color-gray-900);
+
+			@extend %button;
+
+			span {
+				position: relative;
+				z-index: 2;
+			}
+		}
+
+		// Images
+		img {
+			max-width: 100%;
+		}
+
+		// Embedded videos
+		.video {
+			height: 0;
+			padding-block-end: 56.25%;
+			position: relative;
+			margin: var(--spacing-10x) 0;
+
+			iframe {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+			}
+		}
+
+		// Remove unnecessary margins from trailing elements
+		> * {
+			&:first-child {
+				margin-block-start: 0;
+			}
+			&:last-child {
+				margin-block-end: 0;
+			}
+		}
+	}
 </style>

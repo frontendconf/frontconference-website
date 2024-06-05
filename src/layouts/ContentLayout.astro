@@ -2,10 +2,15 @@
 import Layout from "./Layout.astro";
 import Hero from "../components/Hero.astro";
 
-const { title, displayBacklink } = Astro.props;
+const { title, backLinkTitle, displayBacklink, contentClass } = Astro.props;
 ---
 
-<Layout title={title}>
-  <Hero title={title} displayBacklink={displayBacklink} slot="after-header" />
-  <slot />
+<Layout title={title} contentClass={contentClass}>
+	<Hero
+		title={title}
+		displayBacklink={displayBacklink}
+		backLinkTitle={backLinkTitle}
+		slot="after-header"
+	/>
+	<slot />
 </Layout>

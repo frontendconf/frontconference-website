@@ -1,0 +1,28 @@
+---
+import { graphql } from "gql.tada";
+import { client } from "../utils/graphql-client";
+
+const query = graphql(`
+	query GetHotels {
+		config: configCollection(limit: 1) {
+			items {
+				map
+			}
+		}
+	}
+`);
+
+const data = await client.request(query, {});
+const config = data.config.items[0];
+---
+
+{/* TODO: Replace with Map / FloorPlan */}
+<div class="venue">
+	<Fragment set:html={config.map} />
+</div>
+
+<style lang="scss">
+	.venue {
+		aspect-ratio: 16 / 9;
+	}
+</style>

@@ -18,7 +18,7 @@ const query = graphql(`
             }
           }
           photo {
-            url
+            url(transform: { width: 2000, resizeStrategy: FILL, format: WEBP })
           }
         }
       }
@@ -44,7 +44,7 @@ const venueTeaser = data.collection.items[0].venueTeaser;
               href={venueTeaser.link.slug}
               class="ctaButton"
               variant="tertiary"
-              icon="arrowRight"
+              suffixIcon="arrowRight"
             >
               {venueTeaser.ctaLabel}
             </Button>
@@ -60,6 +60,7 @@ const venueTeaser = data.collection.items[0].venueTeaser;
 
   .teaserContainer {
     position: relative;
+    overflow: hidden;
 
     @include breakpoint-up("sm") {
       padding-block: pxToRem(80);

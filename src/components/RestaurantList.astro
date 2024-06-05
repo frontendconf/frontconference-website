@@ -2,6 +2,7 @@
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
 import SpotTeaser from "./SpotTeaser.astro";
+import Markdown from "./Markdown.astro";
 
 Astro.response.headers.set(
   "Cache-Control",
@@ -21,18 +22,21 @@ const query = graphql(`
         }
       }
     }
+    config: configCollection(limit: 1) {
+      items {
+        leadRestaurants
+      }
+    }
   }
 `);
 
 const data = await client.request(query, {});
 const restaurants = data.collection.items;
+const config = data.config.items[0];
 ---
 
 <div class="column--main stack">
-  <div class="markdown">
-    <h2>Eating and drinking in Zurich</h2>
-    <p>Handpicked recommendations from our staff!</p>
-  </div>
+  {config.leadRestaurants && <Markdown text={config.leadRestaurants} />}
   {
     restaurants.map((hotel) => (
       <SpotTeaser

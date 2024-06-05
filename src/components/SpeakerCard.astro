@@ -1,0 +1,165 @@
+---
+import { graphql, type FragmentOf } from "gql.tada";
+
+export const speakerCardFragment = graphql(`
+	fragment SpeakerCardFragment on Speaker @_unmask {
+		name
+		role
+		company
+		slug
+		photo {
+			url(transform: { resizeStrategy: FILL, format: WEBP })
+		}
+	}
+`);
+
+export interface Props {
+	speaker: FragmentOf<typeof speakerCardFragment>;
+	variant?: "dark" | "light";
+}
+
+const { speaker, variant = "dark" } = Astro.props;
+---
+
+<a class="speaker" href={`/speakers/${speaker.slug}`}>
+	<article class:list={["speaker__wrapper", `var--${variant}`]}>
+		<div class="speaker__image">
+			<img
+				src={`${speaker.photo?.url}&w=295&h=395`}
+				srcset={`
+			${speaker.photo?.url}&w=200&h=269 200w,
+			${speaker.photo?.url}&w=300&h=403 300w,
+			${speaker.photo?.url}&w=400&h=538 400w,
+			${speaker.photo?.url}&w=500&h=673 500w,
+			${speaker.photo?.url}&w=600&h=807 600w
+		`}
+				sizes={`
+			(min-width: 1448px) 320px,
+			(min-width: 1248px) calc((100vw - 48px - 120px) / 4),
+			(min-width: 938px) calc((100vw - 48px - 80px) / 3),
+			(min-width: 628px) calc((100vw - 48px - 40px) / 2),
+			calc(100vw - 48px)
+		`}
+				alt={speaker.name}
+				loading="lazy"
+			/>
+		</div>
+		<div class="speaker__content">
+			<h3 class="speaker__name">{speaker.name}</h3>
+			{speaker.role ? <p class="speaker__role">{speaker.role}</p> : null}
+			{
+				speaker.company ? (
+					<p class="speaker__company">{speaker.company}</p>
+				) : null
+			}
+		</div>
+	</article>
+</a>
+
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	.speaker {
+		position: relative;
+		display: block;
+		text-decoration: none;
+		// TODO: replace with masonry layout
+		height: 100%;
+		transition: background var(--transition-duration-quick)
+			var(--transition-easing-default);
+		outline: 0;
+
+		&::before {
+			content: "";
+			display: block;
+			position: absolute;
+			inset: 0;
+			background: var(--color-green-100);
+			clip-path: polygon(
+				0 0,
+				100% 0,
+				100% calc(100% - 25px),
+				calc(100% - 25px) 100%,
+				0 100%,
+				0 0,
+				5px 5px,
+				5px calc(100% - 5px),
+				calc(100% - 25px - 2.5px) calc(100% - 5px),
+				calc(100% - 5px) calc(100% - 25px - 2.5px),
+				calc(100% - 5px) 5px,
+				5px 5px
+			);
+			opacity: 0;
+			z-index: 1;
+			transition: opacity var(--transition-duration-quick)
+				var(--transition-easing-default);
+		}
+
+		&:hover {
+			background: var(--color-green-100);
+
+			.speaker__image img {
+				scale: 1.03;
+			}
+		}
+
+		&:focus-visible {
+			&:before {
+				opacity: 1;
+			}
+		}
+
+		&__wrapper {
+			background-color: var(--color-black);
+			color: var(--color-white);
+			height: 100%;
+			clip-path: polygon(
+				0% 0,
+				0% 100%,
+				calc(100% - 25px) 100%,
+				100% calc(100% - 25px),
+				100% 0
+			);
+		}
+
+		&__image {
+			overflow: hidden;
+
+			img {
+				display: block;
+				width: 100%;
+				aspect-ratio: 1;
+				object-fit: cover;
+				transition: scale var(--transition-duration-quick)
+					var(--transition-easing-default);
+			}
+		}
+
+		&__content {
+			padding: var(--spacing-5x) var(--spacing-5x) var(--spacing-6x);
+		}
+
+		&__name {
+			@extend %typo-h6;
+			text-transform: uppercase;
+		}
+
+		&__role {
+			margin-block-start: var(--spacing-1x);
+		}
+
+		&__company {
+			color: var(--color-gray-400);
+			margin-block-start: var(--spacing-3x);
+		}
+	}
+
+	.var--light {
+		background-color: var(--color-white);
+		color: var(--color-gray-900);
+
+		.speaker__company {
+			color: var(--color-gray-500);
+		}
+	}
+</style>

@@ -1,0 +1,33 @@
+---
+import Button from "./Button.astro";
+
+export interface Props {
+	title: string;
+	displayBacklink: boolean;
+}
+
+const { title, url, displayBacklink } = Astro.props;
+---
+
+<Button
+	id="backButton"
+	variant="tertiary"
+	icon="arrowLeft"
+	style={!displayBacklink && "display: none;"}
+	prefixIcon="arrowLeft"
+	onclick="history.back()"
+>
+	{title}
+</Button>
+
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	#backButton {
+		margin-block-start: var(--spacing-12x);
+
+		@include breakpoint-up("md") {
+			margin-block-start: var(--spacing-20x);
+		}
+	}
+</style>

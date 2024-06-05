@@ -5,103 +5,120 @@ import { client } from "../utils/graphql-client";
 import Markdown from "../components/Markdown.astro";
 
 import SponsorList from "../components/SponsorList.astro";
+import Venue from "../components/Venue.astro";
 import HotelList from "../components/HotelList.astro";
 import RestaurantList from "../components/RestaurantList.astro";
+import AirtableForm from "../components/AirtableForm.astro";
 
 const { slug } = Astro.params;
 
 const query = graphql(`
-  query ($slug: String!) {
-    collection: pageCollection(where: { slug: $slug }) {
-      items {
-        title
-        lead
-        body
-        slug
-        menu
-        menuButton
-        showIntro
-        showNews
-        showSpeakers
-        showVenue
-        showSponsorshipCategories
-        showSponsors
-        showSponsorsDetailed
-        showWorkshops
-        showTeam
-        showJobs
-        showJobsDetailed
-        showSchedule
-        showHotels
-        showRestaurants
-        showCallForSpeakers
-        showSpeakersBootcampForm
-        bodyClass
-        menuClass
-        ctaText
-        specialPage
-        config
-        leadLogosCollection(limit: 5) {
-          items {
-            url
-          }
-        }
-        contentTeasersCollection(limit: 4) {
-          items {
-            body
-            title
-            ctaLabel
-            body
-            photo {
-              url(
-                transform: { width: 1200, height: 1200, resizeStrategy: FILL }
-              )
-            }
-            link {
-              ... on Page {
-                slug
-                title
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+	query ($slug: String!) {
+		collection: pageCollection(where: { slug: $slug }) {
+			items {
+				title
+				lead
+				body
+				slug
+				menu
+				menuButton
+				showIntro
+				showNews
+				showSpeakers
+				showVenue
+				showSponsorshipCategories
+				showSponsors
+				showSponsorsDetailed
+				showWorkshops
+				showTeam
+				showJobs
+				showJobsDetailed
+				showSchedule
+				showHotels
+				showRestaurants
+				showCallForSpeakers
+				showSpeakersBootcampForm
+				bodyClass
+				menuClass
+				ctaText
+				specialPage
+				config
+				leadLogosCollection(limit: 5) {
+					items {
+						url
+					}
+				}
+				contentTeasersCollection(limit: 4) {
+					items {
+						body
+						title
+						ctaLabel
+						body
+						photo {
+							url(
+								transform: { width: 1200, height: 1200, resizeStrategy: FILL }
+							)
+						}
+						link {
+							... on Page {
+								slug
+								title
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 `);
 
 const data = await client.request(query, {
-  slug: slug as string,
+	slug: slug as string,
 });
 
 const currentPage = data.collection?.items[0];
 
 // TODO: double check if this is correct
 if (!currentPage || !currentPage.title) {
-  return {
-    status: 404,
-    error: "Page not found",
-  };
+	return {
+		status: 404,
+		error: "Page not found",
+	};
 }
 ---
 
 <ContentLayout title={currentPage.title}>
-  <!-- TODO: What about the lead, is this not used anymore? -->
-  <!-- <p>{currentPage.lead}</p> -->
-  {currentPage.body && <Markdown text={currentPage.body} />}
+	<!-- TODO: What about the lead, is this not used anymore? -->
+	<!-- <p>{currentPage.lead}</p> -->
+	{currentPage.body && <Markdown text={currentPage.body} />}
 
-  <div class="additionalContent grid grid--row-gap-double">
-    {currentPage.showSponsorsDetailed && <SponsorList />}
-    {currentPage.showHotels && <HotelList />}
-    {currentPage.showRestaurants && <RestaurantList />}
-  </div>
+	<div class="additionalContent grid grid--row-gap-double">
+		{currentPage.showSponsorsDetailed && <SponsorList />}
+		{currentPage.showVenue && <Venue />}
+		{currentPage.showHotels && <HotelList />}
+		{currentPage.showRestaurants && <RestaurantList />}
+		{currentPage.showCallForSpeakers && <AirtableForm id="Call for Speakers" />}
+		{
+			currentPage.showSpeakersBootcampForm && (
+				<AirtableForm id="Speakers Bootcamp" />
+			)
+		}
+	</div>
 </ContentLayout>
 
-<style lang="scss">
-  @import "../styles/_imports.scss";
+{
+	//@ts-ignore
+	currentPage?.config?.scripts?.map((src, i) => (
+		//@ts-ignore
+		<script src={src} async key={i} />
+	))
+}
 
-  // TODO: re-check after grid row gap got implemented
-  .additionalContent:has(> *) {
-    margin-block-start: var(--spacing-10x);
-  }
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	// TODO: re-check after grid row gap got implemented
+	.additionalContent:has(> *) {
+		margin-block-start: var(--spacing-10x);
+	}
 </style>
