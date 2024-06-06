@@ -28,16 +28,17 @@ export const talkDetailFragment = graphql(`
 
 export interface Props {
 	talk: FragmentOf<typeof talkDetailFragment>;
+	prefix?: string;
 }
 
-const { talk } = Astro.props;
+const { talk, prefix = "Talk" } = Astro.props;
 ---
 
 <article class="talk">
 	<h3>{talk.title}</h3>
 	<div class="meta">
 		<div class="metaGroup">
-			<div class="talkType typo-body-caption">Talk</div>
+			<div class="talkType typo-body-caption">{prefix}</div>
 			{talk.date && <div>{formatDate(talk.date)}</div>}
 		</div>
 		<div class="metaGroup">

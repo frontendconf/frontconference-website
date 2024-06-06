@@ -1,0 +1,40 @@
+---
+import { graphql } from "gql.tada";
+import { client } from "../../utils/graphql-client";
+import Markdown from "../../components/Markdown.astro";
+import ContentLayout from "../../layouts/ContentLayout.astro";
+import WorkshopList from "../../components/WorkshopList.astro";
+
+const query = graphql(`
+	query GetWorkshopsPage {
+		collection: pageCollection(where: { showWorkshops: true }) {
+			items {
+				title
+				lead
+				body
+				slug
+				menu
+			}
+		}
+	}
+`);
+
+const data = await client.request(query);
+
+const currentPage = data.collection?.items[0];
+
+// TODO: double check if this is correct
+if (!currentPage || !currentPage.title) {
+	return {
+		status: 404,
+		error: "Page not found",
+	};
+}
+---
+
+<ContentLayout title={currentPage.title}>
+	{currentPage.lead && <p class="typo-lead column--main">{currentPage.lead}</p>}
+	{currentPage.body && <Markdown text={currentPage.body} />}
+
+	<WorkshopList slug={Astro.url.pathname} class="column--main" />
+</ContentLayout>

@@ -12,3 +12,4 @@ export const SPONSOR_LIST_CATEGORY_SORTING_KEYS = [
 
 export const SPEAKER_YEAR_TAG_KEY = TAG_KEY;
 export const TALK_YEAR_TAG_KEY = TAG_KEY;
+export const WORKSHOP_YEAR_TAG_KEY = TAG_KEY;

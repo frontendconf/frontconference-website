@@ -60,7 +60,7 @@ const speakers =
 		{
 			speakers.map((speaker) => (
 				<li class="speaker-list__item">
-					<SpeakerCard speaker={speaker} variant={variant} />
+					<SpeakerCard speaker={speaker} variant={variant} slug={Astro.url.pathname} />
 				</li>
 			))
 		}
