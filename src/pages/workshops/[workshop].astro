@@ -10,6 +10,7 @@ import TalkDetail from "../../components/TalkDetail.astro";
 const formatTime = (date: string) => {
 	return new Date(date).toLocaleTimeString("en-US", {
 		timeStyle: "short",
+		timeZone: "Europe/Zurich",
 	});
 };
 
