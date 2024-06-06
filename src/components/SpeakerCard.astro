@@ -16,10 +16,10 @@ export const speakerCardFragment = graphql(`
 export interface Props {
 	speaker: FragmentOf<typeof speakerCardFragment>;
 	variant?: "dark" | "light";
-	slug: string;
+	slug?: string;
 }
 
-const { speaker, variant = "dark", slug } = Astro.props;
+const { speaker, variant = "dark", slug = "/speakers" } = Astro.props;
 ---
 
 <a class="speaker" href={`${slug}/${speaker.slug}`}>
