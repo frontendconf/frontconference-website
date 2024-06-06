@@ -116,14 +116,10 @@ const page = data.collection?.items[0];
 
 	.introWrapper {
 		position: relative;
-		max-width: calc(var(--max-content-width) + 10%);
+		max-width: calc(var(--max-content-width) + 30%);
 		margin-block-start: var(--spacing-6x);
 		margin-inline: auto;
 		container-type: inline-size;
-
-		@include breakpoint-up("sm") {
-			padding-inline: var(--grid-padding);
-		}
 
 		@include breakpoint-up("lg") {
 			margin-block-start: var(--spacing-8x);
