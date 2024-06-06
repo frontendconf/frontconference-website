@@ -3,19 +3,19 @@ import Markdown from "./Markdown.astro";
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
 import {
-  SPONSOR_LIST_CATEGORY_SORTING_KEYS,
-  SPONSOR_LIST_FILTER_TAG_KEY,
+	SPONSOR_LIST_CATEGORY_SORTING_KEYS,
+	SPONSOR_LIST_FILTER_TAG_KEY,
 } from "../utils/constants";
 import Link from "./Link.astro";
 
 Astro.response.headers.set(
-  "Cache-Control",
-  "s-maxage=60, stale-while-revalidate",
+	"Cache-Control",
+	"s-maxage=60, stale-while-revalidate",
 );
 
 export interface Props {
-  variant?: "teaser";
-  groupTitleTag: "h3" | "h4" | "h5";
+	variant?: "teaser";
+	groupTitleTag: "h3" | "h4" | "h5";
 }
 
 const { variant, groupTitleTag = "h3" } = Astro.props;
@@ -26,32 +26,32 @@ const GroupTitleTag = groupTitleTag;
 // TODO: find why to filter sponsors by tagCollection title
 // like tagCollection(where: {title: "FRONT24"})
 const query = graphql(`
-  query GetSponsorPage {
-    collection: sponsorCollection(order: [title_ASC]) {
-      items {
-        title
-        link
-        logo {
-          url
-        }
-        logoSvg
-        body
-        twitter
-        linkedin
-        facebook
-        instagram
-        order
-        category {
-          title
-        }
-        tagCollection(limit: 1, order: [title_DESC]) {
-          items {
-            title
-          }
-        }
-      }
-    }
-  }
+	query GetSponsorPage {
+		collection: sponsorCollection(order: [title_ASC]) {
+			items {
+				title
+				link
+				logo {
+					url
+				}
+				logoSvg
+				body
+				twitter
+				linkedin
+				facebook
+				instagram
+				order
+				category {
+					title
+				}
+				tagCollection(limit: 1, order: [title_DESC]) {
+					items {
+						title
+					}
+				}
+			}
+		}
+	}
 `);
 
 const data = await client.request(query, {});
@@ -59,241 +59,248 @@ const sponsors = data.collection.items;
 
 // filter sponsors by current event year
 const filteredSponsors = sponsors.filter((sponsor) => {
-  return sponsor.tagCollection.items.some(
-    (tag) => tag.title === SPONSOR_LIST_FILTER_TAG_KEY,
-  );
+	return sponsor.tagCollection.items.some(
+		(tag) => tag.title === SPONSOR_LIST_FILTER_TAG_KEY,
+	);
 });
 
 // group sponsors by category
 const groupedSponsors = filteredSponsors.reduce((acc, sponsor) => {
-  const category = sponsor.category.title;
+	const category = sponsor.category.title;
 
-  if (!acc[category]) {
-    acc[category] = [];
-  }
+	if (!acc[category]) {
+		acc[category] = [];
+	}
 
-  acc[category].push(sponsor);
+	acc[category].push(sponsor);
 
-  return acc;
+	return acc;
 }, {});
 
 // sort sponsors by custom category order
 const sortedSponsors = Object.keys(groupedSponsors)
-  .sort((a, b) => {
-    return (
-      SPONSOR_LIST_CATEGORY_SORTING_KEYS.indexOf(a) -
-      SPONSOR_LIST_CATEGORY_SORTING_KEYS.indexOf(b)
-    );
-  })
-  .map((category) => {
-    return {
-      category,
-      sponsors: groupedSponsors[category],
-    };
-  });
+	.sort((a, b) => {
+		return (
+			SPONSOR_LIST_CATEGORY_SORTING_KEYS.indexOf(a) -
+			SPONSOR_LIST_CATEGORY_SORTING_KEYS.indexOf(b)
+		);
+	})
+	.map((category) => {
+		return {
+			category,
+			sponsors: groupedSponsors[category],
+		};
+	});
+
+const getCategoryClass = (category: string) => {
+	let classNameSafeString = category.replaceAll(" ", "-");
+	classNameSafeString = classNameSafeString.replace(/[^\w-]/g, "");
+
+	return classNameSafeString.toLowerCase();
+};
 
 const socialsKeys = [
-  {
-    key: "twitter",
-    link: "https://twitter.com/",
-    label: "Twitter Profile",
-    icon: "twitter",
-  },
-  {
-    key: "linkedin",
-    link: "https://linkedin.com/",
-    label: "Linkedin Profile",
-    icon: "linkedin",
-  },
-  { key: "link", link: "", label: "Website", icon: "web" },
-  {
-    key: "facebook",
-    link: "https://facebook.com/",
-    label: "Facebook Profile",
-    icon: "facebook",
-  },
-  {
-    key: "instagram",
-    link: "https://instagram.com/",
-    label: "Instagram Profile",
-    icon: "instagram",
-  },
+	{
+		key: "twitter",
+		link: "https://twitter.com/",
+		label: "Twitter Profile",
+		icon: "twitter",
+	},
+	{
+		key: "linkedin",
+		link: "https://linkedin.com/",
+		label: "Linkedin Profile",
+		icon: "linkedin",
+	},
+	{ key: "link", link: "", label: "Website", icon: "web" },
+	{
+		key: "facebook",
+		link: "https://facebook.com/",
+		label: "Facebook Profile",
+		icon: "facebook",
+	},
+	{
+		key: "instagram",
+		link: "https://instagram.com/",
+		label: "Instagram Profile",
+		icon: "instagram",
+	},
 ];
 
 const getSocials = (sponsor) => {
-  const array = [];
+	const array = [];
 
-  socialsKeys.map((social) => {
-    if (!!sponsor[social.key]) {
-      array.push({
-        key: social.key,
-        href: `${social.link}${sponsor[social.key]}`,
-        icon: social.icon,
-        title: `${sponsor.title} ${social.label}`,
-      });
-    }
-  });
+	socialsKeys.map((social) => {
+		if (!!sponsor[social.key]) {
+			array.push({
+				key: social.key,
+				href: `${social.link}${sponsor[social.key]}`,
+				icon: social.icon,
+				title: `${sponsor.title} ${social.label}`,
+			});
+		}
+	});
 
-  return array;
+	return array;
 };
 
 const getSocial = (sponsor, key) =>
-  getSocials(sponsor).find((item) => item.key === key);
+	getSocials(sponsor).find((item) => item.key === key);
 ---
 
 {
-  sortedSponsors.map((item) => (
-    <div class:list={[isTeaser && "var-teaser"]}>
-      <GroupTitleTag class="list__title">{item.category}</GroupTitleTag>
-      <ul class="list">
-        {item.sponsors.map((sponsor) => (
-          <li class:list={["list__item", !isTeaser && "grid"]}>
-            <a {...getSocial(sponsor, "link")} class="logo" target="_blank">
-              <span class="logo__wrapper" set:html={sponsor.logoSvg} />
-            </a>
-            {!isTeaser && (
-              <div class="content">
-                <h4 class="title">{sponsor.title}</h4>
-                <Markdown text={sponsor.body} />
-                <ul class="socials">
-                  {getSocials(sponsor).map((item) => (
-                    <Link {...item} target="_blank" interactive />
-                  ))}
-                </ul>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-  ))
+	sortedSponsors.map((item) => (
+		<div class:list={[isTeaser && "var-teaser"]}>
+			<GroupTitleTag class="list__title">{item.category}</GroupTitleTag>
+			<ul class:list={["list", `var-${getCategoryClass(item.category)}`]}>
+				{item.sponsors.map((sponsor) => (
+					<li class:list={["list__item", !isTeaser && "grid"]}>
+						<a {...getSocial(sponsor, "link")} class="logo" target="_blank">
+							<span class="logo__wrapper" set:html={sponsor.logoSvg} />
+						</a>
+						{!isTeaser && (
+							<div class="content">
+								<h4 class="title">{sponsor.title}</h4>
+								<Markdown text={sponsor.body} />
+								<ul class="socials">
+									{getSocials(sponsor).map((item) => (
+										<Link {...item} target="_blank" interactive />
+									))}
+								</ul>
+							</div>
+						)}
+					</li>
+				))}
+			</ul>
+		</div>
+	))
 }
 
 <style lang="scss">
-  @import "../styles/_imports.scss";
+	@import "../styles/_imports.scss";
 
-  .list__title {
-    @extend %typo-h6;
+	.list__title {
+		@extend %typo-h6;
 
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-2x);
-    margin-block: 0;
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-2x);
+		margin-block: 0;
 
-    &:after {
-      content: "";
-      display: block;
-      height: 1px;
-      background-color: var(--color-gray-100);
-      flex: 1;
-    }
-  }
+		&:after {
+			content: "";
+			display: block;
+			height: 1px;
+			background-color: var(--color-gray-100);
+			flex: 1;
+		}
+	}
 
-  .list {
-    list-style: none;
-    padding-inline-start: 0;
-  }
+	.list {
+		list-style: none;
+		padding-inline-start: 0;
+	}
 
-  .list__item {
-    align-items: start;
-    padding-block: var(--spacing-10x);
-  }
+	.list__item {
+		align-items: start;
+		padding-block: var(--spacing-10x);
+	}
 
-  .logo {
-    @include breakpoint-up("sm") {
-      grid-column: 1 / 5;
-    }
-  }
+	.logo {
+		@include breakpoint-up("sm") {
+			grid-column: 1 / 5;
+		}
+	}
 
-  .logo__wrapper {
-    display: block;
-    max-width: 80%;
+	.logo__wrapper {
+		display: block;
+		max-width: 80%;
 
-    @include breakpoint-up("sm") {
-      max-width: 100%;
-    }
+		@include breakpoint-up("sm") {
+			max-width: 100%;
+		}
 
-    :global(svg) {
-      width: 100%;
-      height: 100%;
-    }
-  }
+		:global(svg) {
+			width: 100%;
+			height: 100%;
+		}
+	}
 
-  .content {
-    @include breakpoint-up("sm") {
-      grid-column: 6 / -1;
-    }
-  }
+	.content {
+		@include breakpoint-up("sm") {
+			grid-column: 6 / -1;
+		}
+	}
 
-  .title {
-    @extend %typo-h5;
+	.title {
+		@extend %typo-h5;
 
-    margin-block-start: 0;
-    margin-block-end: var(--spacing-3x);
-  }
+		margin-block-start: 0;
+		margin-block-end: var(--spacing-3x);
+	}
 
-  .socials {
-    list-style: none;
-    padding-inline-start: 0;
-    margin-block-start: var(--spacing-6x);
+	.socials {
+		list-style: none;
+		padding-inline-start: 0;
+		margin-block-start: var(--spacing-6x);
 
-    display: flex;
-    gap: var(--spacing-5x);
-  }
+		display: flex;
+		gap: var(--spacing-5x);
+	}
 
-  .var-teaser {
-    --sponsor-teaser-item-cols: 1;
-    --sponsor-teaser-logo-height: 200px;
+	.var-teaser {
+		--sponsor-teaser-item-cols: 1;
+		--sponsor-teaser-logo-height: 200px;
 
-    .list__title {
-      @extend %typo-h5;
-    }
+		.list__title {
+			@extend %typo-h5;
+		}
 
-    .list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      column-gap: var(--spacing-10x);
-    }
+		.list {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			column-gap: var(--spacing-10x);
+		}
 
-    .list__item {
-      width: 100%;
+		.list__item {
+			width: 100%;
 
-      @include breakpoint-up("sm") {
-        width: calc(
-          1 / var(--sponsor-teaser-item-cols) * 100% - var(--spacing-10x)
-        );
-      }
-    }
+			@include breakpoint-up("sm") {
+				width: calc(
+					1 / var(--sponsor-teaser-item-cols) * 100% - var(--spacing-10x)
+				);
+			}
+		}
 
-    .logo__wrapper {
-      max-width: 100%;
-      height: var(--sponsor-teaser-logo-height);
-    }
+		.logo__wrapper {
+			max-width: 100%;
+			height: var(--sponsor-teaser-logo-height);
+		}
 
-    :global(svg) {
-      fill: white;
-    }
+		:global(svg) {
+			fill: white;
+		}
 
-    &:nth-child(2) {
-      --sponsor-teaser-item-cols: 2;
-      --sponsor-teaser-logo-height: 160px;
-    }
+		.var-diamond {
+			--sponsor-teaser-item-cols: 2;
+			--sponsor-teaser-logo-height: 160px;
+		}
 
-    &:nth-child(3) {
-      --sponsor-teaser-item-cols: 3;
-      --sponsor-teaser-logo-height: 64px;
-    }
+		.var-platinum {
+			--sponsor-teaser-item-cols: 3;
+			--sponsor-teaser-logo-height: 64px;
+		}
 
-    &:nth-child(4) {
-      --sponsor-teaser-item-cols: 4;
-      --sponsor-teaser-logo-height: 48px;
-    }
+		.var-gold {
+			--sponsor-teaser-item-cols: 4;
+			--sponsor-teaser-logo-height: 48px;
+		}
 
-    &:nth-child(n + 5) {
-      --sponsor-teaser-item-cols: 5;
-      --sponsor-teaser-logo-height: 36px;
-    }
-  }
+		.var-contributing {
+			--sponsor-teaser-item-cols: 5;
+			--sponsor-teaser-logo-height: 36px;
+		}
+	}
 </style>
