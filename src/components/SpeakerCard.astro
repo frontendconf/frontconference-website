@@ -70,9 +70,10 @@ const { speaker, variant = "dark", slug = "/speakers" } = Astro.props;
 		text-decoration: none;
 		// TODO: replace with masonry layout
 		height: 100%;
-		transition: background var(--transition-duration-quick)
+		transition: background var(--transition-duration-medium)
 			var(--transition-easing-default);
 		outline: 0;
+		z-index: 2;
 
 		&::before {
 			content: "";
@@ -100,11 +101,27 @@ const { speaker, variant = "dark", slug = "/speakers" } = Astro.props;
 				var(--transition-easing-default);
 		}
 
-		&:hover {
+		&:after {
+			content: "";
+			position: absolute;
+			inset-block-end: pxToRem(20);
+			inset-inline-end: pxToRem(20);
+			width: pxToRem(40);
+			height: pxToRem(40);
 			background: var(--color-green-100);
+			transition: inset var(--transition-duration-medium)
+				var(--transition-easing-default);
+			z-index: -1;
+		}
 
+		&:hover {
 			.speaker__image img {
 				scale: 1.03;
+			}
+
+			&:after {
+				inset-block-end: 0;
+				inset-inline-end: 0;
 			}
 		}
 
