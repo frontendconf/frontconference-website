@@ -72,10 +72,10 @@ const currentPage = data.collection?.items[0];
 				))
 		}
 	</head>
-	<body>
+	<body class:list={[isHome && "home"]}>
 		<Header />
 		<slot name="after-header" />
-		<main class:list={[isHome && "home"]}>
+		<main>
 			{
 				isHome ? (
 					<slot />
