@@ -33,8 +33,24 @@ if (!currentPage || !currentPage.title) {
 ---
 
 <ContentLayout title={currentPage.title}>
-	{currentPage.lead && <p class="typo-lead column--main">{currentPage.lead}</p>}
-	{currentPage.body && <Markdown text={currentPage.body} />}
+	{
+		currentPage.lead && (
+			<p class="typo-lead column--indent">{currentPage.lead}</p>
+		)
+	}
+	{
+		currentPage.body && (
+			<Markdown text={currentPage.body} class="column--indent" />
+		)
+	}
 
-	<WorkshopList slug={Astro.url.pathname} class="column--main" />
+	<WorkshopList slug={Astro.url.pathname} class="column--indent list" />
 </ContentLayout>
+
+<style lang="scss">
+	@import "../../styles/_imports.scss";
+
+	.list {
+		margin-block-start: var(--spacing-10x);
+	}
+</style>

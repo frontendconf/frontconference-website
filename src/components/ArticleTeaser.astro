@@ -1,0 +1,135 @@
+---
+import Link from "./Link.astro";
+import { Icon } from "astro-icon/components";
+export interface Props {
+	title: string;
+	text: string;
+	link?: string;
+	meta?: string[];
+	slug?: string;
+	titleTag?: "h2" | "h3" | "h4" | "h5";
+}
+
+const {
+	title,
+	text,
+	link,
+	meta,
+	class: className,
+	slug = Astro.url.pathname,
+	titleTag = "h3",
+	...rest
+} = Astro.props;
+
+const TitleTag = titleTag;
+---
+
+<div class:list={["articleTeaser", className]} {...rest}>
+	<TitleTag class="title">
+		{title}
+		<Icon class="title__icon" name="arrowRight" aria-hidden="true" />
+	</TitleTag>
+	{
+		meta && (
+			<div class="meta">
+				{meta.map((item) => (
+					<div>{item}</div>
+				))}
+			</div>
+		)
+	}
+	<p class="text">
+		{text}
+		<Link class="link" href={`${slug}/${link}`} icon>Learn more</Link>
+	</p>
+</div>
+
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	.articleTeaser {
+		position: relative;
+		@extend %grid-gap;
+		transition: color var(--transition-duration-quick)
+			var(--transition-easing-default);
+
+		&:hover {
+			color: var(--color-green-100);
+
+			.title__icon {
+				opacity: 1;
+			}
+		}
+
+		&:has(:focus-visible) {
+			.title {
+				color: var(--color-green-100);
+				text-decoration: underline;
+			}
+		}
+	}
+
+	.title {
+		@extend %typo-h3;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: var(--spacing-1x);
+	}
+
+	.title__icon {
+		opacity: 0;
+		transition: opacity var(--transition-duration-quick)
+			var(--transition-easing-default);
+	}
+
+	.text {
+		@extend %typo-lead;
+		margin-block-start: var(--spacing-2x);
+
+		@include breakpoint-up("md") {
+			margin-block-start: var(--spacing-4x);
+		}
+	}
+
+	.link {
+		&:before {
+			content: "";
+			position: absolute;
+			inset: 0;
+		}
+	}
+
+	.meta {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--spacing-2x);
+		margin-block-start: var(--spacing-6x);
+		overflow: hidden;
+
+		@include breakpoint-up("sm") {
+			flex-direction: row;
+			gap: var(--spacing-6x);
+		}
+
+		&:after {
+			content: "";
+			position: absolute;
+			height: 1px;
+			width: 100%;
+			background: var(--color-gray-100);
+		}
+
+		> div {
+			background: var(--color-white);
+			z-index: 1;
+			padding-inline: var(--spacing-2x);
+
+			&:first-child {
+				padding-inline-start: 0;
+			}
+		}
+	}
+</style>

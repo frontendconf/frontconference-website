@@ -1,53 +1,63 @@
 .container {
-  max-width: var(--max-content-width);
-  padding-inline: var(--grid-padding);
-  margin-inline: auto;
+	max-width: var(--max-content-width);
+	padding-inline: var(--grid-padding);
+	margin-inline: auto;
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: [content-start] repeat(var(--grid-columns), 1fr) [content-end];
-  @extend %grid-gap;
+	display: grid;
+	grid-template-columns: [content-start] repeat(var(--grid-columns), 1fr) [content-end];
+	@extend %grid-gap;
 
-  &--row-gap-double {
-    @extend %grid-row-gap-double;
-  }
+	&--row-gap-double {
+		@extend %grid-row-gap-double;
+	}
 
-  > * {
-    grid-column: content;
-  }
+	> * {
+		grid-column: content;
+	}
 }
 
 .column {
-  grid-column: content;
+	grid-column: content;
 
-  &--main {
-    @include breakpoint-up("xl") {
-      grid-column: 1 / 8;
-    }
-  }
+	&--main {
+		@include breakpoint-up("xl") {
+			grid-column: 1 / 8;
+		}
+	}
 
-  &--side {
-    @include breakpoint-up("xl") {
-      grid-column: -5 / -1;
-    }
-  }
+	&--side {
+		@include breakpoint-up("xl") {
+			grid-column: -5 / -1;
+		}
+	}
+
+	&--indent {
+		@include breakpoint-up("lg") {
+			grid-column: 1 / span 7;
+		}
+
+		@include breakpoint-up("xl") {
+			grid-column: 2 / span 6;
+		}
+	}
 }
 
 .section {
-  padding-block: var(--spacing-12x);
+	padding-block: var(--spacing-12x);
 
-  @include breakpoint-up("md") {
-    padding-block: var(--spacing-20x);
-  }
+	@include breakpoint-up("md") {
+		padding-block: var(--spacing-20x);
+	}
 
-  .home & {
-    padding-block: var(--spacing-20x);
-  }
+	.home & {
+		padding-block: var(--spacing-20x);
+	}
 }
 
 .stack {
-  display: flex;
-  flex-direction: column;
-  @extend %grid-gap;
+	display: flex;
+	flex-direction: column;
+	@extend %grid-gap;
 }
