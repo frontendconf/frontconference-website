@@ -1,0 +1,100 @@
+---
+import { graphql } from "gql.tada";
+import ContentLayout from "../../layouts/ContentLayout.astro";
+import { client } from "../../utils/graphql-client";
+import SpeakerDetail, {
+	speakerDetailFragment,
+} from "../../components/SpeakerDetail.astro";
+import TalkDetail from "../../components/TalkDetail.astro";
+
+const formatTime = (date: string) => {
+	return new Date(date).toLocaleTimeString("en-US", {
+		timeStyle: "short",
+		timeZone: "Europe/Zurich",
+	});
+};
+
+const { workshop: slug } = Astro.params;
+
+const query = graphql(
+	`
+		query GetWorkshopDetail($slug: String!) {
+			workshop: workshopCollection(limit: 1, where: { slug: $slug }) {
+				items {
+					title
+					from
+					to
+					body
+					teacher {
+						...SpeakerDetailFragment
+					}
+				}
+			}
+		}
+	`,
+	[speakerDetailFragment]
+);
+
+const data = await client.request(query, {
+	slug: slug as string,
+});
+
+const workshop = data.workshop?.items[0];
+const speaker = workshop?.teacher;
+
+if (!workshop) {
+	return {
+		status: 404,
+		error: "Page not found",
+	};
+}
+
+const talk = {
+	title: workshop.title,
+	date: workshop.from,
+	fromTime: formatTime(String(workshop.from)),
+	toTime: formatTime(String(workshop.to)),
+	abstract: workshop.body,
+	tagsCollection: null,
+	room: null,
+};
+---
+
+<ContentLayout
+	title={workshop.title}
+	backLinkTitle="Workshops"
+	displayBacklink
+	contentClass="grid--row-gap-double"
+>
+	<div class="workshop">
+		<TalkDetail talk={talk} prefix="Workshop" />
+	</div>
+	<aside class="speaker">
+		{speaker && <SpeakerDetail speaker={speaker} />}
+	</aside>
+</ContentLayout>
+
+<style lang="scss">
+	@import "../../styles/_imports.scss";
+
+	@include breakpoint-up("lg") {
+		.workshop {
+			grid-column: 1 / span 7;
+		}
+
+		.speaker {
+			grid-column: 8 / span 5;
+			margin-block-start: var(--spacing-20x);
+		}
+	}
+
+	@include breakpoint-up("xl") {
+		.workshop {
+			grid-column: 2 / span 6;
+		}
+
+		.speaker {
+			grid-column: 9 / span 4;
+		}
+	}
+</style>
