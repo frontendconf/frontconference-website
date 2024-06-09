@@ -19,7 +19,7 @@ export interface Props {
 	slug?: string;
 }
 
-const { speaker, variant = "dark", slug = "/speakers" } = Astro.props;
+const { speaker, variant = "dark", slug = Astro.url.pathname } = Astro.props;
 ---
 
 <a class="speaker" href={`${slug}/${speaker.slug}`}>
