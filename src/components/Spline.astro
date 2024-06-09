@@ -10,8 +10,14 @@
 	events-target="global"
 	class="spline"></spline-viewer>
 
-<style>
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
 	.spline {
-		aspect-ratio: 16 / 9;
+		aspect-ratio: 1;
+
+		@include breakpoint-up("sm") {
+			aspect-ratio: 16 / 9;
+		}
 	}
 </style>
