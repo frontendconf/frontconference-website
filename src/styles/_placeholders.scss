@@ -276,3 +276,13 @@
 		row-gap: var(--spacing-20x);
 	}
 }
+
+%cutClipPath {
+	clip-path: polygon(
+		0% 0,
+		0% 100%,
+		calc(100% - 1.5rem) 100%,
+		100% calc(100% - 1.5rem),
+		100% 0
+	);
+}

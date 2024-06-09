@@ -93,13 +93,7 @@ const getSocials = (speaker) => {
 	.speakerDetail {
 		background: var(--color-black);
 		color: var(--color-white);
-		clip-path: polygon(
-			0% 0,
-			0% 100%,
-			calc(100% - 25px) 100%,
-			100% calc(100% - 25px),
-			100% 0
-		);
+		@extend %cutClipPath;
 
 		&__image {
 			display: block;

@@ -84,14 +84,14 @@ const { speaker, variant = "dark", slug = "/speakers" } = Astro.props;
 			clip-path: polygon(
 				0 0,
 				100% 0,
-				100% calc(100% - 25px),
-				calc(100% - 25px) 100%,
+				100% calc(100% - 1.5rem),
+				calc(100% - 1.5rem) 100%,
 				0 100%,
 				0 0,
 				5px 5px,
 				5px calc(100% - 5px),
-				calc(100% - 25px - 2.5px) calc(100% - 5px),
-				calc(100% - 5px) calc(100% - 25px - 2.5px),
+				calc(100% - 1.5rem - 2.5px) calc(100% - 5px),
+				calc(100% - 5px) calc(100% - 1.5rem - 2.5px),
 				calc(100% - 5px) 5px,
 				5px 5px
 			);
@@ -135,13 +135,7 @@ const { speaker, variant = "dark", slug = "/speakers" } = Astro.props;
 			background-color: var(--color-black);
 			color: var(--color-white);
 			height: 100%;
-			clip-path: polygon(
-				0% 0,
-				0% 100%,
-				calc(100% - 25px) 100%,
-				100% calc(100% - 25px),
-				100% 0
-			);
+			@extend %cutClipPath;
 		}
 
 		&__image {
