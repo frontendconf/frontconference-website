@@ -2,13 +2,21 @@
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
 import { WORKSHOP_YEAR_TAG_KEY } from "../utils/constants";
-import SpeakerCard, { speakerCardFragment } from "./SpeakerCard.astro";
 import { speakerDetailFragment } from "./SpeakerDetail.astro";
+import ArticleTeaser from "./ArticleTeaser.astro";
 import { notEmpty } from "../utils/helpers";
+
+const formatDate = (date: string) => {
+	return new Date(date).toLocaleDateString("en-US", {
+		month: "short",
+		day: "numeric",
+		year: "numeric",
+	});
+};
 
 Astro.response.headers.set(
 	"Cache-Control",
-	"s-maxage=60, stale-while-revalidate"
+	"s-maxage=60, stale-while-revalidate",
 );
 
 export interface Props {
@@ -29,6 +37,7 @@ const query = graphql(
 					title
 					lead
 					slug
+					from
 					teacher {
 						...SpeakerDetailFragment
 					}
@@ -36,7 +45,7 @@ const query = graphql(
 			}
 		}
 	`,
-	[speakerDetailFragment]
+	[speakerDetailFragment],
 );
 
 const data = await client.request(query, {
@@ -52,15 +61,12 @@ const workshops = data.workshops?.items.filter(notEmpty) || [];
 		{
 			workshops.map((workshop) => (
 				<li class="workshop-list__item">
-					<SpeakerCard
-						speaker={{
-							slug: workshop.slug,
-							name: workshop.title,
-							role: workshop.lead,
-							photo: null,
-							company: workshop.teacher?.name || null,
-						}}
-						slug={Astro.url.pathname}
+					<ArticleTeaser
+						title={workshop.title}
+						text={workshop.lead}
+						link={workshop.slug}
+						meta={[formatDate(workshop.from), workshop.teacher.name]}
+						titleTag="h2"
 					/>
 				</li>
 			))
@@ -71,9 +77,6 @@ const workshops = data.workshops?.items.filter(notEmpty) || [];
 <style lang="scss">
 	@import "../styles/_imports.scss";
 
-	.wrapper {
-	}
-
 	.workshop-list {
 		display: flex;
 		flex-direction: column;
@@ -81,5 +84,9 @@ const workshops = data.workshops?.items.filter(notEmpty) || [];
 		list-style: none;
 		margin: 0;
 		padding: 0;
+
+		@include breakpoint-up("md") {
+			gap: var(--spacing-20x);
+		}
 	}
 </style>

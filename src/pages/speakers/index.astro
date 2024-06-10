@@ -33,12 +33,16 @@ if (!currentPage || !currentPage.title) {
 ---
 
 <ContentLayout title={currentPage.title}>
-	{
-		currentPage.lead && (
-			<p class="typo-lead column--main">{currentPage.lead}</p>
-		)
-	}
+	{currentPage.lead && <p class="typo-lead column--main">{currentPage.lead}</p>}
 	{currentPage.body && <Markdown text={currentPage.body} />}
 
-	<SpeakerList />
+	<SpeakerList class="list" />
 </ContentLayout>
+
+<style lang="scss">
+	@import "../../styles/_imports.scss";
+
+	.list {
+		margin-block-start: var(--spacing-10x);
+	}
+</style>
