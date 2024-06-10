@@ -1,20 +1,20 @@
 @import "./_imports.scss";
 
 body {
-  background: var(--color-black);
-  margin: 0;
+	background: var(--color-black);
+	margin: 0;
+
+	&:not(.home) {
+		background-color: var(--color-white);
+		color: var(--color-black);
+	}
 }
 
 * {
-  box-sizing: border-box;
-}
-
-main:not(.home) {
-  background-color: var(--color-white);
-  color: var(--color-black);
+	box-sizing: border-box;
 }
 
 a,
 button {
-  outline-offset: 4px;
+	outline-offset: 4px;
 }

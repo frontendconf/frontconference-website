@@ -318,4 +318,17 @@ const menuItems =
 			letter-spacing: getLetterSpacing(14, 1, 1);
 		}
 	}
+
+	:global(.home) .header {
+		background: transparent;
+		animation: blend 1s linear forwards;
+		animation-timeline: scroll();
+		animation-range: 0 pxToRem(240);
+
+		@keyframes blend {
+			to {
+				background: var(--color-black);
+			}
+		}
+	}
 </style>

@@ -1,0 +1,27 @@
+---
+
+---
+
+<script
+	type="module"
+	src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
+<spline-viewer
+	url="https://prod.spline.design/e93fTx7o7JPfIoAW/scene.splinecode"
+	events-target="global"
+	class="spline"></spline-viewer>
+
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	.spline {
+		aspect-ratio: 1;
+
+		@include breakpoint-up("sm") {
+			aspect-ratio: 4 / 3;
+		}
+
+		@include breakpoint-up("lg") {
+			aspect-ratio: 5 / 3;
+		}
+	}
+</style>
