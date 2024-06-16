@@ -21,7 +21,12 @@ const query = graphql(
 				}
 			}
 			talk: talkCollection(
-				where: { speaker: { slug: $slug } }
+				where: {
+					OR: [
+						{ speaker: { slug: $slug } },
+						{ speakers: { slug: $slug } }
+					]
+				}
 				order: date_DESC
 			) {
 				items {
@@ -65,7 +70,7 @@ if (!speaker || !speaker.name) {
 	<div class="talk">
 		{
 			filteredTalks.length > 0 ? (
-				<TalkDetail talk={filteredTalks[0]} />
+				<TalkDetail talk={filteredTalks[0]} speaker={speaker} />
 			) : (
 				<p class="typo-h3">More Details coming soon ...</p>
 			)

@@ -1,6 +1,8 @@
 ---
 import { graphql, FragmentOf } from "gql.tada";
 import Markdown from "./Markdown.astro";
+import type { speakerDetailFragment } from "./SpeakerDetail.astro";
+import { notEmpty } from "../utils/helpers";
 
 const formatDate = (date: string) => {
 	return new Date(date).toLocaleDateString("en-US", {
@@ -23,15 +25,26 @@ export const talkDetailFragment = graphql(`
 				title
 			}
 		}
+		speakersCollection(limit: 3) {
+			items {
+				name
+				slug
+			}
+		}
 	}
 `);
 
 export interface Props {
 	talk: FragmentOf<typeof talkDetailFragment>;
+	speaker: FragmentOf<typeof speakerDetailFragment>;
 	prefix?: string;
 }
 
-const { talk, prefix = "Talk" } = Astro.props;
+const { talk, speaker, prefix = "Talk" } = Astro.props;
+
+const additionalSpeakers = talk.speakersCollection?.items
+	.filter((speakerCandidate) => speakerCandidate?.slug !== speaker.slug)
+	.filter(notEmpty);
 ---
 
 <article class="talk">
@@ -50,6 +63,20 @@ const { talk, prefix = "Talk" } = Astro.props;
 				)
 			}
 			{talk.room && <div>{talk.room}</div>}
+		</div>
+		<div class="metaGroup">
+			{
+				additionalSpeakers?.length ? (
+					<div>
+						With{" "}
+						{additionalSpeakers.map((additionalSpeaker) => (
+							<a href={`/speakers/${additionalSpeaker.slug}`}>
+								{additionalSpeaker.name}
+							</a>
+						))}
+					</div>
+				) : null
+			}
 		</div>
 	</div>
 	<Markdown class="abstract" text={talk.abstract} />

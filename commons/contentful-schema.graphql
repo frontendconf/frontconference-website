@@ -1,3 +1,4 @@
+# Downloaded via Contentful GraphQL Playground App
 type Query {
   asset(id: String!, preview: Boolean, locale: String): Asset
   assetCollection(
@@ -8,6 +9,15 @@ type Query {
     where: AssetFilter
     order: [AssetOrder]
   ): AssetCollection
+  talk(id: String!, preview: Boolean, locale: String): Talk
+  talkCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TalkFilter
+    order: [TalkOrder]
+  ): TalkCollection
   sponsor(id: String!, preview: Boolean, locale: String): Sponsor
   sponsorCollection(
     skip: Int = 0
@@ -53,15 +63,6 @@ type Query {
     where: ConfigNewFilter
     order: [ConfigNewOrder]
   ): ConfigNewCollection
-  talk(id: String!, preview: Boolean, locale: String): Talk
-  talkCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-    where: TalkFilter
-    order: [TalkOrder]
-  ): TalkCollection
   news(id: String!, preview: Boolean, locale: String): News
   newsCollection(
     skip: Int = 0
@@ -230,9 +231,7 @@ type Query {
   _node(id: ID!, preview: Boolean, locale: String): _Node
 }
 
-"""
-Represents a binary file in a space. An asset can be any file type.
-"""
+# Represents a binary file in a space. An asset can be any file type.
 type Asset {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -254,209 +253,142 @@ type Sys {
   publishedAt: DateTime
   firstPublishedAt: DateTime
   publishedVersion: Int
+
+  # The locale that was requested.
+  locale: String
 }
 
-"""
-A date-time string at UTC, such as 2007-12-03T10:15:30Z,
-    compliant with the 'date-time' format outlined in section 5.6 of
-    the RFC 3339 profile of the ISO 8601 standard for representation
-    of dates and times using the Gregorian calendar.
-"""
+# A date-time string at UTC, such as 2007-12-03T10:15:30Z,
+#     compliant with the 'date-time' format outlined in section 5.6 of
+#     the RFC 3339 profile of the ISO 8601 standard for representation
+#     of dates and times using the Gregorian calendar.
 scalar DateTime
 
 type ContentfulMetadata {
   tags: [ContentfulTag]!
 }
 
-"""
-Represents a tag entity for finding and organizing content easily.
-    Find out more here: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/content-tags
-"""
+# Represents a tag entity for finding and organizing content easily.
+#     Find out more here: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/content-tags
 type ContentfulTag {
   id: String
   name: String
 }
 
 input ImageTransformOptions {
-  """
-  Desired width in pixels. Defaults to the original image width.
-  """
+  # Desired width in pixels. Defaults to the original image width.
   width: Dimension
 
-  """
-  Desired height in pixels. Defaults to the original image height.
-  """
+  # Desired height in pixels. Defaults to the original image height.
   height: Dimension
 
-  """
-  Desired quality of the image in percents.
-          Used for `PNG8`, `JPG`, `JPG_PROGRESSIVE` and `WEBP` formats.
-  """
+  # Desired quality of the image in percents.
+  #         Used for `PNG8`, `JPG`, `JPG_PROGRESSIVE` and `WEBP` formats.
   quality: Quality
 
-  """
-  Desired corner radius in pixels.
-          Results in an image with rounded corners (pass `-1` for a full circle/ellipse).
-          Defaults to `0`. Uses desired background color as padding color,
-          unless the format is `JPG` or `JPG_PROGRESSIVE` and resize strategy is `PAD`, then defaults to white.
-  """
+  # Desired corner radius in pixels.
+  #         Results in an image with rounded corners (pass `-1` for a full circle/ellipse).
+  #         Defaults to `0`. Uses desired background color as padding color,
+  #         unless the format is `JPG` or `JPG_PROGRESSIVE` and resize strategy is `PAD`, then defaults to white.
   cornerRadius: Int
 
-  """
-  Desired resize strategy. Defaults to `FIT`.
-  """
+  # Desired resize strategy. Defaults to `FIT`.
   resizeStrategy: ImageResizeStrategy
 
-  """
-  Desired resize focus area. Defaults to `CENTER`.
-  """
+  # Desired resize focus area. Defaults to `CENTER`.
   resizeFocus: ImageResizeFocus
 
-  """
-  Desired background color, used with corner radius or `PAD` resize strategy.
-          Defaults to transparent (for `PNG`, `PNG8` and `WEBP`) or white (for `JPG` and `JPG_PROGRESSIVE`).
-  """
+  # Desired background color, used with corner radius or `PAD` resize strategy.
+  #         Defaults to transparent (for `PNG`, `PNG8` and `WEBP`) or white (for `JPG` and `JPG_PROGRESSIVE`).
   backgroundColor: HexColor
 
-  """
-  Desired image format. Defaults to the original image format.
-  """
+  # Desired image format. Defaults to the original image format.
   format: ImageFormat
 }
 
-"""
-The 'Dimension' type represents dimensions as whole numeric values between `1` and `4000`.
-"""
+# The 'Dimension' type represents dimensions as whole numeric values between `1` and `4000`.
 scalar Dimension
 
-"""
-The 'Quality' type represents quality as whole numeric values between `1` and `100`.
-"""
+# The 'Quality' type represents quality as whole numeric values between `1` and `100`.
 scalar Quality
 
 enum ImageResizeStrategy {
-  """
-  Resizes the image to fit into the specified dimensions.
-  """
+  # Resizes the image to fit into the specified dimensions.
   FIT
 
-  """
-  Resizes the image to the specified dimensions, padding the image if needed.
-          Uses desired background color as padding color.
-  """
+  # Resizes the image to the specified dimensions, padding the image if needed.
+  #         Uses desired background color as padding color.
   PAD
 
-  """
-  Resizes the image to the specified dimensions, cropping the image if needed.
-  """
+  # Resizes the image to the specified dimensions, cropping the image if needed.
   FILL
 
-  """
-  Resizes the image to the specified dimensions, changing the original aspect ratio if needed.
-  """
+  # Resizes the image to the specified dimensions, changing the original aspect ratio if needed.
   SCALE
 
-  """
-  Crops a part of the original image to fit into the specified dimensions.
-  """
+  # Crops a part of the original image to fit into the specified dimensions.
   CROP
 
-  """
-  Creates a thumbnail from the image.
-  """
+  # Creates a thumbnail from the image.
   THUMB
 }
 
 enum ImageResizeFocus {
-  """
-  Focus the resizing on the center.
-  """
+  # Focus the resizing on the center.
   CENTER
 
-  """
-  Focus the resizing on the top.
-  """
+  # Focus the resizing on the top.
   TOP
 
-  """
-  Focus the resizing on the top right.
-  """
+  # Focus the resizing on the top right.
   TOP_RIGHT
 
-  """
-  Focus the resizing on the right.
-  """
+  # Focus the resizing on the right.
   RIGHT
 
-  """
-  Focus the resizing on the bottom right.
-  """
+  # Focus the resizing on the bottom right.
   BOTTOM_RIGHT
 
-  """
-  Focus the resizing on the bottom.
-  """
+  # Focus the resizing on the bottom.
   BOTTOM
 
-  """
-  Focus the resizing on the bottom left.
-  """
+  # Focus the resizing on the bottom left.
   BOTTOM_LEFT
 
-  """
-  Focus the resizing on the left.
-  """
+  # Focus the resizing on the left.
   LEFT
 
-  """
-  Focus the resizing on the top left.
-  """
+  # Focus the resizing on the top left.
   TOP_LEFT
 
-  """
-  Focus the resizing on the largest face.
-  """
+  # Focus the resizing on the largest face.
   FACE
 
-  """
-  Focus the resizing on the area containing all the faces.
-  """
+  # Focus the resizing on the area containing all the faces.
   FACES
 }
 
-"""
-The 'HexColor' type represents color in `rgb:ffffff` string format.
-"""
+# The 'HexColor' type represents color in `rgb:ffffff` string format.
 scalar HexColor
 
 enum ImageFormat {
-  """
-  JPG image format.
-  """
+  # JPG image format.
   JPG
 
-  """
-  Progressive JPG format stores multiple passes of an image in progressively higher detail.
-          When a progressive image is loading, the viewer will first see a lower quality pixelated version which
-          will gradually improve in detail, until the image is fully downloaded. This is to display an image as
-          early as possible to make the layout look as designed.
-  """
+  # Progressive JPG format stores multiple passes of an image in progressively higher detail.
+  #         When a progressive image is loading, the viewer will first see a lower quality pixelated version which
+  #         will gradually improve in detail, until the image is fully downloaded. This is to display an image as
+  #         early as possible to make the layout look as designed.
   JPG_PROGRESSIVE
 
-  """
-  PNG image format
-  """
+  # PNG image format
   PNG
 
-  """
-  8-bit PNG images support up to 256 colors and weigh less than the standard 24-bit PNG equivalent.
-          The 8-bit PNG format is mostly used for simple images, such as icons or logos.
-  """
+  # 8-bit PNG images support up to 256 colors and weigh less than the standard 24-bit PNG equivalent.
+  #         The 8-bit PNG format is mostly used for simple images, such as icons or logos.
   PNG8
 
-  """
-  WebP image format.
-  """
+  # WebP image format.
   WEBP
   AVIF
 }
@@ -468,6 +400,12 @@ type AssetLinkingCollections {
     preview: Boolean
     locale: String
   ): EntryCollection
+  talkCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): TalkCollection
   sponsorCollection(
     skip: Int = 0
     limit: Int = 100
@@ -492,12 +430,6 @@ type AssetLinkingCollections {
     preview: Boolean
     locale: String
   ): TeaserCollection
-  talkCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): TalkCollection
   workshopCollection(
     skip: Int = 0
     limit: Int = 100
@@ -548,47 +480,51 @@ interface Entry {
   contentfulMetadata: ContentfulMetadata!
 }
 
-type SponsorCollection {
+type TalkCollection {
   total: Int!
   skip: Int!
   limit: Int!
-  items: [Sponsor]!
+  items: [Talk]!
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/sponsor)
-"""
-type Sponsor implements Entry {
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/talk)
+type Talk implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): SponsorLinkingCollections
+  linkedFrom(allowedLocales: [String]): TalkLinkingCollections
   title(locale: String): String
-  body(locale: String): String
-  logo(preview: Boolean, locale: String): Asset
-  logoSvg(locale: String): String
-  link(locale: String): String
-  twitter(locale: String): String
-  linkedin(locale: String): String
-  instagram(locale: String): String
-  facebook(locale: String): String
-  category(
+  shortDescription(locale: String): String
+  abstract(locale: String): String
+  image(preview: Boolean, locale: String): Asset
+  video(locale: String): String
+  date(locale: String): DateTime
+  fromTime(locale: String): String
+  toTime(locale: String): String
+  slug(locale: String): String
+  room(locale: String): String
+  speaker(preview: Boolean, locale: String, where: SpeakerFilter): Speaker
+  speakersCollection(
+    skip: Int = 0
+    limit: Int = 100
     preview: Boolean
     locale: String
-    where: SponsorCategoryFilter
-  ): SponsorCategory
-  order(locale: String): Int
-  tagCollection(
+    where: SpeakerFilter
+    order: [TalkSpeakersCollectionOrder]
+  ): TalkSpeakersCollection
+  showAbstractOnMobile(locale: String): Boolean
+  tagsCollection(
     skip: Int = 0
     limit: Int = 100
     preview: Boolean
     locale: String
     where: TagFilter
-    order: [SponsorTagCollectionOrder]
-  ): SponsorTagCollection
-  zoomFactor(locale: String): String
+    order: [TalkTagsCollectionOrder]
+  ): TalkTagsCollection
+  duplicate(locale: String): Boolean
+  detailPage(preview: Boolean, locale: String, where: PageFilter): Page
 }
 
-type SponsorLinkingCollections {
+type TalkLinkingCollections {
   entryCollection(
     skip: Int = 0
     limit: Int = 100
@@ -597,60 +533,82 @@ type SponsorLinkingCollections {
   ): EntryCollection
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/sponsorCategory)
-"""
-type SponsorCategory implements Entry {
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/speaker)
+type Speaker implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): SponsorCategoryLinkingCollections
-  title(locale: String): String
-  level(locale: String): Int
-  body(locale: String): String
-  icon(preview: Boolean, locale: String): Asset
-  price(locale: String): String
-  availability(locale: String): String
-  color(locale: String): String
-  cssClass(locale: String): String
-  cssClassItems(locale: String): String
-  teaser(preview: Boolean, locale: String, where: TeaserFilter): Teaser
-  teaserOverview(preview: Boolean, locale: String, where: TeaserFilter): Teaser
-  cssClassTeaser(locale: String): String
+  linkedFrom(allowedLocales: [String]): SpeakerLinkingCollections
+  name(locale: String): String
+  description(locale: String): String
+  company(locale: String): String
+  role(locale: String): String
+  bio(locale: String): String
+  photo(preview: Boolean, locale: String): Asset
+  website(locale: String): String
+  twitter(locale: String): String
+  linkedin(locale: String): String
+  slug(locale: String): String
+  order(locale: String): Int
+  tagsCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TagFilter
+    order: [SpeakerTagsCollectionOrder]
+  ): SpeakerTagsCollection
+  publicationDate(locale: String): DateTime
 }
 
-type SponsorCategoryLinkingCollections {
+type SpeakerLinkingCollections {
   entryCollection(
     skip: Int = 0
     limit: Int = 100
     preview: Boolean
     locale: String
   ): EntryCollection
-  sponsorCollection(
+  talkCollection(
     skip: Int = 0
     limit: Int = 100
     preview: Boolean
     locale: String
-    order: [SponsorCategoryLinkingCollectionsSponsorCollectionOrder]
-  ): SponsorCollection
+    order: [SpeakerLinkingCollectionsTalkCollectionOrder]
+  ): TalkCollection
+  teaserCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [SpeakerLinkingCollectionsTeaserCollectionOrder]
+  ): TeaserCollection
+  workshopCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [SpeakerLinkingCollectionsWorkshopCollectionOrder]
+  ): WorkshopCollection
 }
 
-enum SponsorCategoryLinkingCollectionsSponsorCollectionOrder {
+enum SpeakerLinkingCollectionsTalkCollectionOrder {
   title_ASC
   title_DESC
-  link_ASC
-  link_DESC
-  twitter_ASC
-  twitter_DESC
-  linkedin_ASC
-  linkedin_DESC
-  instagram_ASC
-  instagram_DESC
-  facebook_ASC
-  facebook_DESC
-  order_ASC
-  order_DESC
-  zoomFactor_ASC
-  zoomFactor_DESC
+  shortDescription_ASC
+  shortDescription_DESC
+  date_ASC
+  date_DESC
+  fromTime_ASC
+  fromTime_DESC
+  toTime_ASC
+  toTime_DESC
+  slug_ASC
+  slug_DESC
+  room_ASC
+  room_DESC
+  showAbstractOnMobile_ASC
+  showAbstractOnMobile_DESC
+  duplicate_ASC
+  duplicate_DESC
   sys_id_ASC
   sys_id_DESC
   sys_publishedAt_ASC
@@ -661,9 +619,14 @@ enum SponsorCategoryLinkingCollectionsSponsorCollectionOrder {
   sys_publishedVersion_DESC
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/teaser)
-"""
+type TeaserCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Teaser]!
+}
+
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/teaser)
 type Teaser implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -714,9 +677,7 @@ type PageCollection {
   items: [Page]!
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/page)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/page)
 type Page implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -785,6 +746,13 @@ type PageLinkingCollections {
     preview: Boolean
     locale: String
   ): EntryCollection
+  talkCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [PageLinkingCollectionsTalkCollectionOrder]
+  ): TalkCollection
   pageCollection(
     skip: Int = 0
     limit: Int = 100
@@ -806,13 +774,6 @@ type PageLinkingCollections {
     locale: String
     order: [PageLinkingCollectionsConfigNewCollectionOrder]
   ): ConfigNewCollection
-  talkCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-    order: [PageLinkingCollectionsTalkCollectionOrder]
-  ): TalkCollection
   workshopCollection(
     skip: Int = 0
     limit: Int = 100
@@ -827,6 +788,35 @@ type PageLinkingCollections {
     locale: String
     order: [PageLinkingCollectionsConfigCollectionOrder]
   ): ConfigCollection
+}
+
+enum PageLinkingCollectionsTalkCollectionOrder {
+  title_ASC
+  title_DESC
+  shortDescription_ASC
+  shortDescription_DESC
+  date_ASC
+  date_DESC
+  fromTime_ASC
+  fromTime_DESC
+  toTime_ASC
+  toTime_DESC
+  slug_ASC
+  slug_DESC
+  room_ASC
+  room_DESC
+  showAbstractOnMobile_ASC
+  showAbstractOnMobile_DESC
+  duplicate_ASC
+  duplicate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
 }
 
 enum PageLinkingCollectionsPageCollectionOrder {
@@ -894,13 +884,6 @@ enum PageLinkingCollectionsPageCollectionOrder {
   sys_publishedVersion_DESC
 }
 
-type TeaserCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Teaser]!
-}
-
 enum PageLinkingCollectionsTeaserCollectionOrder {
   title_ASC
   title_DESC
@@ -925,9 +908,7 @@ type ConfigNewCollection {
   items: [ConfigNew]!
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/configNew)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/configNew)
 type ConfigNew implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -1011,9 +992,7 @@ type ConfigNewLogoText {
   links: ConfigNewLogoTextLinks!
 }
 
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
+# The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 scalar JSON
 
 type ConfigNewLogoTextLinks {
@@ -1629,9 +1608,7 @@ type ConfigNewFooterSocialMediaCollection {
   items: [SocialMedia]!
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/socialMedia)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/socialMedia)
 type SocialMedia implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -1694,9 +1671,7 @@ type ConfigCollection {
   items: [Config]!
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/config)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/config)
 type Config implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -2074,9 +2049,7 @@ input TeaserFilter {
   AND: [TeaserFilter]
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/tag)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/tag)
 type Tag implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -2091,6 +2064,13 @@ type TagLinkingCollections {
     preview: Boolean
     locale: String
   ): EntryCollection
+  talkCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [TagLinkingCollectionsTalkCollectionOrder]
+  ): TalkCollection
   sponsorCollection(
     skip: Int = 0
     limit: Int = 100
@@ -2112,13 +2092,6 @@ type TagLinkingCollections {
     locale: String
     order: [TagLinkingCollectionsConfigNewCollectionOrder]
   ): ConfigNewCollection
-  talkCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-    order: [TagLinkingCollectionsTalkCollectionOrder]
-  ): TalkCollection
   newsCollection(
     skip: Int = 0
     limit: Int = 100
@@ -2149,9 +2122,122 @@ type TagLinkingCollections {
   ): HostCollection
 }
 
-enum TagLinkingCollectionsSponsorCollectionOrder {
+enum TagLinkingCollectionsTalkCollectionOrder {
   title_ASC
   title_DESC
+  shortDescription_ASC
+  shortDescription_DESC
+  date_ASC
+  date_DESC
+  fromTime_ASC
+  fromTime_DESC
+  toTime_ASC
+  toTime_DESC
+  slug_ASC
+  slug_DESC
+  room_ASC
+  room_DESC
+  showAbstractOnMobile_ASC
+  showAbstractOnMobile_DESC
+  duplicate_ASC
+  duplicate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type SponsorCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Sponsor]!
+}
+
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/sponsor)
+type Sponsor implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): SponsorLinkingCollections
+  title(locale: String): String
+  body(locale: String): String
+  logo(preview: Boolean, locale: String): Asset
+  logoSvg(locale: String): String
+  zoomFactor(locale: String): String
+  link(locale: String): String
+  twitter(locale: String): String
+  linkedin(locale: String): String
+  instagram(locale: String): String
+  facebook(locale: String): String
+  category(
+    preview: Boolean
+    locale: String
+    where: SponsorCategoryFilter
+  ): SponsorCategory
+  order(locale: String): Int
+  tagCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: TagFilter
+    order: [SponsorTagCollectionOrder]
+  ): SponsorTagCollection
+}
+
+type SponsorLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/sponsorCategory)
+type SponsorCategory implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): SponsorCategoryLinkingCollections
+  title(locale: String): String
+  level(locale: String): Int
+  body(locale: String): String
+  icon(preview: Boolean, locale: String): Asset
+  price(locale: String): String
+  availability(locale: String): String
+  color(locale: String): String
+  cssClass(locale: String): String
+  cssClassItems(locale: String): String
+  teaser(preview: Boolean, locale: String, where: TeaserFilter): Teaser
+  teaserOverview(preview: Boolean, locale: String, where: TeaserFilter): Teaser
+  cssClassTeaser(locale: String): String
+}
+
+type SponsorCategoryLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  sponsorCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [SponsorCategoryLinkingCollectionsSponsorCollectionOrder]
+  ): SponsorCollection
+}
+
+enum SponsorCategoryLinkingCollectionsSponsorCollectionOrder {
+  title_ASC
+  title_DESC
+  zoomFactor_ASC
+  zoomFactor_DESC
   link_ASC
   link_DESC
   twitter_ASC
@@ -2164,8 +2250,144 @@ enum TagLinkingCollectionsSponsorCollectionOrder {
   facebook_DESC
   order_ASC
   order_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input SponsorCategoryFilter {
+  teaser: cfTeaserNestedFilter
+  teaserOverview: cfTeaserNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  level_exists: Boolean
+  level: Int
+  level_not: Int
+  level_in: [Int]
+  level_not_in: [Int]
+  level_gt: Int
+  level_gte: Int
+  level_lt: Int
+  level_lte: Int
+  body_exists: Boolean
+  body: String
+  body_not: String
+  body_in: [String]
+  body_not_in: [String]
+  body_contains: String
+  body_not_contains: String
+  icon_exists: Boolean
+  price_exists: Boolean
+  price: String
+  price_not: String
+  price_in: [String]
+  price_not_in: [String]
+  price_contains: String
+  price_not_contains: String
+  availability_exists: Boolean
+  availability: String
+  availability_not: String
+  availability_in: [String]
+  availability_not_in: [String]
+  availability_contains: String
+  availability_not_contains: String
+  color_exists: Boolean
+  color: String
+  color_not: String
+  color_in: [String]
+  color_not_in: [String]
+  color_contains: String
+  color_not_contains: String
+  cssClass_exists: Boolean
+  cssClass: String
+  cssClass_not: String
+  cssClass_in: [String]
+  cssClass_not_in: [String]
+  cssClass_contains: String
+  cssClass_not_contains: String
+  cssClassItems_exists: Boolean
+  cssClassItems: String
+  cssClassItems_not: String
+  cssClassItems_in: [String]
+  cssClassItems_not_in: [String]
+  cssClassItems_contains: String
+  cssClassItems_not_contains: String
+  teaser_exists: Boolean
+  teaserOverview_exists: Boolean
+  cssClassTeaser_exists: Boolean
+  cssClassTeaser: String
+  cssClassTeaser_not: String
+  cssClassTeaser_in: [String]
+  cssClassTeaser_not_in: [String]
+  cssClassTeaser_contains: String
+  cssClassTeaser_not_contains: String
+  OR: [SponsorCategoryFilter]
+  AND: [SponsorCategoryFilter]
+}
+
+type SponsorTagCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Tag]!
+}
+
+input TagFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  OR: [TagFilter]
+  AND: [TagFilter]
+}
+
+enum SponsorTagCollectionOrder {
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TagLinkingCollectionsSponsorCollectionOrder {
+  title_ASC
+  title_DESC
   zoomFactor_ASC
   zoomFactor_DESC
+  link_ASC
+  link_DESC
+  twitter_ASC
+  twitter_DESC
+  linkedin_ASC
+  linkedin_DESC
+  instagram_ASC
+  instagram_DESC
+  facebook_ASC
+  facebook_DESC
+  order_ASC
+  order_DESC
   sys_id_ASC
   sys_id_DESC
   sys_publishedAt_ASC
@@ -2183,36 +2405,88 @@ type SpeakerCollection {
   items: [Speaker]!
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/speaker)
-"""
-type Speaker implements Entry {
+enum TagLinkingCollectionsSpeakerCollectionOrder {
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  company_ASC
+  company_DESC
+  role_ASC
+  role_DESC
+  website_ASC
+  website_DESC
+  twitter_ASC
+  twitter_DESC
+  linkedin_ASC
+  linkedin_DESC
+  slug_ASC
+  slug_DESC
+  order_ASC
+  order_DESC
+  publicationDate_ASC
+  publicationDate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TagLinkingCollectionsConfigNewCollectionOrder {
+  logoTitle_ASC
+  logoTitle_DESC
+  headerTitle_ASC
+  headerTitle_DESC
+  footerNewsletterTitle_ASC
+  footerNewsletterTitle_DESC
+  footerNewsletterField_ASC
+  footerNewsletterField_DESC
+  footerNewsletterButton_ASC
+  footerNewsletterButton_DESC
+  footerCopyright_ASC
+  footerCopyright_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type NewsCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [News]!
+}
+
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/news)
+type News implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): SpeakerLinkingCollections
-  name(locale: String): String
-  description(locale: String): String
-  company(locale: String): String
-  role(locale: String): String
-  bio(locale: String): String
-  photo(preview: Boolean, locale: String): Asset
-  website(locale: String): String
-  twitter(locale: String): String
-  linkedin(locale: String): String
+  linkedFrom(allowedLocales: [String]): NewsLinkingCollections
+  title(locale: String): String
+  date(locale: String): DateTime
+  body(locale: String): String
   slug(locale: String): String
-  order(locale: String): Int
   tagsCollection(
     skip: Int = 0
     limit: Int = 100
     preview: Boolean
     locale: String
     where: TagFilter
-    order: [SpeakerTagsCollectionOrder]
-  ): SpeakerTagsCollection
-  publicationDate(locale: String): DateTime
+    order: [NewsTagsCollectionOrder]
+  ): NewsTagsCollection
+  summary(locale: String): String
 }
 
-type SpeakerLinkingCollections {
+type NewsLinkingCollections {
   entryCollection(
     skip: Int = 0
     limit: Int = 100
@@ -2224,25 +2498,11 @@ type SpeakerLinkingCollections {
     limit: Int = 100
     preview: Boolean
     locale: String
-    order: [SpeakerLinkingCollectionsTeaserCollectionOrder]
+    order: [NewsLinkingCollectionsTeaserCollectionOrder]
   ): TeaserCollection
-  talkCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-    order: [SpeakerLinkingCollectionsTalkCollectionOrder]
-  ): TalkCollection
-  workshopCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-    order: [SpeakerLinkingCollectionsWorkshopCollectionOrder]
-  ): WorkshopCollection
 }
 
-enum SpeakerLinkingCollectionsTeaserCollectionOrder {
+enum NewsLinkingCollectionsTeaserCollectionOrder {
   title_ASC
   title_DESC
   ctaLabel_ASC
@@ -2259,51 +2519,113 @@ enum SpeakerLinkingCollectionsTeaserCollectionOrder {
   sys_publishedVersion_DESC
 }
 
-type TalkCollection {
+type NewsTagsCollection {
   total: Int!
   skip: Int!
   limit: Int!
-  items: [Talk]!
+  items: [Tag]!
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/talk)
-"""
-type Talk implements Entry {
+enum NewsTagsCollectionOrder {
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+enum TagLinkingCollectionsNewsCollectionOrder {
+  title_ASC
+  title_DESC
+  date_ASC
+  date_DESC
+  slug_ASC
+  slug_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type WorkshopCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Workshop]!
+}
+
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/workshop)
+type Workshop implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): TalkLinkingCollections
+  linkedFrom(allowedLocales: [String]): WorkshopLinkingCollections
   title(locale: String): String
-  shortDescription(locale: String): String
-  abstract(locale: String): String
-  image(preview: Boolean, locale: String): Asset
-  video(locale: String): String
-  date(locale: String): DateTime
-  fromTime(locale: String): String
-  toTime(locale: String): String
+  lead(locale: String): String
+  body(locale: String): String
+  from(locale: String): DateTime
+  to(locale: String): DateTime
+  location(locale: String): Location
+  teacher(preview: Boolean, locale: String, where: SpeakerFilter): Speaker
   slug(locale: String): String
-  room(locale: String): String
-  speaker(preview: Boolean, locale: String, where: SpeakerFilter): Speaker
-  showAbstractOnMobile(locale: String): Boolean
+  photo(preview: Boolean, locale: String): Asset
+  order(locale: String): Int
+  cta(preview: Boolean, locale: String, where: PageFilter): Page
   tagsCollection(
     skip: Int = 0
     limit: Int = 100
     preview: Boolean
     locale: String
     where: TagFilter
-    order: [TalkTagsCollectionOrder]
-  ): TalkTagsCollection
-  duplicate(locale: String): Boolean
-  detailPage(preview: Boolean, locale: String, where: PageFilter): Page
+    order: [WorkshopTagsCollectionOrder]
+  ): WorkshopTagsCollection
+  publicationDate(locale: String): DateTime
 }
 
-type TalkLinkingCollections {
+type WorkshopLinkingCollections {
   entryCollection(
     skip: Int = 0
     limit: Int = 100
     preview: Boolean
     locale: String
   ): EntryCollection
+  teaserCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    order: [WorkshopLinkingCollectionsTeaserCollectionOrder]
+  ): TeaserCollection
+}
+
+enum WorkshopLinkingCollectionsTeaserCollectionOrder {
+  title_ASC
+  title_DESC
+  ctaLabel_ASC
+  ctaLabel_DESC
+  linkExternal_ASC
+  linkExternal_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type Location {
+  lat: Float
+  lon: Float
 }
 
 input SpeakerFilter {
@@ -2411,143 +2733,6 @@ input cfTagNestedFilter {
   AND: [cfTagNestedFilter]
 }
 
-type TalkTagsCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Tag]!
-}
-
-input TagFilter {
-  sys: SysFilter
-  contentfulMetadata: ContentfulMetadataFilter
-  title_exists: Boolean
-  title: String
-  title_not: String
-  title_in: [String]
-  title_not_in: [String]
-  title_contains: String
-  title_not_contains: String
-  OR: [TagFilter]
-  AND: [TagFilter]
-}
-
-enum TalkTagsCollectionOrder {
-  title_ASC
-  title_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-enum SpeakerLinkingCollectionsTalkCollectionOrder {
-  title_ASC
-  title_DESC
-  shortDescription_ASC
-  shortDescription_DESC
-  date_ASC
-  date_DESC
-  fromTime_ASC
-  fromTime_DESC
-  toTime_ASC
-  toTime_DESC
-  slug_ASC
-  slug_DESC
-  room_ASC
-  room_DESC
-  showAbstractOnMobile_ASC
-  showAbstractOnMobile_DESC
-  duplicate_ASC
-  duplicate_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-type WorkshopCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Workshop]!
-}
-
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/workshop)
-"""
-type Workshop implements Entry {
-  sys: Sys!
-  contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): WorkshopLinkingCollections
-  title(locale: String): String
-  lead(locale: String): String
-  body(locale: String): String
-  from(locale: String): DateTime
-  to(locale: String): DateTime
-  location(locale: String): Location
-  teacher(preview: Boolean, locale: String, where: SpeakerFilter): Speaker
-  slug(locale: String): String
-  photo(preview: Boolean, locale: String): Asset
-  order(locale: String): Int
-  cta(preview: Boolean, locale: String, where: PageFilter): Page
-  tagsCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-    where: TagFilter
-    order: [WorkshopTagsCollectionOrder]
-  ): WorkshopTagsCollection
-  publicationDate(locale: String): DateTime
-}
-
-type WorkshopLinkingCollections {
-  entryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): EntryCollection
-  teaserCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-    order: [WorkshopLinkingCollectionsTeaserCollectionOrder]
-  ): TeaserCollection
-}
-
-enum WorkshopLinkingCollectionsTeaserCollectionOrder {
-  title_ASC
-  title_DESC
-  ctaLabel_ASC
-  ctaLabel_DESC
-  linkExternal_ASC
-  linkExternal_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-type Location {
-  lat: Float
-  lon: Float
-}
-
 type WorkshopTagsCollection {
   total: Int!
   skip: Int!
@@ -2558,233 +2743,6 @@ type WorkshopTagsCollection {
 enum WorkshopTagsCollectionOrder {
   title_ASC
   title_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-enum SpeakerLinkingCollectionsWorkshopCollectionOrder {
-  title_ASC
-  title_DESC
-  lead_ASC
-  lead_DESC
-  from_ASC
-  from_DESC
-  to_ASC
-  to_DESC
-  slug_ASC
-  slug_DESC
-  order_ASC
-  order_DESC
-  publicationDate_ASC
-  publicationDate_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-type SpeakerTagsCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Tag]!
-}
-
-enum SpeakerTagsCollectionOrder {
-  title_ASC
-  title_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-enum TagLinkingCollectionsSpeakerCollectionOrder {
-  name_ASC
-  name_DESC
-  description_ASC
-  description_DESC
-  company_ASC
-  company_DESC
-  role_ASC
-  role_DESC
-  website_ASC
-  website_DESC
-  twitter_ASC
-  twitter_DESC
-  linkedin_ASC
-  linkedin_DESC
-  slug_ASC
-  slug_DESC
-  order_ASC
-  order_DESC
-  publicationDate_ASC
-  publicationDate_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-enum TagLinkingCollectionsConfigNewCollectionOrder {
-  logoTitle_ASC
-  logoTitle_DESC
-  headerTitle_ASC
-  headerTitle_DESC
-  footerNewsletterTitle_ASC
-  footerNewsletterTitle_DESC
-  footerNewsletterField_ASC
-  footerNewsletterField_DESC
-  footerNewsletterButton_ASC
-  footerNewsletterButton_DESC
-  footerCopyright_ASC
-  footerCopyright_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-enum TagLinkingCollectionsTalkCollectionOrder {
-  title_ASC
-  title_DESC
-  shortDescription_ASC
-  shortDescription_DESC
-  date_ASC
-  date_DESC
-  fromTime_ASC
-  fromTime_DESC
-  toTime_ASC
-  toTime_DESC
-  slug_ASC
-  slug_DESC
-  room_ASC
-  room_DESC
-  showAbstractOnMobile_ASC
-  showAbstractOnMobile_DESC
-  duplicate_ASC
-  duplicate_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-type NewsCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [News]!
-}
-
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/news)
-"""
-type News implements Entry {
-  sys: Sys!
-  contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): NewsLinkingCollections
-  title(locale: String): String
-  date(locale: String): DateTime
-  body(locale: String): String
-  slug(locale: String): String
-  tagsCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-    where: TagFilter
-    order: [NewsTagsCollectionOrder]
-  ): NewsTagsCollection
-  summary(locale: String): String
-}
-
-type NewsLinkingCollections {
-  entryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): EntryCollection
-  teaserCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-    order: [NewsLinkingCollectionsTeaserCollectionOrder]
-  ): TeaserCollection
-}
-
-enum NewsLinkingCollectionsTeaserCollectionOrder {
-  title_ASC
-  title_DESC
-  ctaLabel_ASC
-  ctaLabel_DESC
-  linkExternal_ASC
-  linkExternal_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-type NewsTagsCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Tag]!
-}
-
-enum NewsTagsCollectionOrder {
-  title_ASC
-  title_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-enum TagLinkingCollectionsNewsCollectionOrder {
-  title_ASC
-  title_DESC
-  date_ASC
-  date_DESC
-  slug_ASC
-  slug_DESC
   sys_id_ASC
   sys_id_DESC
   sys_publishedAt_ASC
@@ -2848,9 +2806,7 @@ type HostCollection {
   items: [Host]!
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/host)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/host)
 type Host implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -3223,35 +3179,6 @@ enum PageLinkingCollectionsConfigNewCollectionOrder {
   sys_publishedVersion_DESC
 }
 
-enum PageLinkingCollectionsTalkCollectionOrder {
-  title_ASC
-  title_DESC
-  shortDescription_ASC
-  shortDescription_DESC
-  date_ASC
-  date_DESC
-  fromTime_ASC
-  fromTime_DESC
-  toTime_ASC
-  toTime_DESC
-  slug_ASC
-  slug_DESC
-  room_ASC
-  room_DESC
-  showAbstractOnMobile_ASC
-  showAbstractOnMobile_DESC
-  duplicate_ASC
-  duplicate_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
 enum PageLinkingCollectionsWorkshopCollectionOrder {
   title_ASC
   title_DESC
@@ -3523,91 +3450,114 @@ enum TeaserLinkingCollectionsConfigCollectionOrder {
 
 union TeaserLink = Host | News | Page | Speaker | Workshop
 
-input SponsorCategoryFilter {
-  teaser: cfTeaserNestedFilter
-  teaserOverview: cfTeaserNestedFilter
-  sys: SysFilter
-  contentfulMetadata: ContentfulMetadataFilter
-  title_exists: Boolean
-  title: String
-  title_not: String
-  title_in: [String]
-  title_not_in: [String]
-  title_contains: String
-  title_not_contains: String
-  level_exists: Boolean
-  level: Int
-  level_not: Int
-  level_in: [Int]
-  level_not_in: [Int]
-  level_gt: Int
-  level_gte: Int
-  level_lt: Int
-  level_lte: Int
-  body_exists: Boolean
-  body: String
-  body_not: String
-  body_in: [String]
-  body_not_in: [String]
-  body_contains: String
-  body_not_contains: String
-  icon_exists: Boolean
-  price_exists: Boolean
-  price: String
-  price_not: String
-  price_in: [String]
-  price_not_in: [String]
-  price_contains: String
-  price_not_contains: String
-  availability_exists: Boolean
-  availability: String
-  availability_not: String
-  availability_in: [String]
-  availability_not_in: [String]
-  availability_contains: String
-  availability_not_contains: String
-  color_exists: Boolean
-  color: String
-  color_not: String
-  color_in: [String]
-  color_not_in: [String]
-  color_contains: String
-  color_not_contains: String
-  cssClass_exists: Boolean
-  cssClass: String
-  cssClass_not: String
-  cssClass_in: [String]
-  cssClass_not_in: [String]
-  cssClass_contains: String
-  cssClass_not_contains: String
-  cssClassItems_exists: Boolean
-  cssClassItems: String
-  cssClassItems_not: String
-  cssClassItems_in: [String]
-  cssClassItems_not_in: [String]
-  cssClassItems_contains: String
-  cssClassItems_not_contains: String
-  teaser_exists: Boolean
-  teaserOverview_exists: Boolean
-  cssClassTeaser_exists: Boolean
-  cssClassTeaser: String
-  cssClassTeaser_not: String
-  cssClassTeaser_in: [String]
-  cssClassTeaser_not_in: [String]
-  cssClassTeaser_contains: String
-  cssClassTeaser_not_contains: String
-  OR: [SponsorCategoryFilter]
-  AND: [SponsorCategoryFilter]
+enum SpeakerLinkingCollectionsTeaserCollectionOrder {
+  title_ASC
+  title_DESC
+  ctaLabel_ASC
+  ctaLabel_DESC
+  linkExternal_ASC
+  linkExternal_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
 }
 
-type SponsorTagCollection {
+enum SpeakerLinkingCollectionsWorkshopCollectionOrder {
+  title_ASC
+  title_DESC
+  lead_ASC
+  lead_DESC
+  from_ASC
+  from_DESC
+  to_ASC
+  to_DESC
+  slug_ASC
+  slug_DESC
+  order_ASC
+  order_DESC
+  publicationDate_ASC
+  publicationDate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type SpeakerTagsCollection {
   total: Int!
   skip: Int!
   limit: Int!
   items: [Tag]!
 }
 
-enum SponsorTagCollectionOrder {
+enum SpeakerTagsCollectionOrder {
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type TalkSpeakersCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Speaker]!
+}
+
+enum TalkSpeakersCollectionOrder {
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  company_ASC
+  company_DESC
+  role_ASC
+  role_DESC
+  website_ASC
+  website_DESC
+  twitter_ASC
+  twitter_DESC
+  linkedin_ASC
+  linkedin_DESC
+  slug_ASC
+  slug_DESC
+  order_ASC
+  order_DESC
+  publicationDate_ASC
+  publicationDate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type TalkTagsCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Tag]!
+}
+
+enum TalkTagsCollectionOrder {
   title_ASC
   title_DESC
   sys_id_ASC
@@ -3627,9 +3577,7 @@ type HotelCollection {
   items: [Hotel]!
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/hotel)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/hotel)
 type Hotel implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -3657,9 +3605,7 @@ type RestaurantCollection {
   items: [Restaurant]!
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/restaurant)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/restaurant)
 type Restaurant implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -3687,9 +3633,7 @@ type TeamCollection {
   items: [Team]!
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/team)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/team)
 type Team implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -3804,6 +3748,212 @@ enum AssetOrder {
   sys_publishedVersion_DESC
 }
 
+input TalkFilter {
+  speaker: cfSpeakerNestedFilter
+  speakers: cfSpeakerNestedFilter
+  tags: cfTagNestedFilter
+  detailPage: cfPageNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  shortDescription_exists: Boolean
+  shortDescription: String
+  shortDescription_not: String
+  shortDescription_in: [String]
+  shortDescription_not_in: [String]
+  shortDescription_contains: String
+  shortDescription_not_contains: String
+  abstract_exists: Boolean
+  abstract: String
+  abstract_not: String
+  abstract_in: [String]
+  abstract_not_in: [String]
+  abstract_contains: String
+  abstract_not_contains: String
+  image_exists: Boolean
+  video_exists: Boolean
+  video: String
+  video_not: String
+  video_in: [String]
+  video_not_in: [String]
+  video_contains: String
+  video_not_contains: String
+  date_exists: Boolean
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime]
+  date_not_in: [DateTime]
+  date_gt: DateTime
+  date_gte: DateTime
+  date_lt: DateTime
+  date_lte: DateTime
+  fromTime_exists: Boolean
+  fromTime: String
+  fromTime_not: String
+  fromTime_in: [String]
+  fromTime_not_in: [String]
+  fromTime_contains: String
+  fromTime_not_contains: String
+  toTime_exists: Boolean
+  toTime: String
+  toTime_not: String
+  toTime_in: [String]
+  toTime_not_in: [String]
+  toTime_contains: String
+  toTime_not_contains: String
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  room_exists: Boolean
+  room: String
+  room_not: String
+  room_in: [String]
+  room_not_in: [String]
+  room_contains: String
+  room_not_contains: String
+  speaker_exists: Boolean
+  speakersCollection_exists: Boolean
+  showAbstractOnMobile_exists: Boolean
+  showAbstractOnMobile: Boolean
+  showAbstractOnMobile_not: Boolean
+  tagsCollection_exists: Boolean
+  duplicate_exists: Boolean
+  duplicate: Boolean
+  duplicate_not: Boolean
+  detailPage_exists: Boolean
+  OR: [TalkFilter]
+  AND: [TalkFilter]
+}
+
+input cfSpeakerNestedFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  name_exists: Boolean
+  name: String
+  name_not: String
+  name_in: [String]
+  name_not_in: [String]
+  name_contains: String
+  name_not_contains: String
+  description_exists: Boolean
+  description: String
+  description_not: String
+  description_in: [String]
+  description_not_in: [String]
+  description_contains: String
+  description_not_contains: String
+  company_exists: Boolean
+  company: String
+  company_not: String
+  company_in: [String]
+  company_not_in: [String]
+  company_contains: String
+  company_not_contains: String
+  role_exists: Boolean
+  role: String
+  role_not: String
+  role_in: [String]
+  role_not_in: [String]
+  role_contains: String
+  role_not_contains: String
+  bio_exists: Boolean
+  bio: String
+  bio_not: String
+  bio_in: [String]
+  bio_not_in: [String]
+  bio_contains: String
+  bio_not_contains: String
+  photo_exists: Boolean
+  website_exists: Boolean
+  website: String
+  website_not: String
+  website_in: [String]
+  website_not_in: [String]
+  website_contains: String
+  website_not_contains: String
+  twitter_exists: Boolean
+  twitter: String
+  twitter_not: String
+  twitter_in: [String]
+  twitter_not_in: [String]
+  twitter_contains: String
+  twitter_not_contains: String
+  linkedin_exists: Boolean
+  linkedin: String
+  linkedin_not: String
+  linkedin_in: [String]
+  linkedin_not_in: [String]
+  linkedin_contains: String
+  linkedin_not_contains: String
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  order_exists: Boolean
+  order: Int
+  order_not: Int
+  order_in: [Int]
+  order_not_in: [Int]
+  order_gt: Int
+  order_gte: Int
+  order_lt: Int
+  order_lte: Int
+  tagsCollection_exists: Boolean
+  publicationDate_exists: Boolean
+  publicationDate: DateTime
+  publicationDate_not: DateTime
+  publicationDate_in: [DateTime]
+  publicationDate_not_in: [DateTime]
+  publicationDate_gt: DateTime
+  publicationDate_gte: DateTime
+  publicationDate_lt: DateTime
+  publicationDate_lte: DateTime
+  OR: [cfSpeakerNestedFilter]
+  AND: [cfSpeakerNestedFilter]
+}
+
+enum TalkOrder {
+  title_ASC
+  title_DESC
+  shortDescription_ASC
+  shortDescription_DESC
+  date_ASC
+  date_DESC
+  fromTime_ASC
+  fromTime_DESC
+  toTime_ASC
+  toTime_DESC
+  slug_ASC
+  slug_DESC
+  room_ASC
+  room_DESC
+  showAbstractOnMobile_ASC
+  showAbstractOnMobile_DESC
+  duplicate_ASC
+  duplicate_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
 input SponsorFilter {
   category: cfSponsorCategoryNestedFilter
   tag: cfTagNestedFilter
@@ -3831,6 +3981,13 @@ input SponsorFilter {
   logoSvg_not_in: [String]
   logoSvg_contains: String
   logoSvg_not_contains: String
+  zoomFactor_exists: Boolean
+  zoomFactor: String
+  zoomFactor_not: String
+  zoomFactor_in: [String]
+  zoomFactor_not_in: [String]
+  zoomFactor_contains: String
+  zoomFactor_not_contains: String
   link_exists: Boolean
   link: String
   link_not: String
@@ -3877,13 +4034,6 @@ input SponsorFilter {
   order_lt: Int
   order_lte: Int
   tagCollection_exists: Boolean
-  zoomFactor_exists: Boolean
-  zoomFactor: String
-  zoomFactor_not: String
-  zoomFactor_in: [String]
-  zoomFactor_not_in: [String]
-  zoomFactor_contains: String
-  zoomFactor_not_contains: String
   OR: [SponsorFilter]
   AND: [SponsorFilter]
 }
@@ -3966,6 +4116,8 @@ input cfSponsorCategoryNestedFilter {
 enum SponsorOrder {
   title_ASC
   title_DESC
+  zoomFactor_ASC
+  zoomFactor_DESC
   link_ASC
   link_DESC
   twitter_ASC
@@ -3978,8 +4130,6 @@ enum SponsorOrder {
   facebook_DESC
   order_ASC
   order_DESC
-  zoomFactor_ASC
-  zoomFactor_DESC
   sys_id_ASC
   sys_id_DESC
   sys_publishedAt_ASC
@@ -4224,210 +4374,6 @@ enum ConfigNewOrder {
   sys_publishedVersion_DESC
 }
 
-input TalkFilter {
-  speaker: cfSpeakerNestedFilter
-  tags: cfTagNestedFilter
-  detailPage: cfPageNestedFilter
-  sys: SysFilter
-  contentfulMetadata: ContentfulMetadataFilter
-  title_exists: Boolean
-  title: String
-  title_not: String
-  title_in: [String]
-  title_not_in: [String]
-  title_contains: String
-  title_not_contains: String
-  shortDescription_exists: Boolean
-  shortDescription: String
-  shortDescription_not: String
-  shortDescription_in: [String]
-  shortDescription_not_in: [String]
-  shortDescription_contains: String
-  shortDescription_not_contains: String
-  abstract_exists: Boolean
-  abstract: String
-  abstract_not: String
-  abstract_in: [String]
-  abstract_not_in: [String]
-  abstract_contains: String
-  abstract_not_contains: String
-  image_exists: Boolean
-  video_exists: Boolean
-  video: String
-  video_not: String
-  video_in: [String]
-  video_not_in: [String]
-  video_contains: String
-  video_not_contains: String
-  date_exists: Boolean
-  date: DateTime
-  date_not: DateTime
-  date_in: [DateTime]
-  date_not_in: [DateTime]
-  date_gt: DateTime
-  date_gte: DateTime
-  date_lt: DateTime
-  date_lte: DateTime
-  fromTime_exists: Boolean
-  fromTime: String
-  fromTime_not: String
-  fromTime_in: [String]
-  fromTime_not_in: [String]
-  fromTime_contains: String
-  fromTime_not_contains: String
-  toTime_exists: Boolean
-  toTime: String
-  toTime_not: String
-  toTime_in: [String]
-  toTime_not_in: [String]
-  toTime_contains: String
-  toTime_not_contains: String
-  slug_exists: Boolean
-  slug: String
-  slug_not: String
-  slug_in: [String]
-  slug_not_in: [String]
-  slug_contains: String
-  slug_not_contains: String
-  room_exists: Boolean
-  room: String
-  room_not: String
-  room_in: [String]
-  room_not_in: [String]
-  room_contains: String
-  room_not_contains: String
-  speaker_exists: Boolean
-  showAbstractOnMobile_exists: Boolean
-  showAbstractOnMobile: Boolean
-  showAbstractOnMobile_not: Boolean
-  tagsCollection_exists: Boolean
-  duplicate_exists: Boolean
-  duplicate: Boolean
-  duplicate_not: Boolean
-  detailPage_exists: Boolean
-  OR: [TalkFilter]
-  AND: [TalkFilter]
-}
-
-input cfSpeakerNestedFilter {
-  sys: SysFilter
-  contentfulMetadata: ContentfulMetadataFilter
-  name_exists: Boolean
-  name: String
-  name_not: String
-  name_in: [String]
-  name_not_in: [String]
-  name_contains: String
-  name_not_contains: String
-  description_exists: Boolean
-  description: String
-  description_not: String
-  description_in: [String]
-  description_not_in: [String]
-  description_contains: String
-  description_not_contains: String
-  company_exists: Boolean
-  company: String
-  company_not: String
-  company_in: [String]
-  company_not_in: [String]
-  company_contains: String
-  company_not_contains: String
-  role_exists: Boolean
-  role: String
-  role_not: String
-  role_in: [String]
-  role_not_in: [String]
-  role_contains: String
-  role_not_contains: String
-  bio_exists: Boolean
-  bio: String
-  bio_not: String
-  bio_in: [String]
-  bio_not_in: [String]
-  bio_contains: String
-  bio_not_contains: String
-  photo_exists: Boolean
-  website_exists: Boolean
-  website: String
-  website_not: String
-  website_in: [String]
-  website_not_in: [String]
-  website_contains: String
-  website_not_contains: String
-  twitter_exists: Boolean
-  twitter: String
-  twitter_not: String
-  twitter_in: [String]
-  twitter_not_in: [String]
-  twitter_contains: String
-  twitter_not_contains: String
-  linkedin_exists: Boolean
-  linkedin: String
-  linkedin_not: String
-  linkedin_in: [String]
-  linkedin_not_in: [String]
-  linkedin_contains: String
-  linkedin_not_contains: String
-  slug_exists: Boolean
-  slug: String
-  slug_not: String
-  slug_in: [String]
-  slug_not_in: [String]
-  slug_contains: String
-  slug_not_contains: String
-  order_exists: Boolean
-  order: Int
-  order_not: Int
-  order_in: [Int]
-  order_not_in: [Int]
-  order_gt: Int
-  order_gte: Int
-  order_lt: Int
-  order_lte: Int
-  tagsCollection_exists: Boolean
-  publicationDate_exists: Boolean
-  publicationDate: DateTime
-  publicationDate_not: DateTime
-  publicationDate_in: [DateTime]
-  publicationDate_not_in: [DateTime]
-  publicationDate_gt: DateTime
-  publicationDate_gte: DateTime
-  publicationDate_lt: DateTime
-  publicationDate_lte: DateTime
-  OR: [cfSpeakerNestedFilter]
-  AND: [cfSpeakerNestedFilter]
-}
-
-enum TalkOrder {
-  title_ASC
-  title_DESC
-  shortDescription_ASC
-  shortDescription_DESC
-  date_ASC
-  date_DESC
-  fromTime_ASC
-  fromTime_DESC
-  toTime_ASC
-  toTime_DESC
-  slug_ASC
-  slug_DESC
-  room_ASC
-  room_DESC
-  showAbstractOnMobile_ASC
-  showAbstractOnMobile_DESC
-  duplicate_ASC
-  duplicate_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
 input NewsFilter {
   tags: cfTagNestedFilter
   sys: SysFilter
@@ -4572,14 +4518,10 @@ input WorkshopFilter {
   AND: [WorkshopFilter]
 }
 
-"""
-The Circle scalar type represents a circle, defined by the coordinates of its center and a radius. The Circle type is used to represent a searchable area together with the '_within_circle' filter.
-"""
+# The Circle scalar type represents a circle, defined by the coordinates of its center and a radius. The Circle type is used to represent a searchable area together with the '_within_circle' filter.
 scalar Circle
 
-"""
-The Rectangle scalar type represents a rectangle, defined by the coordinates of its top left and bottom right corners. The Rectangle type is used to represent a searchable area together with the '_within_rectangle' filter.
-"""
+# The Rectangle scalar type represents a rectangle, defined by the coordinates of its top left and bottom right corners. The Rectangle type is used to represent a searchable area together with the '_within_rectangle' filter.
 scalar Rectangle
 
 enum WorkshopOrder {
@@ -4742,9 +4684,7 @@ enum ConfigOrder {
   sys_publishedVersion_DESC
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/block)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/block)
 type Block implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -4803,9 +4743,7 @@ enum BlockOrder {
   sys_publishedVersion_DESC
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/staff)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/staff)
 type Staff implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -4941,9 +4879,7 @@ enum HostOrder {
   sys_publishedVersion_DESC
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/redirect)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/redirect)
 type Redirect implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -5195,9 +5131,7 @@ enum TeamOrder {
   sys_publishedVersion_DESC
 }
 
-"""
-Sponsorship Goodies [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/goodies)
-"""
+# Sponsorship Goodies [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/goodies)
 type Goodies implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -5270,9 +5204,7 @@ enum SocialMediaOrder {
   sys_publishedVersion_DESC
 }
 
-"""
-Year of Appearance [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/edition)
-"""
+# Year of Appearance [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/edition)
 type Edition implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -5337,9 +5269,7 @@ enum EditionOrder {
   sys_publishedVersion_DESC
 }
 
-"""
-Contact Form [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/contact)
-"""
+# Contact Form [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/contact)
 type Contact implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
@@ -5400,9 +5330,7 @@ enum ContactOrder {
   sys_publishedVersion_DESC
 }
 
-"""
-[See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/track)
-"""
+# [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/track)
 type Track implements Entry {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
