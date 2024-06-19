@@ -1,20 +1,30 @@
 @import "./_imports.scss";
 
 body {
-  background: var(--color-black);
-  margin: 0;
+	background: var(--color-black);
+	margin: 0;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 main:not(.home) {
-  background-color: var(--color-white);
-  color: var(--color-black);
+	background-color: var(--color-white);
+	color: var(--color-black);
 }
 
 a,
 button {
-  outline-offset: 4px;
+	outline-offset: 4px;
+}
+
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
 }

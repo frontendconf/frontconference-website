@@ -26,6 +26,13 @@ const query = graphql(`
 const data = await client.request(query);
 
 const page = data.collection?.items[0];
+
+if (!page) {
+	return {
+		status: 404,
+		error: "Page not found",
+	};
+}
 ---
 
 <Layout title="Front Conference Zurich" isHome>
@@ -98,7 +105,8 @@ const page = data.collection?.items[0];
 		page.showSponsors && (
 			<div class="section">
 				<div class="container grid">
-					<SponsorList variant="teaser" />
+					<h2 class="visually-hidden">Our generous sponsors</h2>
+					<SponsorList variant="teaser" groupTitleTag="h3" />
 				</div>
 			</div>
 		)

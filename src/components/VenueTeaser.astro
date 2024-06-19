@@ -4,26 +4,26 @@ import { client } from "../utils/graphql-client";
 import Button from "./Button.astro";
 
 const query = graphql(`
-  query GetVenueTeaser {
-    collection: configCollection(limit: 1) {
-      items {
-        venueTeaser {
-          title
-          body
-          ctaLabel
-          link {
-            ... on Page {
-              slug
-              title
-            }
-          }
-          photo {
-            url(transform: { width: 2000, resizeStrategy: FILL, format: WEBP })
-          }
-        }
-      }
-    }
-  }
+	query GetVenueTeaser {
+		collection: configCollection(limit: 1) {
+			items {
+				venueTeaser {
+					title
+					body
+					ctaLabel
+					link {
+						... on Page {
+							slug
+							title
+						}
+					}
+					photo {
+						url(transform: { width: 2000, resizeStrategy: FILL, format: WEBP })
+					}
+				}
+			}
+		}
+	}
 `);
 
 const data = await client.request(query);
@@ -31,121 +31,126 @@ const venueTeaser = data.collection.items[0].venueTeaser;
 ---
 
 <div class="teaserContainer">
-  <img class="background" src={venueTeaser.photo.url} alt="Venue" />
-  <div class="container">
-    <div class="wrapper">
-      <div class="content">
-        <h2 class="title">{venueTeaser.title}</h2>
-        <p class="text">{venueTeaser.body}</p>
-        {
-          venueTeaser.link && venueTeaser.ctaLabel && (
-            <Button
-              as="a"
-              href={venueTeaser.link.slug}
-              class="ctaButton"
-              variant="tertiary"
-              suffixIcon="arrowRight"
-            >
-              {venueTeaser.ctaLabel}
-            </Button>
-          )
-        }
-      </div>
-    </div>
-  </div>
+	<img
+		class="background"
+		src={venueTeaser.photo.url}
+		alt="Venue"
+		loading="lazy"
+	/>
+	<div class="container">
+		<div class="wrapper">
+			<div class="content">
+				<h2 class="title">{venueTeaser.title}</h2>
+				<p class="text">{venueTeaser.body}</p>
+				{
+					venueTeaser.link && venueTeaser.ctaLabel && (
+						<Button
+							as="a"
+							href={venueTeaser.link.slug}
+							class="ctaButton"
+							variant="tertiary"
+							suffixIcon="arrowRight"
+						>
+							{venueTeaser.ctaLabel}
+						</Button>
+					)
+				}
+			</div>
+		</div>
+	</div>
 </div>
 
 <style lang="scss">
-  @import "../styles/_imports.scss";
+	@import "../styles/_imports.scss";
 
-  .teaserContainer {
-    position: relative;
-    overflow: hidden;
+	.teaserContainer {
+		position: relative;
+		overflow: hidden;
 
-    @include breakpoint-up("sm") {
-      padding-block: pxToRem(80);
-    }
+		@include breakpoint-up("sm") {
+			padding-block: pxToRem(80);
+		}
 
-    @include breakpoint-up("lg") {
-      padding-block: pxToRem(120);
-    }
+		@include breakpoint-up("lg") {
+			padding-block: pxToRem(120);
+		}
 
-    @include breakpoint-up("xxl") {
-      padding-block: pxToRem(224);
-    }
-  }
+		@include breakpoint-up("xxl") {
+			padding-block: pxToRem(224);
+		}
+	}
 
-  .background {
-    aspect-ratio: 10 / 16;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
+	.background {
+		aspect-ratio: 10 / 16;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		z-index: -1;
 
-    @include breakpoint-up("sm") {
-      position: absolute;
-      inset: 0;
-      aspect-ratio: 16 / 10;
-    }
-  }
+		@include breakpoint-up("sm") {
+			position: absolute;
+			inset: 0;
+			aspect-ratio: 16 / 10;
+		}
+	}
 
-  .container {
-    height: 100%;
-    margin-block-start: -50%;
-    margin-inline: pxToRem(-80);
+	.container {
+		height: 100%;
+		margin-block-start: -50%;
+		margin-inline: pxToRem(-80);
 
-    @include breakpoint-up("sm") {
-      margin-block-start: 0;
-      margin-inline: auto;
-    }
-  }
+		@include breakpoint-up("sm") {
+			margin-block-start: 0;
+			margin-inline: auto;
+		}
+	}
 
-  .wrapper {
-    display: grid;
-    align-items: center;
-    height: 100%;
-  }
+	.wrapper {
+		display: grid;
+		align-items: center;
+		height: 100%;
+	}
 
-  .content {
-    display: grid;
-    place-content: center;
-    justify-items: start;
-    background: var(--color-white);
-    aspect-ratio: 1;
-    border-radius: 100%;
-    padding: pxToRem(80);
-    color: var(--color-gray-900);
+	.content {
+		display: grid;
+		place-content: center;
+		justify-items: start;
+		background: var(--color-white);
+		aspect-ratio: 1;
+		border-radius: 100%;
+		padding: pxToRem(80);
+		color: var(--color-gray-900);
 
-    @include breakpoint-up("sm") {
-      max-width: 480px;
-    }
+		@include breakpoint-up("sm") {
+			max-width: 480px;
+		}
 
-    @include breakpoint-up("lg") {
-      max-width: 560px;
-      padding: pxToRem(100);
-    }
+		@include breakpoint-up("lg") {
+			max-width: 560px;
+			padding: pxToRem(100);
+		}
 
-    @include breakpoint-up("xxl") {
-      padding: pxToRem(120);
-    }
-  }
+		@include breakpoint-up("xxl") {
+			padding: pxToRem(120);
+		}
+	}
 
-  /* ignore responsive styles */
-  .title {
-    font-size: pxToRem(36);
-    line-height: calc(40 / 36);
-    letter-spacing: getLetterSpacing(36);
-  }
+	/* ignore responsive styles */
+	.title {
+		font-size: pxToRem(36);
+		line-height: calc(40 / 36);
+		letter-spacing: getLetterSpacing(36);
+	}
 
-  /* ignore responsive styles */
-  .text {
-    margin-block-start: var(--spacing-4x);
-    font-size: pxToRem(16);
-    line-height: calc(24 / 16);
-    letter-spacing: getLetterSpacing(16, 1, 4);
-  }
+	/* ignore responsive styles */
+	.text {
+		margin-block-start: var(--spacing-4x);
+		font-size: pxToRem(16);
+		line-height: calc(24 / 16);
+		letter-spacing: getLetterSpacing(16, 1, 4);
+	}
 
-  .ctaButton {
-    margin-block-start: var(--spacing-10x);
-  }
+	.ctaButton {
+		margin-block-start: var(--spacing-10x);
+	}
 </style>

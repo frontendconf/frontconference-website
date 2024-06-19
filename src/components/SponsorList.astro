@@ -10,12 +10,12 @@ import Link from "./Link.astro";
 
 Astro.response.headers.set(
 	"Cache-Control",
-	"s-maxage=60, stale-while-revalidate",
+	"s-maxage=60, stale-while-revalidate"
 );
 
 export interface Props {
 	variant?: "teaser";
-	groupTitleTag: "h3" | "h4" | "h5";
+	groupTitleTag: "h2" | "h3" | "h4" | "h5";
 }
 
 const { variant, groupTitleTag = "h3" } = Astro.props;
@@ -60,7 +60,7 @@ const sponsors = data.collection.items;
 // filter sponsors by current event year
 const filteredSponsors = sponsors.filter((sponsor) => {
 	return sponsor.tagCollection.items.some(
-		(tag) => tag.title === SPONSOR_LIST_FILTER_TAG_KEY,
+		(tag) => tag.title === SPONSOR_LIST_FILTER_TAG_KEY
 	);
 });
 
