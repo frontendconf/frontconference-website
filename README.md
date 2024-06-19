@@ -1,6 +1,6 @@
 # Frontconference Website
 
-[![Powered by vercel banner](./static/vercel.svg)](https://vercel.com/?utm_source=frontendconf&utm_campaign=oss)
+[![Powered by vercel banner](./src/assets/vercel.svg)](https://vercel.com/?utm_source=frontendconf&utm_campaign=oss)
 
 This directory is a brief example of an [Astro](https://astro.build/) site that can be deployed to Vercel with zero configuration. This demo showcases:
 
