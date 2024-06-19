@@ -5,6 +5,7 @@ import Button from "./Button.astro";
 // import NewsletterSignup from "./NewsletterSignup.astro";
 import Logo from "./Logo.astro";
 import Link from "./Link.astro";
+import Vercel from "../assets/vercel.svg?raw";
 
 const { slug } = Astro.params;
 
@@ -140,6 +141,17 @@ const socialMediaItems =
 			}
 		</ul>
 	</div>
+
+	<div class="vercel-wrapper">
+		<a
+			href="https://vercel.com/?utm_source=frontendconf&utm_campaign=oss"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="vercel-banner"
+		>
+			<Fragment set:html={Vercel} />
+		</a>
+	</div>
 </footer>
 
 <style lang="scss">
@@ -148,7 +160,7 @@ const socialMediaItems =
 	.footer {
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-areas: "newsletter" "social" "cta" "nav" "meta";
+		grid-template-areas: "newsletter" "social" "cta" "nav" "meta" "vercel";
 		padding-block-start: var(--spacing-10x);
 		padding-block-end: var(--spacing-12x);
 
@@ -157,7 +169,8 @@ const socialMediaItems =
 			grid-template-columns: auto 1fr 1fr;
 			grid-template-areas:
 				"cta nav newsletter"
-				"meta meta social";
+				"meta meta social"
+				"vercel vercel vercel";
 			row-gap: var(--spacing-20x);
 		}
 	}
@@ -294,5 +307,16 @@ const socialMediaItems =
 		@include breakpoint-up("lg") {
 			padding-inline: 0;
 		}
+	}
+
+	.vercel-wrapper {
+		grid-area: vercel;
+		display: flex;
+		justify-content: center;
+	}
+
+	.vercel-banner {
+		width: 212px;
+		height: auto;
 	}
 </style>
