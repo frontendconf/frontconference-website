@@ -313,6 +313,10 @@ const socialMediaItems =
 		grid-area: vercel;
 		display: flex;
 		justify-content: center;
+
+		@include breakpoint-down("md") {
+			margin-top: var(--spacing-10x);
+		}
 	}
 
 	.vercel-banner {
