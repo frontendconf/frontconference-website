@@ -10,7 +10,7 @@ import Link from "./Link.astro";
 
 Astro.response.headers.set(
 	"Cache-Control",
-	"s-maxage=60, stale-while-revalidate"
+	"s-maxage=60, stale-while-revalidate",
 );
 
 export interface Props {
@@ -60,7 +60,7 @@ const sponsors = data.collection.items;
 // filter sponsors by current event year
 const filteredSponsors = sponsors.filter((sponsor) => {
 	return sponsor.tagCollection.items.some(
-		(tag) => tag.title === SPONSOR_LIST_FILTER_TAG_KEY
+		(tag) => tag.title === SPONSOR_LIST_FILTER_TAG_KEY,
 	);
 });
 
@@ -249,8 +249,8 @@ const getSocial = (sponsor, key) =>
 	}
 
 	.var-teaser {
-		--sponsor-teaser-item-cols: 1;
-		--sponsor-teaser-logo-height: 200px;
+		--sponsor-teaser-item-cols: 4;
+		--sponsor-teaser-logo-height: 42px;
 
 		.list__title {
 			@extend %typo-h5;
@@ -281,6 +281,11 @@ const getSocial = (sponsor, key) =>
 
 		:global(svg) {
 			fill: white;
+		}
+
+		.var-presenting-sponsor {
+			--sponsor-teaser-item-cols: 1;
+			--sponsor-teaser-logo-height: 200px;
 		}
 
 		.var-diamond {
