@@ -21,6 +21,7 @@ const query = graphql(`
 			items {
 				config
 				lead
+				metaDescription
 			}
 		}
 	}
@@ -31,7 +32,8 @@ const data = await client.request(query, {
 });
 
 const currentPage = data.collection?.items[0];
-const pageMetaDescription = metaDescription || currentPage.lead;
+const pageMetaDescription =
+	metaDescription || currentPage.metaDescription || currentPage.lead;
 ---
 
 <!doctype html>
