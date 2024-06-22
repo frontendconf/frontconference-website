@@ -7,11 +7,12 @@ import Footer from "../components/Footer.astro";
 
 export interface Props {
 	title: string;
+	metaDescription?: string;
 	isHome?: boolean;
 	contentClass?: string;
 }
 
-const { title, isHome, contentClass } = Astro.props;
+const { title, metaDescription, isHome, contentClass } = Astro.props;
 const { slug } = Astro.params;
 
 const query = graphql(`
@@ -19,6 +20,7 @@ const query = graphql(`
 		collection: pageCollection(where: { slug: $slug }) {
 			items {
 				config
+				lead
 			}
 		}
 	}
@@ -29,6 +31,7 @@ const data = await client.request(query, {
 });
 
 const currentPage = data.collection?.items[0];
+const pageMetaDescription = metaDescription || currentPage.lead;
 ---
 
 <!doctype html>
@@ -47,6 +50,7 @@ const currentPage = data.collection?.items[0];
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="manifest" href="/manifest.webmanifest" />
 		<title>{title} - Front Conference Zurich</title>
+		<meta name="description" content={pageMetaDescription} />
 		<ViewTransitions />
 		<style lang="scss" is:global>
 			@import "../styles/fonts.scss";
