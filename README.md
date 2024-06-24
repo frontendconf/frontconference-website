@@ -45,3 +45,13 @@ All commands are run from the root of the project, from a terminal:
 ## Environment
 
 See `.env.template` for required environment variables. Locally, creating a `.env` file is probably the easiest way to provide them to the app. The values can be copied from Vercel's project settings, e.g.
+
+## GraphQL
+
+You can generate the GraphQL Schema and Types by running the following command:
+
+```bash
+npx gql.tada generate-schema https://graphql.contentful.com/content/v1/spaces/{SPACE}/environments/master\?access_token\={CDA_TOKEN}
+```
+
+The `SPACE` and `CDA_TOKEN` can be found in the Contentful settings. 
