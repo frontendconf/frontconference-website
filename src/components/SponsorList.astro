@@ -10,7 +10,7 @@ import Link from "./Link.astro";
 
 Astro.response.headers.set(
 	"Cache-Control",
-	"s-maxage=60, stale-while-revalidate",
+	"s-maxage=60, stale-while-revalidate"
 );
 
 export interface Props {
@@ -60,7 +60,7 @@ const sponsors = data.collection.items;
 // filter sponsors by current event year
 const filteredSponsors = sponsors.filter((sponsor) => {
 	return sponsor.tagCollection.items.some(
-		(tag) => tag.title === SPONSOR_LIST_FILTER_TAG_KEY,
+		(tag) => tag.title === SPONSOR_LIST_FILTER_TAG_KEY
 	);
 });
 
@@ -156,7 +156,7 @@ const getSocial = (sponsor, key) =>
 				{item.sponsors.map((sponsor) => (
 					<li class:list={["list__item", !isTeaser && "grid"]}>
 						<a {...getSocial(sponsor, "link")} class="logo" target="_blank">
-							<span class="logo__wrapper" set:html={sponsor.logoSvg} />
+							<div class="logo__wrapper" set:html={sponsor.logoSvg} />
 						</a>
 						{!isTeaser && (
 							<div class="content">
@@ -212,6 +212,22 @@ const getSocial = (sponsor, key) =>
 		}
 	}
 
+	.var-presenting-sponsor {
+		--sponsor-teaser-logo-height: 160px;
+	}
+
+	.var-gold {
+		--sponsor-teaser-logo-height: 140px;
+	}
+
+	.var-silver {
+		--sponsor-teaser-logo-height: 120px;
+	}
+
+	.var-contributing {
+		--sponsor-teaser-logo-height: 110px;
+	}
+
 	.logo__wrapper {
 		display: block;
 		max-width: 80%;
@@ -222,7 +238,7 @@ const getSocial = (sponsor, key) =>
 
 		:global(svg) {
 			width: 100%;
-			height: 100%;
+			max-height: var(--sponsor-teaser-logo-height);
 		}
 	}
 
@@ -277,6 +293,12 @@ const getSocial = (sponsor, key) =>
 		.logo__wrapper {
 			max-width: 100%;
 			height: var(--sponsor-teaser-logo-height);
+
+			:global(svg) {
+				width: 100%;
+				height: 100%;
+				max-width: none;
+			}
 		}
 
 		:global(svg) {
