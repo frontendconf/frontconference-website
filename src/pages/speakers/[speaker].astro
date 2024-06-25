@@ -22,10 +22,7 @@ const query = graphql(
 			}
 			talk: talkCollection(
 				where: {
-					OR: [
-						{ speaker: { slug: $slug } },
-						{ speakers: { slug: $slug } }
-					]
+					OR: [{ speaker: { slug: $slug } }, { speakers: { slug: $slug } }]
 				}
 				order: date_DESC
 			) {
@@ -63,6 +60,7 @@ if (!speaker || !speaker.name) {
 
 <ContentLayout
 	title={speaker.name}
+	metaDescription={filteredTalks[0].shortDescription}
 	backLinkTitle="Speakers"
 	displayBacklink
 	contentClass="grid--row-gap-double"

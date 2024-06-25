@@ -32,7 +32,7 @@ if (!currentPage || !currentPage.title) {
 }
 ---
 
-<ContentLayout title={currentPage.title}>
+<ContentLayout title={currentPage.title} metaDescription={currentPage.lead}>
 	{currentPage.lead && <p class="typo-lead column--main">{currentPage.lead}</p>}
 	{currentPage.body && <Markdown text={currentPage.body} />}
 
