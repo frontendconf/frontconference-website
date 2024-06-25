@@ -48,16 +48,11 @@ if (!page) {
 					</div>
 					<Ticket />
 				</div>
-				<div class="arrowWrapper">
-					<div class="arrow">
-						<Icon name="arrowDown" />
-					</div>
-				</div>
 			</>
 		)
 	}
 	{/* TODO: make dynamic and move to Contentful */}
-	<div class="section" id="scrollTarget">
+	<div class="section">
 		<div class="container grid">
 			<div class="teaser">
 				<div class="teaser__content">
@@ -116,11 +111,6 @@ if (!page) {
 <style lang="scss">
 	@import "../styles/_imports.scss";
 
-	// makes sure there is some space between the header and the scrollTarget
-	#scrollTarget {
-		scroll-margin-block-start: var(--spacing-20x);
-	}
-
 	.introWrapper {
 		position: relative;
 		max-width: calc(var(--max-content-width) + 10%);
@@ -157,25 +147,6 @@ if (!page) {
 			&.intro--desktop {
 				display: block;
 			}
-		}
-	}
-
-	.arrowWrapper {
-		display: flex;
-		justify-content: center;
-		margin-block-start: var(--spacing-16x);
-	}
-
-	.arrow {
-		appearance: none;
-		background: none;
-		border: none;
-		color: white;
-		// cursor: pointer;
-
-		svg {
-			width: pxToRem(80);
-			height: pxToRem(24);
 		}
 	}
 
