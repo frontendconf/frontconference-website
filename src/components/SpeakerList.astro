@@ -14,9 +14,16 @@ Astro.response.headers.set(
 export interface Props {
 	variant?: "light" | "dark";
 	limit?: number;
+	slug?: string;
 }
 
-const { variant = "dark", limit, class: className, ...rest } = Astro.props;
+const {
+	variant = "dark",
+	limit,
+	slug,
+	class: className,
+	...rest
+} = Astro.props;
 
 const query = graphql(
 	`
@@ -60,7 +67,7 @@ const speakers =
 		{
 			speakers.map((speaker) => (
 				<li class="speaker-list__item">
-					<SpeakerCard speaker={speaker} variant={variant} />
+					<SpeakerCard speaker={speaker} variant={variant} slug={slug} />
 				</li>
 			))
 		}
