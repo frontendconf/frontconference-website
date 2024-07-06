@@ -6,8 +6,8 @@ export interface Props extends HTMLInputElement {
 const { class: className, variant, ...rest } = Astro.props;
 ---
 
-<div class:list={["wrapper", variant, className]}>
-	<input class="input" {...rest} />
+<div class:list={["wrapper", variant]}>
+	<input class:list={["input", className]} {...rest} />
 </div>
 
 <style lang="scss">
@@ -43,7 +43,7 @@ const { class: className, variant, ...rest } = Astro.props;
 
 	.wrapper {
 		display: inline-flex;
-		justify-content: center;
+		width: 100%;
 		align-items: center;
 		text-decoration: none;
 		position: relative;
@@ -109,6 +109,7 @@ const { class: className, variant, ...rest } = Astro.props;
 	.input {
 		border: 0 none;
 		appearance: none;
+		width: inherit;
 		outline: none !important;
 		padding-inline: 0;
 		background-color: transparent;
