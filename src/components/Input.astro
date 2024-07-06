@@ -16,18 +16,29 @@ const { class: className, variant, ...rest } = Astro.props;
 	:root {
 		--input-color: var(--color-gray-600);
 		--input-background-color: var(--color-white);
+		--input-outline-background-color: var(--color-white);
 		--input-placeholder-color: var(--color-cardboard);
 
 		--input-hover-color: var(--color-gray-600);
 		--input-hover-background-color: var(--color-gray-50);
 
 		--input-focus-color: var(--color-gray-700);
-		--input-focus-background-color: var(--color-white);
 		--input-focus-outline-color: var(--color-green-100);
 
 		--input-invalid-color: var(--color-purple-200);
-		--input-invalid-background-color: var(--color-white);
 		--input-invalid-outline-color: var(--color-purple-200);
+	}
+
+	/**
+	* variants need to be declared before styles
+	* otherwise the outline styles will not work
+	* TODO: investigate why - probably a cascade issue
+	*/
+	.secondary {
+		--input-background-color: var(--color-gray-50);
+		--input-outline-background-color: var(--color-gray-50);
+		--input-hover-background-color: var(--color-gray-100);
+		--input-focus-background-color: var(--color-gray-50);
 	}
 
 	.wrapper {
@@ -47,15 +58,11 @@ const { class: className, variant, ...rest } = Astro.props;
 		);
 		padding-inline: pxToRem(30);
 		column-gap: var(--spacing-1x);
-		background-color: var(--input-background-color);
+		background-color: var(--input-outline-background-color);
 
 		transition: var(--transition-duration-quick)
 			var(--transition-easing-default);
 		transition-property: color, background-color;
-
-		&:not(:disabled) {
-			cursor: pointer;
-		}
 
 		&::before {
 			content: "";
@@ -79,17 +86,12 @@ const { class: className, variant, ...rest } = Astro.props;
 		&:where(:has(input:not(:disabled):hover)) {
 			--input-color: var(--input-hover-color);
 			--input-background-color: var(--input-hover-background-color);
-			&::before {
-				background-color: var(--input-hover-background-color);
-			}
+			--input-outline-background-color: var(--input-hover-background-color);
 		}
 
 		&:where(:has(input:focus-visible)) {
 			--input-color: var(--input-focus-color);
-			--input-background-color: var(--input-focus-outline-color);
-			&::before {
-				background-color: var(--input-focus-background-color);
-			}
+			--input-outline-background-color: var(--input-focus-outline-color);
 		}
 
 		&:where(:has(input:disabled)) {
@@ -100,10 +102,7 @@ const { class: className, variant, ...rest } = Astro.props;
 
 		&:where(:has(input:user-invalid)) {
 			--input-color: var(--input-invalid-color);
-			--input-background-color: var(--input-invalid-outline-color);
-			&::before {
-				background-color: var(--input-invalid-background-color);
-			}
+			--input-outline-background-color: var(--input-invalid-outline-color);
 		}
 	}
 
