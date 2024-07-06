@@ -56,7 +56,7 @@ const { class: className, variant, ...rest } = Astro.props;
 			12px 100%,
 			0% 50%
 		);
-		padding-inline: pxToRem(30);
+		padding-inline: var(--spacing-5x);
 		column-gap: var(--spacing-1x);
 		background-color: var(--input-outline-background-color);
 
@@ -110,6 +110,7 @@ const { class: className, variant, ...rest } = Astro.props;
 		border: 0 none;
 		appearance: none;
 		outline: none !important;
+		padding-inline: 0;
 		background-color: transparent;
 		color: var(--input-color);
 		font-variant-numeric: lining-nums tabular-nums;

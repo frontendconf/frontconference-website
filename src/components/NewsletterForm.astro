@@ -36,6 +36,11 @@ import Input from "./Input.astro";
 	.label {
 		@extend %typo-lead;
 		color: var(--color-purple-100);
+		padding-inline-start: var(--spacing-4x);
+
+		@include breakpoint-up("xxl") {
+			padding-inline-start: 0;
+		}
 	}
 
 	.group {
