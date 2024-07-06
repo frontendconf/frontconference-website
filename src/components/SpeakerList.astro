@@ -27,7 +27,11 @@ const {
 
 const query = graphql(
 	`
-		query GetSpeakersPage($limit: Int!, $yearTag: String!) {
+		query GetSpeakersPage(
+			$limit: Int!
+			$yearTag: String!
+			$order: [TagLinkingCollectionsSpeakerCollectionOrder]!
+		) {
 			collection: pageCollection(where: { slug: "speakers" }) {
 				items {
 					title
@@ -40,7 +44,7 @@ const query = graphql(
 			tags: tagCollection(limit: 1, where: { title: $yearTag }) {
 				items {
 					linkedFrom {
-						speakers: speakerCollection(limit: $limit, order: name_ASC) {
+						speakers: speakerCollection(limit: $limit, order: $order) {
 							items {
 								...SpeakerCardFragment
 							}
@@ -56,6 +60,7 @@ const query = graphql(
 const data = await client.request(query, {
 	yearTag: SPEAKER_YEAR_TAG_KEY,
 	limit: limit || 200,
+	order: variant === "light" ? ["order_ASC"] : ["name_ASC"],
 });
 
 const speakers =
