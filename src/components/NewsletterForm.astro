@@ -1,0 +1,58 @@
+---
+import Button from "./Button.astro";
+import Input from "./Input.astro";
+---
+
+<form
+	class="form"
+	action="//frontendconf.us2.list-manage.com/subscribe/post?u=d6e0840333568eaec22d009ab&id=d822473667"
+	method="post"
+	id="mc-embedded-subscribe-form"
+	name="mc-embedded-subscribe-form"
+	target="_blank"
+>
+	<label for="email" class="label">Sign up for the newsletter</label>
+	<div class="group">
+		<Input type="email" id="email" name="EMAIL" placeholder="E-Mail" />
+		<Button type="submit" variant="tertiary">Go</Button>
+	</div>
+</form>
+
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	.form {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-5x);
+
+		@include breakpoint-up("xxl") {
+			flex-direction: row;
+			align-items: center;
+			gap: var(--spacing-10x);
+		}
+	}
+
+	.label {
+		@extend %typo-lead;
+		color: var(--color-purple-100);
+		padding-inline-start: var(--spacing-4x);
+
+		@include breakpoint-up("xxl") {
+			padding-inline-start: 0;
+		}
+	}
+
+	.group {
+		display: flex;
+		max-width: 50ch;
+
+		input {
+			margin-right: var(--spacing-3x);
+		}
+
+		button {
+			margin-left: calc(-1 * var(--spacing-3x));
+		}
+	}
+</style>
