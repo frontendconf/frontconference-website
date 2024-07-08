@@ -1,4 +1,23 @@
 ---
+export async function getStaticPaths() {
+	const query = graphql(`
+		query {
+			collection: workshopCollection {
+				items {
+					slug
+				}
+			}
+		}
+	`);
+
+	const data = await client.request(query);
+	const pages = data.collection?.items
+		.map((item) => ({ params: { workshop: item?.slug } }))
+		.filter((page) => page.params?.workshop);
+
+	return pages;
+}
+
 import { graphql } from "gql.tada";
 import ContentLayout from "../../layouts/ContentLayout.astro";
 import { client } from "../../utils/graphql-client";
@@ -33,7 +52,7 @@ const query = graphql(
 			}
 		}
 	`,
-	[speakerDetailFragment],
+	[speakerDetailFragment]
 );
 
 const data = await client.request(query, {

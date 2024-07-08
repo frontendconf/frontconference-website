@@ -4,11 +4,6 @@ import { client } from "../utils/graphql-client";
 import SpotTeaser from "./SpotTeaser.astro";
 import Markdown from "./Markdown.astro";
 
-Astro.response.headers.set(
-  "Cache-Control",
-  "s-maxage=60, stale-while-revalidate",
-);
-
 const query = graphql(`
   query GetHotels {
     collection: hotelCollection {

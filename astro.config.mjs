@@ -4,7 +4,7 @@ import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
+  output: "hybrid",
   adapter: vercel(),
   integrations: [icon({
     iconDir: "src/assets/icons",

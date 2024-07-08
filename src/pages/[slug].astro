@@ -1,4 +1,24 @@
 ---
+export async function getStaticPaths() {
+	const query = graphql(`
+		query {
+			collection: pageCollection {
+				items {
+					slug
+				}
+			}
+		}
+	`);
+
+	const data = await client.request(query);
+	const pages = data.collection?.items
+		.map((item) => ({ params: { slug: item?.slug } }))
+		.filter((page) => page.params?.slug)
+		.filter((page) => page.params?.slug !== "/");
+
+	return pages;
+}
+
 import ContentLayout from "../layouts/ContentLayout.astro";
 import { graphql } from "gql.tada";
 import { client } from "../utils/graphql-client";
@@ -9,7 +29,7 @@ import Venue from "../components/Venue.astro";
 import HotelList from "../components/HotelList.astro";
 import RestaurantList from "../components/RestaurantList.astro";
 import AirtableForm from "../components/AirtableForm.astro";
-
+console.log(Astro.params);
 const { slug } = Astro.params;
 
 const query = graphql(`

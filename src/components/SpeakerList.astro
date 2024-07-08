@@ -6,11 +6,6 @@ import { notEmpty } from "../utils/helpers";
 import SpeakerCard, { speakerCardFragment } from "./SpeakerCard.astro";
 import Button from "./Button.astro";
 
-Astro.response.headers.set(
-	"Cache-Control",
-	"s-maxage=60, stale-while-revalidate",
-);
-
 export interface Props {
 	variant?: "light" | "dark";
 	limit?: number;
