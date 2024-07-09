@@ -1,4 +1,23 @@
 ---
+export async function getStaticPaths() {
+	const query = graphql(`
+		query {
+			collection: speakerCollection {
+				items {
+					slug
+				}
+			}
+		}
+	`);
+
+	const data = await client.request(query);
+	const pages = data.collection?.items
+		.map((item) => ({ params: { speaker: item?.slug } }))
+		.filter((page) => page.params?.speaker);
+
+	return pages;
+}
+
 import { graphql } from "gql.tada";
 import ContentLayout from "../../layouts/ContentLayout.astro";
 import { client } from "../../utils/graphql-client";
@@ -32,7 +51,7 @@ const query = graphql(
 			}
 		}
 	`,
-	[speakerDetailFragment, talkDetailFragment],
+	[speakerDetailFragment, talkDetailFragment]
 );
 
 const data = await client.request(query, {
@@ -45,7 +64,7 @@ const talks = data.talk?.items;
 // filter talks by current event year
 const filteredTalks = talks.filter((talk) => {
 	return talk.tagsCollection.items.some(
-		(tag) => tag.title === TALK_YEAR_TAG_KEY,
+		(tag) => tag.title === TALK_YEAR_TAG_KEY
 	);
 });
 
@@ -60,7 +79,7 @@ if (!speaker || !speaker.name) {
 
 <ContentLayout
 	title={speaker.name}
-	metaDescription={filteredTalks[0].shortDescription}
+	metaDescription={filteredTalks[0]?.shortDescription}
 	backLinkTitle="Speakers"
 	displayBacklink
 	contentClass="grid--row-gap-double"

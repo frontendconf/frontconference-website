@@ -8,11 +8,6 @@ import {
 } from "../utils/constants";
 import Link from "./Link.astro";
 
-Astro.response.headers.set(
-	"Cache-Control",
-	"s-maxage=60, stale-while-revalidate",
-);
-
 export interface Props {
 	variant?: "teaser";
 	groupTitleTag: "h2" | "h3" | "h4" | "h5";

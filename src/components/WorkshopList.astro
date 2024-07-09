@@ -14,11 +14,6 @@ const formatDate = (date: string) => {
 	});
 };
 
-Astro.response.headers.set(
-	"Cache-Control",
-	"s-maxage=60, stale-while-revalidate",
-);
-
 export interface Props {
 	slug: string;
 	class?: string;
