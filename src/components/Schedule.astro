@@ -1,0 +1,213 @@
+---
+import { graphql } from "gql.tada";
+import { client } from "../utils/graphql-client";
+import { TALK_YEAR_TAG_KEY } from "../utils/constants";
+import TalkCard from "./TalkCard.astro";
+
+// TODO: re-add this once the talks have been updated with time and room
+// const formatDay = (date: string) => {
+// 	return new Date(date).toLocaleDateString("en-US", {
+// 		weekday: "long",
+// 	});
+// };
+
+const query = graphql(`
+	query GetTalks($limit: Int!, $yearTag: String!) {
+		collection: talkCollection(
+			limit: $limit
+			where: { tags: { title: $yearTag } }
+		) {
+			items {
+				title
+				date
+				fromTime
+				toTime
+				room
+				speaker: speakersCollection(limit: 1) {
+					items {
+						slug
+						name
+						photo {
+							url(transform: { width: 600, height: 600, resizeStrategy: FILL })
+						}
+					}
+				}
+			}
+		}
+	}
+`);
+
+const data = await client.request(query, {
+	yearTag: TALK_YEAR_TAG_KEY,
+	limit: 200,
+});
+
+const schedule = data.collection?.items || [];
+
+// TODO: re-add this once the talks have been updated with time and room
+// const scheduleMap = schedule.reduce((acc, talk) => {
+// 	const day = formatDay(talk.date);
+// 	const sortDate = new Date(talk.date).getTime();
+//
+// 	if (!acc[day]) {
+// 		acc[day] = {
+// 			title: day,
+// 			sort: sortDate,
+// 			slots: {},
+// 		};
+// 	}
+//
+// 	if (talk.fromTime) {
+// 		const fromTimeSort = parseInt(talk.fromTime.replace(/[^0-9]/g, ""), 10);
+//
+// 		if (!acc[day].slots[talk.fromTime]) {
+// 			acc[day].slots[talk.fromTime] = {
+// 				sort: fromTimeSort,
+// 				title: talk.fromTime,
+// 				talks: [],
+// 			};
+// 		}
+//
+// 		acc[day].slots[talk.fromTime].talks.push(talk);
+// 	}
+//
+// 	return acc;
+// }, {});
+//
+// const sortedSchedule = Object.keys(scheduleMap)
+// 	.map((day) => {
+// 		const dayData = scheduleMap[day];
+// 		dayData.slots = Object.values(dayData.slots)
+// 			.sort((a, b) => a.sort - b.sort)
+// 			.map((slot) => {
+// 				slot.talks.sort((a, b) => a.room.localeCompare(b.room));
+// 				return slot;
+// 			});
+// 		return dayData;
+// 	})
+// 	.sort((a, b) => a.sort - b.sort);
+
+const scheduleMap = schedule.reduce((acc, talk) => {
+	const room = talk.room;
+
+	if (room) {
+		if (!acc[room]) {
+			acc[room] = [];
+		}
+		acc[room].push({
+			fromTime: talk.fromTime,
+			toTime: talk.toTime,
+			title: talk.title,
+			speaker: talk.speaker.items[0],
+			detailPage: talk.detailPage,
+		});
+	}
+
+	return acc;
+}, {});
+
+const sortedSchedule = Object.keys(scheduleMap)
+	.sort((a, b) => a.localeCompare(b)) // Sort rooms alphabetically
+	.map((room) => ({
+		room,
+		talks: scheduleMap[room],
+	}));
+---
+
+<p class="typo-lead">
+	Our Schedule is still work in progress - but here's a Sneakpeak.
+</p>
+<div class="wrapper">
+	<ul class="legend" role="presentation">
+		<li class="legend-item var--purple">Lower floor</li>
+		<li class="legend-item var--green">Upper floor</li>
+	</ul>
+	<div class="schedule">
+		{
+			sortedSchedule.map((schedule) => (
+				<div>
+					<h2 class="typo-h3">{schedule.room}</h2>
+					<ul class="list">
+						{schedule.talks.map((talk) => (
+							<TalkCard
+								name={talk.speaker.name}
+								title={talk.title}
+								image={{
+									src: talk.speaker.photo.url,
+									alt: talk.speaker.name,
+								}}
+								href={`/speakers/${talk.speaker.slug}`}
+								variant={schedule.room === "Folium" ? "purple" : "green"}
+							/>
+						))}
+					</ul>
+				</div>
+			))
+		}
+	</div>
+</div>
+
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-10x);
+	}
+
+	.legend {
+		--_mark-color: transparent;
+
+		display: flex;
+		gap: var(--spacing-4x);
+		list-style: none;
+		padding-inline-start: 0;
+		align-self: end;
+
+		.legend-item {
+			display: flex;
+			align-items: center;
+			gap: var(--spacing-3x);
+
+			&:before {
+				content: "";
+				display: block;
+				width: pxToRem(24);
+				height: pxToRem(24);
+				background: linear-gradient(
+					225deg,
+					var(--_mark-color) 50%,
+					transparent 50%
+				);
+			}
+
+			&.var--purple:before {
+				--_mark-color: var(--color-purple-100);
+			}
+
+			&.var--green:before {
+				--_mark-color: var(--color-green-100);
+			}
+		}
+	}
+
+	.schedule {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--spacing-10x);
+
+		@include breakpoint-up("lg") {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.list {
+		list-style: none;
+		padding-inline-start: 0;
+		margin-block-start: var(--spacing-10x);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-8x);
+	}
+</style>

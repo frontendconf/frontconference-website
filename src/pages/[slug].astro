@@ -9,6 +9,7 @@ import Venue from "../components/Venue.astro";
 import HotelList from "../components/HotelList.astro";
 import RestaurantList from "../components/RestaurantList.astro";
 import AirtableForm from "../components/AirtableForm.astro";
+import Schedule from "../components/Schedule.astro";
 
 const { slug } = Astro.params;
 
@@ -123,6 +124,7 @@ if (!currentPage || !currentPage.title) {
 				<AirtableForm id="Speakers Bootcamp" />
 			)
 		}
+		{currentPage.showSchedule && <Schedule />}
 	</div>
 </ContentLayout>
 
