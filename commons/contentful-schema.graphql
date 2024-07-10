@@ -92,7 +92,7 @@ type ContentfulMetadata {
 
 """
 Represents a tag entity for finding and organizing content easily.
-    Find out more here: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/content-tags
+      Find out more here: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/content-tags
 """
 type ContentfulTag {
   id: String
@@ -276,10 +276,11 @@ type PageCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/page)
 """
-type Page implements Entry {
+type Page implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): PageLinkingCollections
+  _id: ID!
   title(locale: String): String
   metaDescription(locale: String): String
   lead(locale: String): String
@@ -317,6 +318,10 @@ type Page implements Entry {
   config(locale: String): JSON
   backgroundImageDesktop(preview: Boolean, locale: String): Asset
   backgroundImageMobile(preview: Boolean, locale: String): Asset
+}
+
+interface _Node {
+  _id: ID!
 }
 
 type PageLinkingCollections {
@@ -406,10 +411,11 @@ type TalkCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/talk)
 """
-type Talk implements Entry {
+type Talk implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): TalkLinkingCollections
+  _id: ID!
   title(locale: String): String
   shortDescription(locale: String): String
   abstract(locale: String): String
@@ -435,10 +441,11 @@ type TalkLinkingCollections {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/speaker)
 """
-type Speaker implements Entry {
+type Speaker implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): SpeakerLinkingCollections
+  _id: ID!
   name(locale: String): String
   description(locale: String): String
   company(locale: String): String
@@ -500,10 +507,11 @@ type TeaserCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/teaser)
 """
-type Teaser implements Entry {
+type Teaser implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): TeaserLinkingCollections
+  _id: ID!
   title(locale: String): String
   ctaLabel(locale: String): String
   body(locale: String): String
@@ -597,10 +605,11 @@ type SponsorCategoryCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/sponsorCategory)
 """
-type SponsorCategory implements Entry {
+type SponsorCategory implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): SponsorCategoryLinkingCollections
+  _id: ID!
   title(locale: String): String
   level(locale: String): Int
   body(locale: String): String
@@ -630,10 +639,11 @@ type SponsorCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/sponsor)
 """
-type Sponsor implements Entry {
+type Sponsor implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): SponsorLinkingCollections
+  _id: ID!
   title(locale: String): String
   body(locale: String): String
   logo(preview: Boolean, locale: String): Asset
@@ -826,10 +836,11 @@ type SponsorTagCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/tag)
 """
-type Tag implements Entry {
+type Tag implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): TagLinkingCollections
+  _id: ID!
   title(locale: String): String
 }
 
@@ -949,10 +960,11 @@ type ConfigNewCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/configNew)
 """
-type ConfigNew implements Entry {
+type ConfigNew implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): ConfigNewLinkingCollections
+  _id: ID!
   logoTitle(locale: String): String
   logoText(locale: String): ConfigNewLogoText
   menuCollection(skip: Int = 0, limit: Int = 100, preview: Boolean, locale: String): ConfigNewMenuCollection
@@ -1533,10 +1545,11 @@ type ConfigNewFooterSocialMediaCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/socialMedia)
 """
-type SocialMedia implements Entry {
+type SocialMedia implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): SocialMediaLinkingCollections
+  _id: ID!
   title(locale: String): String
   link(locale: String): String
   iconCharacter(locale: String): String
@@ -1581,10 +1594,11 @@ type ConfigCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/config)
 """
-type Config implements Entry {
+type Config implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): ConfigLinkingCollections
+  _id: ID!
   menuCollection(skip: Int = 0, limit: Int = 100, preview: Boolean, locale: String): ConfigMenuCollection
   title(locale: String): String
   subtitle(locale: String): String
@@ -2233,10 +2247,11 @@ type NewsCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/news)
 """
-type News implements Entry {
+type News implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): NewsLinkingCollections
+  _id: ID!
   title(locale: String): String
   date(locale: String): DateTime
   body(locale: String): String
@@ -2314,10 +2329,11 @@ type WorkshopCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/workshop)
 """
-type Workshop implements Entry {
+type Workshop implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): WorkshopLinkingCollections
+  _id: ID!
   title(locale: String): String
   lead(locale: String): String
   body(locale: String): String
@@ -2541,10 +2557,11 @@ type HostCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/host)
 """
-type Host implements Entry {
+type Host implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): HostLinkingCollections
+  _id: ID!
   name(locale: String): String
   description(locale: String): String
   bio(locale: String): String
@@ -3058,10 +3075,11 @@ type HotelCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/hotel)
 """
-type Hotel implements Entry {
+type Hotel implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): HotelLinkingCollections
+  _id: ID!
   name(locale: String): String
   description(locale: String): String
   link(locale: String): String
@@ -3083,10 +3101,11 @@ type RestaurantCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/restaurant)
 """
-type Restaurant implements Entry {
+type Restaurant implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): RestaurantLinkingCollections
+  _id: ID!
   name(locale: String): String
   description(locale: String): String
   link(locale: String): String
@@ -3108,10 +3127,11 @@ type TeamCollection {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/team)
 """
-type Team implements Entry {
+type Team implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): TeamLinkingCollections
+  _id: ID!
   name(locale: String): String
   description(locale: String): String
   company(locale: String): String
@@ -4162,10 +4182,11 @@ enum ConfigOrder {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/block)
 """
-type Block implements Entry {
+type Block implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): BlockLinkingCollections
+  _id: ID!
   id(locale: String): String
   content(locale: String): String
 }
@@ -4218,10 +4239,11 @@ enum BlockOrder {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/staff)
 """
-type Staff implements Entry {
+type Staff implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): StaffLinkingCollections
+  _id: ID!
   name(locale: String): String
   twitter(locale: String): String
 }
@@ -4351,10 +4373,11 @@ enum HostOrder {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/redirect)
 """
-type Redirect implements Entry {
+type Redirect implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): RedirectLinkingCollections
+  _id: ID!
   slug(locale: String): String
   url(locale: String): String
 }
@@ -4600,10 +4623,11 @@ enum TeamOrder {
 """
 Sponsorship Goodies [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/goodies)
 """
-type Goodies implements Entry {
+type Goodies implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): GoodiesLinkingCollections
+  _id: ID!
   goodieList(locale: String): String
 }
 
@@ -4670,10 +4694,11 @@ enum SocialMediaOrder {
 """
 Year of Appearance [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/edition)
 """
-type Edition implements Entry {
+type Edition implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): EditionLinkingCollections
+  _id: ID!
   fec17(locale: String): DateTime
   fec16(locale: String): DateTime
 }
@@ -4732,10 +4757,11 @@ enum EditionOrder {
 """
 Contact Form [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/contact)
 """
-type Contact implements Entry {
+type Contact implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): ContactLinkingCollections
+  _id: ID!
   title(locale: String): String
   description(locale: String): String
 }
@@ -4790,10 +4816,11 @@ enum ContactOrder {
 """
 [See type definition](https://app.contentful.com/spaces/j8md9ikrag2j/content_types/track)
 """
-type Track implements Entry {
+type Track implements Entry & _Node {
   sys: Sys!
   contentfulMetadata: ContentfulMetadata!
   linkedFrom(allowedLocales: [String]): TrackLinkingCollections
+  _id: ID!
   title(locale: String): String
 }
 
@@ -4851,8 +4878,4 @@ enum EntryOrder {
   sys_firstPublishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
-}
-
-interface _Node {
-  _id: ID!
 }
