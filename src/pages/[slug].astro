@@ -1,4 +1,17 @@
 ---
+import ContentLayout from "../layouts/ContentLayout.astro";
+import { graphql } from "gql.tada";
+import { client } from "../utils/graphql-client";
+import Markdown from "../components/Markdown.astro";
+
+import SponsorList from "../components/SponsorList.astro";
+import Venue from "../components/Venue.astro";
+import HotelList from "../components/HotelList.astro";
+import RestaurantList from "../components/RestaurantList.astro";
+import AirtableForm from "../components/AirtableForm.astro";
+
+const { slug } = Astro.params;
+
 export async function getStaticPaths() {
 	const query = graphql(`
 		query {
@@ -18,19 +31,6 @@ export async function getStaticPaths() {
 
 	return pages;
 }
-
-import ContentLayout from "../layouts/ContentLayout.astro";
-import { graphql } from "gql.tada";
-import { client } from "../utils/graphql-client";
-import Markdown from "../components/Markdown.astro";
-
-import SponsorList from "../components/SponsorList.astro";
-import Venue from "../components/Venue.astro";
-import HotelList from "../components/HotelList.astro";
-import RestaurantList from "../components/RestaurantList.astro";
-import AirtableForm from "../components/AirtableForm.astro";
-
-const { slug } = Astro.params;
 
 const query = graphql(`
 	query ($slug: String!) {
