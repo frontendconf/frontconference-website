@@ -4,12 +4,13 @@ import { client } from "../utils/graphql-client";
 import { TALK_YEAR_TAG_KEY } from "../utils/constants";
 import TalkCard from "./TalkCard.astro";
 
-// TODO: re-add this once the talks have been updated with time and room
-// const formatDay = (date: string) => {
-// 	return new Date(date).toLocaleDateString("en-US", {
-// 		weekday: "long",
-// 	});
-// };
+const formatDay = (date: string) => {
+	return new Date(date).toLocaleDateString("en-US", {
+		weekday: "long",
+		day: "numeric",
+		month: "short",
+	});
+};
 
 const query = graphql(`
 	query GetTalks($limit: Int!, $yearTag: String!) {
@@ -44,62 +45,37 @@ const data = await client.request(query, {
 
 const schedule = data.collection?.items || [];
 
-// TODO: re-add this once the talks have been updated with time and room
-// const scheduleMap = schedule.reduce((acc, talk) => {
-// 	const day = formatDay(talk.date);
-// 	const sortDate = new Date(talk.date).getTime();
-//
-// 	if (!acc[day]) {
-// 		acc[day] = {
-// 			title: day,
-// 			sort: sortDate,
-// 			slots: {},
-// 		};
-// 	}
-//
-// 	if (talk.fromTime) {
-// 		const fromTimeSort = parseInt(talk.fromTime.replace(/[^0-9]/g, ""), 10);
-//
-// 		if (!acc[day].slots[talk.fromTime]) {
-// 			acc[day].slots[talk.fromTime] = {
-// 				sort: fromTimeSort,
-// 				title: talk.fromTime,
-// 				talks: [],
-// 			};
-// 		}
-//
-// 		acc[day].slots[talk.fromTime].talks.push(talk);
-// 	}
-//
-// 	return acc;
-// }, {});
-//
-// const sortedSchedule = Object.keys(scheduleMap)
-// 	.map((day) => {
-// 		const dayData = scheduleMap[day];
-// 		dayData.slots = Object.values(dayData.slots)
-// 			.sort((a, b) => a.sort - b.sort)
-// 			.map((slot) => {
-// 				slot.talks.sort((a, b) => a.room.localeCompare(b.room));
-// 				return slot;
-// 			});
-// 		return dayData;
-// 	})
-// 	.sort((a, b) => a.sort - b.sort);
-
 const scheduleMap = schedule.reduce((acc, talk) => {
-	const room = talk.room;
+	const day = formatDay(talk.date);
+	const sortDate = new Date(talk.date).getTime();
+	const hasSpeaker = talk.speaker.items.length > 0;
 
-	if (room) {
-		if (!acc[room]) {
-			acc[room] = [];
+	if (!acc[day]) {
+		acc[day] = {
+			title: day,
+			sort: sortDate,
+			slots: {},
+		};
+	}
+
+	if (talk.fromTime) {
+		const fromTimeSort = parseInt(talk.fromTime.replace(/[^0-9]/g, ""), 10);
+
+		if (!acc[day].slots[talk.fromTime]) {
+			acc[day].slots[talk.fromTime] = {
+				sort: fromTimeSort,
+				title: talk.fromTime,
+				room: !hasSpeaker && talk.room,
+				talks: [],
+			};
 		}
-		acc[room].push({
-			fromTime: talk.fromTime,
-			toTime: talk.toTime,
+
+		console.log(talk);
+
+		acc[day].slots[talk.fromTime].talks.push({
 			title: talk.title,
-			speaker: talk.speaker.items[0],
-			detailPage: talk.detailPage,
+			room: talk.room,
+			...(hasSpeaker && { speaker: talk.speaker.items[0] }),
 		});
 	}
 
@@ -107,53 +83,69 @@ const scheduleMap = schedule.reduce((acc, talk) => {
 }, {});
 
 const sortedSchedule = Object.keys(scheduleMap)
-	.sort((a, b) => a.localeCompare(b)) // Sort rooms alphabetically
-	.map((room) => ({
-		room,
-		talks: scheduleMap[room],
-	}));
+	.map((day) => {
+		const dayData = scheduleMap[day];
+		dayData.slots = Object.values(dayData.slots)
+			.sort((a, b) => a.sort - b.sort)
+			.map((slot) => {
+				slot.talks.sort((a, b) => a.room.localeCompare(b.room));
+				return slot;
+			});
+		return dayData;
+	})
+	.sort((a, b) => a.sort - b.sort);
 ---
 
 <p class="typo-lead">
 	Our Schedule is still work in progress - but here's a Sneakpeak.
 </p>
-<div class="wrapper">
+<div>
 	<ul class="legend" role="presentation">
 		<li class="legend-item var--purple">Lower floor</li>
 		<li class="legend-item var--green">Upper floor</li>
 	</ul>
-	<div class="schedule">
-		{
-			sortedSchedule.map((schedule) => (
-				<div>
-					<h2 class="typo-h3">{schedule.room}</h2>
-					<ul class="list">
-						{schedule.talks.map((talk) => (
-							<TalkCard
-								name={talk.speaker.name}
-								title={talk.title}
-								image={{
-									src: talk.speaker.photo.url,
-									alt: talk.speaker.name,
-								}}
-								href={`/speakers/${talk.speaker.slug}`}
-								variant={schedule.room === "Folium" ? "purple" : "green"}
-							/>
-						))}
-					</ul>
+	{
+		sortedSchedule.map((day) => (
+			<div class="wrapper">
+				<h2 class="typo-h2">{day.title}</h2>
+				<div class="schedule">
+					{day.slots.map((slot) => (
+						<div>
+							<h3 class="meta">
+								<span>{slot.title}</span>
+								<span>{slot.room}</span>
+							</h3>
+							<ul class="list">
+								{slot.talks.map((talk) =>
+									talk.speaker ? (
+										<TalkCard
+											name={talk.speaker.name}
+											title={talk.title}
+											image={{
+												src: talk.speaker.photo.url,
+												alt: talk.speaker.name,
+											}}
+											href={`/speakers/${talk.speaker.slug}`}
+											variant={talk.room === "Folium" ? "purple" : "green"}
+										/>
+									) : (
+										<h3 class="typo-h4">{talk.title}</h3>
+									),
+								)}
+							</ul>
+						</div>
+					))}
 				</div>
-			))
-		}
-	</div>
+			</div>
+		))
+	}
 </div>
 
 <style lang="scss">
 	@import "../styles/_imports.scss";
 
-	.wrapper {
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing-10x);
+	.wrapper + .wrapper {
+		margin-block-start: var(--spacing-24x);
 	}
 
 	.legend {
@@ -163,7 +155,7 @@ const sortedSchedule = Object.keys(scheduleMap)
 		gap: var(--spacing-4x);
 		list-style: none;
 		padding-inline-start: 0;
-		align-self: end;
+		place-content: end;
 
 		.legend-item {
 			display: flex;
@@ -193,21 +185,55 @@ const sortedSchedule = Object.keys(scheduleMap)
 	}
 
 	.schedule {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: var(--spacing-10x);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-12x);
+	}
 
-		@include breakpoint-up("lg") {
-			grid-template-columns: 1fr 1fr;
+	.meta {
+		@extend %typo-body;
+
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: var(--spacing-2x);
+		margin-block-start: var(--spacing-6x);
+		overflow: hidden;
+
+		@include breakpoint-up("sm") {
+			gap: var(--spacing-6x);
+		}
+
+		&:after {
+			content: "";
+			position: absolute;
+			height: 1px;
+			width: 100%;
+			background: var(--color-gray-100);
+		}
+
+		> span {
+			background: var(--color-white);
+			z-index: 1;
+			padding-inline: var(--spacing-2x);
+
+			&:first-child {
+				padding-inline-start: 0;
+			}
 		}
 	}
 
 	.list {
 		list-style: none;
 		padding-inline-start: 0;
-		margin-block-start: var(--spacing-10x);
-		display: flex;
-		flex-direction: column;
+		margin-block-start: var(--spacing-5x);
+		display: grid;
+		grid-template-columns: 1fr;
 		gap: var(--spacing-8x);
+
+		@include breakpoint-up("md") {
+			grid-template-columns: 1fr 1fr;
+		}
 	}
 </style>
