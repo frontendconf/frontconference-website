@@ -1,0 +1,118 @@
+---
+export interface Props {
+	name: string;
+	title: string;
+	image: { src: string; alt: string };
+	href: string;
+	variant?: "green" | "purple";
+}
+
+const { name, title, image, href, variant } = Astro.props;
+---
+
+<li>
+	<a href={href} class="link">
+		<div class:list={["image", variant && `var--${variant}`]}>
+			<img src={image.src} alt={image.alt} />
+		</div>
+		<div class="content">
+			<h3 class="name">{name}</h3>
+			<h4 class="title">{title}</h4>
+		</div>
+	</a>
+</li>
+
+<style lang="scss">
+	@import "../styles/_imports.scss";
+
+	.link {
+		--_mark-color: transparent;
+
+		display: flex;
+		gap: var(--spacing-10x);
+		outline: 0;
+		color: currentColor;
+		text-decoration: none;
+		transition: color var(--transition-duration-quick)
+			var(--transition-easing-default);
+
+		&:hover {
+			color: var(--color-green-100);
+
+			img {
+				scale: 1.03;
+			}
+		}
+
+		&:focus-visible {
+			.image {
+				outline: 2px solid var(--color-green-100);
+			}
+
+			.name {
+				color: var(--color-green-100);
+			}
+		}
+	}
+
+	.image {
+		position: relative;
+		overflow: hidden;
+
+		img {
+			display: block;
+			aspect-ratio: 1 / 1;
+			max-width: 100px;
+			transition: scale var(--transition-duration-quick)
+				var(--transition-easing-default);
+
+			@include breakpoint-up("sm") {
+				max-width: 200px;
+			}
+		}
+
+		&:before {
+			content: "";
+			position: absolute;
+			inset-block-start: 0;
+			inset-inline-end: 0;
+			width: pxToRem(16);
+			height: pxToRem(16);
+			background: linear-gradient(
+				225deg,
+				var(--_mark-color) 50%,
+				transparent 50%
+			);
+			z-index: 1;
+
+			@include breakpoint-up("sm") {
+				width: pxToRem(32);
+				height: pxToRem(32);
+			}
+		}
+
+		&.var--green {
+			--_mark-color: var(--color-green-100);
+		}
+
+		&.var--purple {
+			--_mark-color: var(--color-purple-100);
+		}
+	}
+
+	.content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-1x);
+	}
+
+	.name {
+		@extend %typo-h6;
+		text-transform: uppercase;
+	}
+
+	.title {
+		@extend %typo-lead;
+	}
+</style>
