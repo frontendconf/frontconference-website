@@ -70,8 +70,6 @@ const scheduleMap = schedule.reduce((acc, talk) => {
 			};
 		}
 
-		console.log(talk);
-
 		acc[day].slots[talk.fromTime].talks.push({
 			title: talk.title,
 			room: talk.room,
