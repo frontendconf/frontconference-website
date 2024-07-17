@@ -63,10 +63,10 @@ const workshop = data.workshop?.items[0];
 const speaker = workshop?.teacher;
 
 if (!workshop) {
-	return {
+	return new Response(null, {
 		status: 404,
-		error: "Page not found",
-	};
+		statusText: "Page not found",
+	});
 }
 
 const talk = {

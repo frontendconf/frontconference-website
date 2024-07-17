@@ -25,10 +25,10 @@ const currentPage = data.collection?.items[0];
 
 // TODO: double check if this is correct
 if (!currentPage || !currentPage.title) {
-	return {
+	return new Response(null, {
 		status: 404,
-		error: "Page not found",
-	};
+		statusText: "Page not found",
+	});
 }
 ---
 

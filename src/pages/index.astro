@@ -28,10 +28,10 @@ const data = await client.request(query);
 const page = data.collection?.items[0];
 
 if (!page) {
-	return {
+	return new Response(null, {
 		status: 404,
-		error: "Page not found",
-	};
+		statusText: "Page not found",
+	});
 }
 ---
 

@@ -70,10 +70,10 @@ const filteredTalks = talks.filter((talk) => {
 
 // TODO: double check if this is correct
 if (!speaker || !speaker.name) {
-	return {
+	return new Response(null, {
 		status: 404,
-		error: "Page not found",
-	};
+		statusText: "Page not found",
+	});
 }
 ---
 
