@@ -51,7 +51,7 @@ const query = graphql(
 			}
 		}
 	`,
-	[speakerDetailFragment, talkDetailFragment]
+	[speakerDetailFragment, talkDetailFragment],
 );
 
 const data = await client.request(query, {
@@ -64,7 +64,7 @@ const talks = data.talk?.items;
 // filter talks by current event year
 const filteredTalks = talks.filter((talk) => {
 	return talk.tagsCollection.items.some(
-		(tag) => tag.title === TALK_YEAR_TAG_KEY
+		(tag) => tag.title === TALK_YEAR_TAG_KEY,
 	);
 });
 
@@ -80,7 +80,7 @@ if (!speaker || !speaker.name) {
 <ContentLayout
 	title={speaker.name}
 	metaDescription={filteredTalks[0]?.shortDescription}
-	backLinkTitle="Speakers"
+	backLinkTitle="Back"
 	displayBacklink
 	contentClass="grid--row-gap-double"
 >
