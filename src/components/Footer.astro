@@ -2,9 +2,9 @@
 import { client } from "../utils/graphql-client";
 import { graphql } from "gql.tada";
 import Button from "./Button.astro";
-// import NewsletterSignup from "./NewsletterSignup.astro";
 import Logo from "./Logo.astro";
 import Link from "./Link.astro";
+import NewsletterForm from "./NewsletterForm.astro";
 import Vercel from "../assets/vercel.svg?raw";
 
 const { slug } = Astro.params;
@@ -77,11 +77,8 @@ const socialMediaItems =
 ---
 
 <footer class="footer container">
-	{
-		/** TODO: add NewsletterSignup
-		 * <div class="newsletter"><NewsletterSignup /></div>
-		 */
-	}
+	<div class="newsletter"><NewsletterForm /></div>
+
 	<ul class="cta nav-list nav-list__cta">
 		{
 			ctas.map((item) => (
@@ -238,14 +235,20 @@ const socialMediaItems =
 
 	.newsletter {
 		grid-area: newsletter;
+
+		@include breakpoint-up("lg") {
+			justify-self: end;
+		}
 	}
 
 	.social {
 		grid-area: social;
+		margin-block-start: var(--spacing-8x);
 
 		@include breakpoint-up("lg") {
 			align-self: center;
 			justify-self: end;
+			margin-block-start: 0;
 		}
 	}
 
