@@ -27,6 +27,7 @@ const query = graphql(
 			workshops: workshopCollection(
 				limit: $limit
 				where: { tags: { title: $yearTag } }
+				order: order_ASC
 			) {
 				items {
 					title
