@@ -1,4 +1,4 @@
-const TAG_KEY = "FRONT24";
+const TAG_KEY = "FRONT26";
 
 export const SPONSOR_LIST_FILTER_TAG_KEY = TAG_KEY;
 export const SPONSOR_LIST_CATEGORY_SORTING_KEYS = [
