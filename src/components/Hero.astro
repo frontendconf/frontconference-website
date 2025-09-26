@@ -11,7 +11,7 @@ export interface Props {
 const { title, displayBacklink = false, backLinkTitle } = Astro.props;
 const { slug } = Astro.params;
 
-const heroGlyphChar = slug || title;
+const heroGlyphChar = (slug || title).split(' ').at(-1)?.charAt(0).toUpperCase() || 'F';
 const glyphColor = ["green-100", "cardboard", "red", "orange"][
 	Math.floor(Math.random() * 4)
 ];
@@ -23,7 +23,7 @@ const glyphColor = ["green-100", "cardboard", "red", "orange"][
 	<div class="hero__icon-wrapper">
 		<Icon
 			class:list={["hero__icon", glyphColor && `color--${glyphColor}`]}
-			name={`glyph${heroGlyphChar.charAt(0).toUpperCase()}`}
+			name={`glyph${heroGlyphChar}`}
 		/>
 	</div>
 </section>
