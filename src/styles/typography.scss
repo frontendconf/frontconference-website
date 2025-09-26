@@ -44,7 +44,7 @@ h6 {
 
 b,
 strong {
-	@extend %typo-body-caption;
+	@include typo-family-bold;
 }
 
 pre {
