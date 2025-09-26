@@ -11,7 +11,8 @@ export const speakerDetailFragment = graphql(`
 		company
 		slug
 		bio
-		twitter
+		mastodon
+		bluesky
 		linkedin
 		website
 		photo {
@@ -27,19 +28,25 @@ export interface Props {
 const { speaker } = Astro.props;
 
 const socialsKeys = [
+	{ key: "website", link: "", label: "Website", icon: "web" },
 	{
-		key: "twitter",
-		link: "https://twitter.com/",
-		label: "Twitter Profile",
-		icon: "twitter",
+		key: "mastodon",
+		link: "",
+		label: "Mastodon Profile",
+		icon: "mastodon",
+	},
+	{
+		key: "bluesky",
+		link: "",
+		label: "Bluesky Profile",
+		icon: "bluesky",
 	},
 	{
 		key: "linkedin",
-		link: "https://linkedin.com/",
+		linkPrefix: "https://linkedin.com/",
 		label: "Linkedin Profile",
 		icon: "linkedin",
 	},
-	{ key: "website", link: "", label: "Website", icon: "web" },
 ];
 
 const getSocials = (speaker) => {
@@ -49,9 +56,9 @@ const getSocials = (speaker) => {
 		if (!!speaker[social.key]) {
 			array.push({
 				key: social.key,
-				href: `${social.link}${speaker[social.key]}`,
+				href: `${social.linkPrefix || ""}${speaker[social.key]}`,
 				icon: social.icon,
-				title: `${speaker.title} ${social.label}`,
+				title: social.label,
 			});
 		}
 	});
