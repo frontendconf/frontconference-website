@@ -1,11 +1,13 @@
 import { defineConfig } from "astro/config";
-import vercel from "@astrojs/vercel/serverless";
 import icon from "astro-icon";
+import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
-  output: "hybrid",
-  adapter: vercel(),
+  output: "static",
+  adapter: node({
+    mode: 'standalone',
+  }),
   integrations: [icon({
     iconDir: "src/assets/icons",
     svgoOptions: {
