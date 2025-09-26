@@ -1,9 +1,11 @@
-FROM node:lts AS runtime
+FROM node:22-slim AS runtime
 WORKDIR /app
 
-COPY . .
+COPY package*.json .
 
-RUN npm install
+RUN npm ci
+
+COPY . .
 
 ARG CONTENTFUL_SPACE
 ENV CONTENTFUL_SPACE=$CONTENTFUL_SPACE
