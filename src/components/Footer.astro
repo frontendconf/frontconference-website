@@ -5,6 +5,7 @@ import Button from "./Button.astro";
 // import NewsletterSignup from "./NewsletterSignup.astro";
 import Logo from "./Logo.astro";
 import Link from "./Link.astro";
+import Deploio from "../assets/deploio.svg?raw";
 
 const { slug } = Astro.params;
 
@@ -141,7 +142,16 @@ const socialMediaItems =
 		</ul>
 	</div>
 
-	<div class="hosting-wrapper"></div>
+	<div class="hosting-wrapper">
+		<a
+			href="https://deplo.io?utm_source=frontendconf"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="hosting-banner"
+		>
+			<Fragment set:html={Deploio} />
+		</a>
+	</div>
 </footer>
 
 <style lang="scss">
@@ -310,7 +320,14 @@ const socialMediaItems =
 	}
 
 	.hosting-banner {
-		width: 212px;
+		width: 180px;
 		height: auto;
+		color: red;
+
+		:global(svg) {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
 	}
 </style>
